@@ -1,6 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
+import {appState} from '../App'
 
 const Login = () => {
+  const {openLogin,setOpenLogin}=useContext(appState);
+
     const [form,setForm]=useState({
         email:'',
         password:''
@@ -23,6 +26,7 @@ const Login = () => {
           const data=await res.json();
           if(res.status===200){
               window.alert("sucessfully logged in")
+              setOpenLogin(false)
               console.log(data,resstatus);
           }
           else{
@@ -32,7 +36,7 @@ const Login = () => {
           }
      }
   return (
-    <div className='absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-8 w-[500px] bg-black-gradient rounded-2xl border-2 border-slate-600'>
+    <div className={`${openLogin?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-8 w-[500px] bg-black-gradient rounded-2xl border-2 border-slate-600`}>
     <form action=""  className=' flex flex-col gap-6'>
     <label className='flex flex-col'>
           <span className='text-white font-medium mb-4'>Your Name</span>
@@ -59,7 +63,7 @@ const Login = () => {
    
     </form>
     <div className='m-6 right-3 font-medium'>
-    <button className='h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-transparent plane' >Cancel</button>
+    <button className='h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-transparent plane' onClick={()=>{setOpenLogin(false)}} >Cancel</button>
       <button className='h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700' onClick={submit}>Login</button>
     </div>
   </div>
