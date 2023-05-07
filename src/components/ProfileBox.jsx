@@ -17,7 +17,7 @@ const ProfileBox = () => {
       </div>
     </div>
     <div className='ml-10 mt-2 mb-2 text-white'>
-        <h3 className=' text-white text-bold'>{following.length} <span className='text-[#dfd9ff] text-[0.9rem]'>following</span>&nbsp; | &nbsp; {followers.length} <span className='text-[#dfd9ff] text-[0.9rem]'>followers</span></h3>
+        {/* <h3 className=' text-white text-bold'>{following.length} <span className='text-[#dfd9ff] text-[0.9rem]'>following</span>&nbsp; | &nbsp; {followers.length} <span className='text-[#dfd9ff] text-[0.9rem]'>followers</span></h3> */}
     </div>
     </div>}
     {!user && <div className='fllex flex-row justify-center h-[60px] w-[200px] font-medium p-3 items-center'>

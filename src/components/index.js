@@ -5,6 +5,8 @@ import ProfileBox from "./ProfileBox";
 import PostFooter from "./PostFooter";
 import Signup from "./SignUp";
 import Login from "./Login";
+import Tweet from './Tweet'
+import PostProfile from './PostProfile'
 
 
 export {
@@ -14,5 +16,7 @@ export {
     ProfileBox,
     PostFooter,
     Signup,
-    Login
+    Login,
+    Tweet,
+    PostProfile
 }
