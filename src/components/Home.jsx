@@ -1,5 +1,5 @@
 import React,{useEffect,useContext} from 'react'
-import {PostFooter,PostProfile} from '../components'
+import {PostFooter,PostProfile} from '.'
 // import {posts} from '../constants'
 import { appState } from '../App'
 
@@ -14,7 +14,7 @@ import { appState } from '../App'
 //   </div>
 //   )
 
-const Middle = () => {
+const Home = () => {
   const {posts,setPosts}=useContext(appState);
 
     const getposts=async ()=>{
@@ -45,7 +45,7 @@ const Middle = () => {
       <div className='ml-2'>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-        <PostFooter post={post}/>
+        <PostFooter post={post} />
     </div>
 
 
@@ -55,4 +55,4 @@ const Middle = () => {
   )
 }
 
-export default Middle
+export default Home

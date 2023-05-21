@@ -3,23 +3,28 @@ import logo from '../assets/logo.png'
 const menubList=[
     {
         logo:"f",
-        name:"Home"
+        name:"Home",
+        link:''
     },
     {
         logo:"f",
-        name:"Profile"
+        name:"Profile",
+        link:'/profile'
     },
     {
         logo:"f",
-        name:"Following"
+        name:"Following",
+        link:'/following'
     },
     {
         logo:"f",
-        name:"Bookmark"
+        name:"Bookmark",
+        link:'/bookmark'
     },
     {
         logo:"f",
-        name:"Settings"
+        name:"Log-out",
+        link:'/sign-out'
     }
 ]
 

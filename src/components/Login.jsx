@@ -27,11 +27,11 @@ const Login = () => {
           if(res.status===200){
               window.alert("sucessfully logged in")
               setOpenLogin(false)
-              console.log(data,resstatus);
+              console.log("data=",data,res.status);
           }
           else{
               window.alert("invalid login")
-              console.log(data,res.tatus);
+              console.log(data,res.status);
     
           }
      }

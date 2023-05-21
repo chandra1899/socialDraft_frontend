@@ -5,6 +5,7 @@ import profile from '../assets/profile.png'
 import dark from '../assets/dark.png'
 import close from '../assets/close.svg'
 import menu from '../assets/menu.svg'
+import { Link } from "react-router-dom";
 
 const Left = () => {
   const [active,setActive]=useState('');
@@ -22,7 +23,7 @@ const Left = () => {
           } hover:text-white ${item.name==="Home"?"text-bold text-[20px]":"text-[18px]"}  font-medium cursor-pointer flex mb-4 `}
           onClick={()=>{setActive(item.name)}}>
             <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
-            <a className='ml-4' href={`#${item.name}`}>{item.name}</a>
+            <Link className='ml-4' to={`${item.link}`}>{item.name}</Link>
           </div>
         ))}
       </div>
@@ -48,7 +49,7 @@ const Left = () => {
         } font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle);setActive(item.name)}}
         >
-          <a href={`#${item.name}`}>{item.name}</a>
+          <Link to={`${item.link}`}>{item.name}</Link>
         </li>
       ))
     }

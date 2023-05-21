@@ -31,7 +31,7 @@ const Following=({logo, name,email})=>(
 
 const Right = () => {
   return (
-    <div className='h-full hidden sm:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 border-slate-700 '>
+    <div className='h-full hidden sm:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 border-slate-700 scroll-smooth'>
     <h3 className='font-medium text-[23px] my-3'>Fowllowing</h3>
     <div className='border-t-2 border-slate-500 py-3 min-w-[95%] overflow-scroll no-scrollbar'>
       {following.map((follower)=>(
