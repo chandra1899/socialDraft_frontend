@@ -1,10 +1,62 @@
-import React from 'react'
+import React,{useEffect,useContext, useState} from 'react'
+import { appState } from '../App'
+import logo from '../assets/logo.png'
+import {PostFooter,PostProfile} from '.'
+ import { useNavigate } from 'react-router-dom'
 
 const Bookmark = () => {
+  const navigate=useNavigate()
+  const {user,setOpenLogin}=useContext(appState);
+  const [savedposts,setSavedposts]=useState([])
+  const getsavedposts=async ()=>{
+    let res=await fetch("http://localhost:8000/api/post/savedposts",{
+      method:"GET",
+      headers:{
+        "Content-Type":"application/json"
+      },
+    credentials:'include'
+    })
+    let data=await res.json();
+    if(res.status===200){
+      setSavedposts(data.savedposts)
+      // console.log(data.savedposts);
+    }
+    else{
+      window.alert("something wrong in fetching saved posts");
+    }
+  }
+  useEffect( () => {
+    if(user){
+      getsavedposts();
+      }else{
+        navigate('/')
+        setOpenLogin(true)
+      }
+ }, []);
+
   return (
-    <div>
-      Bookmark
+   <>
+   {user &&  <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2 bg-black flex flex-col overflow-scroll no-scrollbar '>
+      <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
+    {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
+    <div className='flex flex-col overflow-scroll no-scrollbar '>
+      {savedposts.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600'>No Saved Posts</p></>}
+    {savedposts.map((post,i)=>(
+      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:bg-[#112]  hover:border-3 hover:border-slate-600 '>
+      <PostProfile user={post.bookmark
+.user}/>
+      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post.bookmark
+._id}`)}}>
+        <p className='font-medium text-[16px] p-2'>{post.bookmark.content}</p>
+      </div>
+        <PostFooter post={post.bookmark} />
     </div>
+    ))}
+    </div>
+   </div>
+      
+    </div>}
+   </>
   )
 }
 

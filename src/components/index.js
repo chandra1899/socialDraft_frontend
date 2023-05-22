@@ -10,6 +10,11 @@ import PostProfile from './PostProfile'
 import Profile from './Profile'
 import Following from './Following'
 import Bookmark from './Bookmark'
+import Post from './Post'
+import Comment from './Comments'
+import CommentForm from './CommentForm'
+import EditProfile from './EditProfileForm'
+import People from './People'
 
 
 export {
@@ -24,5 +29,10 @@ export {
     PostProfile,
     Profile,
     Following,
-    Bookmark
+    Bookmark,
+    Post,
+    Comment,
+    CommentForm,
+    EditProfile,
+    People
 }

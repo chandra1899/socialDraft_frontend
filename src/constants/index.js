@@ -13,8 +13,8 @@ const menubList=[
     },
     {
         logo:"f",
-        name:"Following",
-        link:'/following'
+        name:"Post",
+        link:'/Post'
     },
     {
         logo:"f",

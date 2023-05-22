@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useContext,useEffect } from 'react'
 import {ProfileBox} from '../components'
 import {menubList} from '../constants'
 import profile from '../assets/profile.png'
@@ -6,11 +6,16 @@ import dark from '../assets/dark.png'
 import close from '../assets/close.svg'
 import menu from '../assets/menu.svg'
 import { Link } from "react-router-dom";
+import { appState } from '../App'
 
 const Left = () => {
+  const {calluser}=useContext(appState);
   const [active,setActive]=useState('');
   const [toggle,setToggle]=useState(false);
-
+  useEffect( () => {
+    calluser();
+   // console.log(user);
+ }, []);
 
   return (
    <div >

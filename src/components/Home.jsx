@@ -2,7 +2,7 @@ import React,{useEffect,useContext} from 'react'
 import {PostFooter,PostProfile} from '.'
 // import {posts} from '../constants'
 import { appState } from '../App'
-
+import { useNavigate ,useParams} from "react-router-dom";
 // const Post=({index})=>(
   
 //     <div key={index} className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:border-3 hover:border-slate-300 '>
@@ -15,7 +15,8 @@ import { appState } from '../App'
 //   )
 
 const Home = () => {
-  const {posts,setPosts}=useContext(appState);
+  const navigate=useNavigate()
+  const {posts,setPosts,user}=useContext(appState);
 
     const getposts=async ()=>{
       let res=await fetch("http://localhost:8000/api",{
@@ -40,9 +41,9 @@ const Home = () => {
 
 
     {posts.map((post,i)=>(
-      <div key={i} className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:border-3 hover:border-slate-300 '>
+      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:border-3 hover:border-slate-600 hover:bg-[#112] '>
       <PostProfile user={post.user}/>
-      <div className='ml-2'>
+      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
         <PostFooter post={post} />

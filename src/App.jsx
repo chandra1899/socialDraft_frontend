@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Following,Profile} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Following,Profile,Post,CommentForm,EditProfile,People} from './components'
 import {
   Routes,
   Route
@@ -30,9 +30,12 @@ function App() {
   //         console.log("no data sorry ", er);
   //       });
   //   }
-  const [user,setUser]=useState({});
+  const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
+  const [openComment,setOpenComment]=useState(false);
   const [openSignUp,setOpenSignUp]=useState(false);
+  const [commentpostId,setCommentpostId]=useState(false);
+  const [editProfile,setEditProfile]=useState(false);
   const [posts,setPosts]=useState([]);
     const calluser=async ()=>{
       try {
@@ -54,6 +57,7 @@ function App() {
       }
       else{
           // window.alert("no user found")
+          setUser(undefined)
           console.log(data.status);
       }
       // console.log(data);
@@ -68,11 +72,13 @@ function App() {
 
   return (
     <>
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser}}>
     <div className={`bg-primary text-white h-full w-full flex flex-row `}>
      <Left/>
     <Signup/>
     {/* <Tweet/> */}
+    <EditProfile/>
+    <CommentForm/>
     <Login/>
     <div  className='bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 from-black to-blue-950 h-full max-w-[95%] sm:max-w-[69%] p-3 flex flex-row sm:border-2 border-slate-700 '>
       
@@ -81,6 +87,8 @@ function App() {
         <Route exact path='/bookmark' element={<Bookmark/>} />
         <Route exact path='/profile' element={<Profile/>} />
         <Route exact path='/following' element={<Following/>} />
+        <Route exact path='/post/:id' element={<Post/>} />
+        <Route exact path='/people/:id' element={<People/>} />
       </Routes>
      
      <Right/>

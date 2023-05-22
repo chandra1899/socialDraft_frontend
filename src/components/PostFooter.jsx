@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import save from '../assets/save.png'
 import saved from '../assets/saved.png'
 import like from '../assets/like.png'
 import liked from '../assets/liked.png'
+import {appState} from '../App'
+
 
 const PostFooter =  ({post}) => {
+  const {user,setOpenLogin}=useContext(appState)
+
   const [likes,setLikes]=useState(post.likes.length)
   const [likelogo,setLikelogo]=useState(post.likes.length)
   const [savelogo,setSavelogo]=useState(post.likes.length)
-  const [issave,setIssaved]=useState("")
-  const [islike,setIslike]=useState("")
+  const [issave,setIssaved]=useState("Save")
+  const [islike,setIslike]=useState("Like")
   const like=async ()=>{
     // console.log(post._id);
-    let res=await fetch(`http://localhost:8000/api/like?id=${post._id}&type=Post`,{
+      if(user){
+        let res=await fetch(`http://localhost:8000/api/like?id=${post._id}&type=Post`,{
       method:'POST',
       // mode: 'no-cors',
       headers:{
@@ -37,6 +42,9 @@ const PostFooter =  ({post}) => {
     }else{
       window.alert("unable to make like")
     }
+      }else{
+        setOpenLogin(true)
+      }
   }
   const savepost=async ()=>{
     let res=await fetch(`http://localhost:8000/api/is/saved?id=${post._id}`,{
@@ -85,6 +93,7 @@ const PostFooter =  ({post}) => {
     setLikes(data.likes)
   }
   const bookmark=async ()=>{
+   if(user){
     let res=await fetch(`http://localhost:8000/api/bookmark?id=${post._id}`,{
       method:'post',
       // mode: 'no-cors',
@@ -107,16 +116,20 @@ const PostFooter =  ({post}) => {
     else{
       window.alert("some thing is wrong in bookmark")
     }
+   }else{
+    setOpenLogin(true)
+  }
   }
   useEffect( () => {
+    if(user){
     likepost()
     savepost()
-   
+    }
  }, []);
   return (
     <div className='flex flex-row justify-around items-center p-3'>
         <p onClick={like} className='text-[#f93838] text-[0.9rem] font-bold cursor-pointer'>{likes} {islike}</p>
-        <p className='text-[#f4c838] text-[0.9rem] font-bold'>{post.comments.length} Comments</p>
+        <p className='text-[#f4c838] text-[0.9rem] font-bold cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>{post.comments.length} Comments</p>
         <p className='text-[#3a3afb] text-[0.9rem] font-bold'>Retweets</p>
         <p onClick={bookmark} className='text-[#3ff339] text-[0.9rem] font-bold cursor-pointer'>{issave}</p>      
     </div>
