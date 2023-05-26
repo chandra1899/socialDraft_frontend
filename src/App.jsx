@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Following,Profile,Post,CommentForm,EditProfile,People} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Following,Profile,Post,CommentForm,EditProfile,People,CreatePostForm} from './components'
 import {
   Routes,
   Route
@@ -36,6 +36,8 @@ function App() {
   const [openSignUp,setOpenSignUp]=useState(false);
   const [commentpostId,setCommentpostId]=useState(false);
   const [editProfile,setEditProfile]=useState(false);
+  const [following,setFollowing]=useState([]);
+  const [postForm,setPostForm]=useState(false);
   const [posts,setPosts]=useState([]);
     const calluser=async ()=>{
       try {
@@ -65,20 +67,41 @@ function App() {
         console.log(err);
       }
     }
+    const callfollowing=async ()=>{
+      let res= await fetch('http://localhost:8000/api/follow/following',{
+          method:'GET',
+          // mode: 'no-cors',
+          headers:{
+            'Access-Control-Allow-Origin': '*',
+            Accept:"application/json",
+            "Content-Type":"application/json"
+          },
+          credentials:'include', 
+        });
+        let data=await res.json();
+        if(res.status===200){
+          // console.log("following",data.following);
+          setFollowing(data.following)
+        }else{
+          window.alert("something wrong in fetching following")
+        }
+    }
     useEffect( () => {
        calluser();
+       callfollowing()
       // console.log(user);
     }, []);
 
   return (
     <>
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing}}>
     <div className={`bg-primary text-white h-full w-full flex flex-row `}>
      <Left/>
     <Signup/>
     {/* <Tweet/> */}
     <EditProfile/>
     <CommentForm/>
+    <CreatePostForm/>
     <Login/>
     <div  className='bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 from-black to-blue-950 h-full max-w-[95%] sm:max-w-[69%] p-3 flex flex-row sm:border-2 border-slate-700 '>
       

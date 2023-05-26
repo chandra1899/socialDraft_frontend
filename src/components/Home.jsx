@@ -41,7 +41,7 @@ const Home = () => {
 
 
     {posts.map((post,i)=>(
-      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:border-3 hover:border-slate-600 hover:bg-[#112] '>
+      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]   hover:border-3 hover:border-slate-600 hover:bg-[#112] transition duration-150 ease-in-out '>
       <PostProfile user={post.user}/>
       <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>

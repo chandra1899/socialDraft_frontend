@@ -32,6 +32,7 @@ const Profile = () => {
     // calluser()
     if(user){
     getposts();
+    calluser()
     }else{
       navigate('/')
       setOpenLogin(true)
@@ -46,10 +47,18 @@ const Profile = () => {
           <div className='flex flex-col  min-w-[50%] items-center'>
             <div className='flex justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer hover:bg-slate-700 font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-400 border-2 mb-3 rounded-3xl' onClick={()=>setEditProfile(true)}>Edit Profile</div>
             <div className='flex flex-wrap justify-center items-center mx-6 '>
-              <p className='m-2 mr-3 sm:text-[0.9rem] text-[0.6rem] font-medium '># Followers</p>
-              <p className='m-2 sm:text-[0.9rem] text-[0.6rem] font-medium '># Following</p>
+              <p className='m-2 mr-3 sm:text-[0.9rem] text-[0.6rem] font-medium '>{user.followers?user.followers.length:'0'} Followers</p>
+              <p className='m-2 sm:text-[0.9rem] text-[0.6rem] font-medium '>{user.following?user.following.length:'0'} Following</p>
             </div>
           </div>
+      </div>
+      <div className='m-2'>
+        <h3 className='font-bold text-[#3ff63f] text-[1.125rem] ml-3'>Name :</h3>
+        <p className='ml-6 text-[#b2e4ecf0]'>{user.name}</p>
+      </div>
+      <div className='m-2'>
+        <h3 className='font-bold text-[#3ff63f] text-[1.125rem] ml-3'>Email :</h3>
+        <p className='ml-6 text-[#b2e4ecf0]'>{user.email}</p>
       </div>
       <div className='m-2'>
         <h3 className='font-bold text-[#3ff63f] text-[1.125rem] ml-3'>Description :</h3>
@@ -61,7 +70,7 @@ const Profile = () => {
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     <div className='flex flex-col overflow-scroll no-scrollbar '>
     {yourposts.map((post,i)=>(
-      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:bg-[#112]  hover:border-3 hover:border-slate-600 '>
+      <div key={i}  className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]   hover:bg-[#112] transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 '>
       <PostProfile user={user}/>
       <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>

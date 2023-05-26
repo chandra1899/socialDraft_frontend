@@ -15,6 +15,7 @@ import Comment from './Comments'
 import CommentForm from './CommentForm'
 import EditProfile from './EditProfileForm'
 import People from './People'
+import CreatePostForm from './CreatePostForm'
 
 
 export {
@@ -34,5 +35,6 @@ export {
     Comment,
     CommentForm,
     EditProfile,
-    People
+    People,
+    CreatePostForm
 }

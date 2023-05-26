@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { appState } from '../App'
 
 const Left = () => {
-  const {calluser}=useContext(appState);
+  const {calluser,postForm,setPostForm}=useContext(appState);
   const [active,setActive]=useState('');
   const [toggle,setToggle]=useState(false);
   useEffect( () => {
@@ -22,15 +22,36 @@ const Left = () => {
     <div className='bg-gradient-to-b hidden sm:flex rounded-3xl fixed overflow-y-scroll top-6 left-4 bottom-4 z-0 from-black to-blue-950 h-full max-w-[28%] p-3 overflow-hidden flex-col no-scrollbar border-2 border-slate-700'>
       <ProfileBox/>
       <div className=' flex flex-col mt-4 py-5 '>
-        {menubList.map((item)=>(
-          <div key={item.name} className={`${
-            active===item.name?"text-white":"text-secondary"
-          } hover:text-white ${item.name==="Home"?"text-bold text-[20px]":"text-[18px]"}  font-medium cursor-pointer flex mb-4 `}
-          onClick={()=>{setActive(item.name)}}>
+        <div className={`${
+            active==='Home'?"text-white":"text-secondary"
+          } hover:text-white text-bold text-[20px] font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Home')}}>
             <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
-            <Link className='ml-4' to={`${item.link}`}>{item.name}</Link>
-          </div>
-        ))}
+            <Link className='ml-4' to='/'>Home</Link>
+        </div>
+        <div className={`${
+            active==='Profile'?"text-white":"text-secondary"
+          } hover:text-white text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Profile')}}>
+            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            <Link className='ml-4' to='/profile'>Profile</Link>
+        </div>
+        <div className={`${
+            active==='Post'?"text-white":"text-secondary"
+          } hover:text-white text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Post')}}>
+            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            <p className='ml-4' onClick={()=>{setPostForm((pre)=>!pre)}}>Post</p>
+        </div>
+        <div className={`${
+            active==='Bookmark'?"text-white":"text-secondary"
+          } hover:text-white text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Bookmark')}}>
+            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            <Link className='ml-4' to='/bookmark'>Bookmark</Link>
+        </div>
+        <div className={`${
+            active==='Log-Out'?"text-white":"text-secondary"
+          } hover:text-white text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Log-Out')}}>
+            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            <Link className='ml-4' to='/sign-out'>Log-Out</Link>
+        </div>
       </div>
       <div className='flex flex-row justify-start items-center border-t-2  border-slate-400 p-2 '>
         <img className='h-[45px] w-[45]  mb-3 mt-2 mx-2 ml-6' src={dark} alt="mode" />
