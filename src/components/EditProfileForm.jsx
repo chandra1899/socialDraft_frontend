@@ -2,7 +2,7 @@ import React,{useContext,useEffect,useState} from 'react'
 import { appState } from '../App'
 
 const EditProfileForm = () => {
-    const {editProfile,setEditProfile,user,setUser}=useContext(appState);
+    const {editProfile,setEditProfile,user,setUser,dark}=useContext(appState);
     const [form,setForm]=useState({
         email:'',
         name:'',
@@ -42,47 +42,47 @@ const EditProfileForm = () => {
      }
    }, []);
   return (
-    <div className={`${editProfile?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[550px] p-8 w-[500px] bg-black-gradient rounded-2xl border-2 border-slate-600`}>
+    <div className={`${editProfile?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[550px] p-8 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"}  rounded-2xl border-2 `}>
     <form action=""  className=' flex flex-col gap-6'>
     <label className='flex flex-col'>
-          <span className='text-white font-medium mb-4'>Your Email</span>
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`} >Your Email</span>
           <input 
           type="email" 
           name='email'
           value={form.email}
           onChange={handleChange}
           placeholder="what's your email?"
-          className='bg-blue-900 py-4 px-6 placeholder:text-secondary text-red-400 rounded-lg outline-none border-none font-medium'
+          className={`${dark?"bg-blue-900 placeholder:text-secondary":"bg-white"} py-4 px-6  text-red-400 rounded-lg outline-none border-none font-medium`}
           disabled
           />
         </label>
     <label className='flex flex-col'>
-          <span className='text-white font-medium mb-4'>Your Name</span>
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
           <input 
           type="text" 
           name='name'
           value={form.name}
           onChange={handleChange}
           placeholder="Enter Name?"
-          className='bg-blue-900 py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+          className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
           />
         </label>
     <label className='flex flex-col'>
-          <span className='text-white font-medium mb-4'>Description About You</span>
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Description About You</span>
           <textarea 
           name="description"
            value={form.description} 
            cols="30" 
            rows="5"
            onChange={handleChange}
-           className='bg-blue-900 py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium resize-none'
+           className={`${dark?"bg-blue-900 text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black"} py-4 px-6   rounded-lg outline-none border-none font-medium resize-none`}
            ></textarea>
         </label>
    
     </form>
     <div className='m-6 right-3 font-medium'>
-    <button className='h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-transparent plane' onClick={()=>{setEditProfile(false)}} >Cancel</button>
-      <button className='h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700' onClick={submit}>Update</button>
+    <button className={`h-[42px] ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 `} onClick={()=>{setEditProfile(false)}} >Cancel</button>
+      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`} onClick={submit}>Update</button>
     </div>
   </div>
   )

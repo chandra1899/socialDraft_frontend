@@ -7,7 +7,7 @@ import {appState} from '../App'
 
 
 const PostFooter =  ({post}) => {
-  const {user,setOpenLogin}=useContext(appState)
+  const {user,setOpenLogin,dark}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
   const [likelogo,setLikelogo]=useState(post.likes.length)
@@ -128,10 +128,10 @@ const PostFooter =  ({post}) => {
  }, []);
   return (
     <div className='flex flex-row justify-around items-center p-3'>
-        <p onClick={like} className='text-[#f93838] text-[0.9rem] font-bold cursor-pointer'>{likes} {islike}</p>
-        <p className='text-[#f4c838] text-[0.9rem] font-bold cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>{post.comments.length} Comments</p>
-        <p className='text-[#3a3afb] text-[0.9rem] font-bold'>Retweets</p>
-        <p onClick={bookmark} className='text-[#3ff339] text-[0.9rem] font-bold cursor-pointer'>{issave}</p>      
+        <p onClick={like} className={`${dark?"text-[#f93838]":"text-red-700"} text-[0.9rem] font-bold cursor-pointer`}>{likes} {islike}</p>
+        <p className={`${dark?"text-[#f4c838]":"text-[#fd980c]"} text-[0.9rem] font-bold cursor-pointer`} onClick={()=>{navigate(`/post/${post._id}`)}}>{post.comments.length} Comments</p>
+        <p className={`text-[#3a3afb] text-[0.9rem] font-bold`}>Retweets</p>
+        <p onClick={bookmark} className={`${dark?"text-[#3ff339]":"text-green-600"} text-[0.9rem] font-bold cursor-pointer`}>{issave}</p>      
     </div>
   )
 }

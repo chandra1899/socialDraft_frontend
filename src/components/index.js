@@ -8,7 +8,6 @@ import Login from "./Login";
 import Tweet from './Tweet'
 import PostProfile from './PostProfile'
 import Profile from './Profile'
-import Following from './Following'
 import Bookmark from './Bookmark'
 import Post from './Post'
 import Comment from './Comments'
@@ -29,7 +28,6 @@ export {
     Tweet,
     PostProfile,
     Profile,
-    Following,
     Bookmark,
     Post,
     Comment,

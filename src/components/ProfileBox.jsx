@@ -3,7 +3,7 @@ import logo from '../assets/logo.png'
 import {appState} from '../App'
 
 const ProfileBox = () => {
-  const {user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin}=useContext(appState)
+  const {user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,dark}=useContext(appState)
   // console.log(user);
   let name,email,following,followers
   if(user)
@@ -14,11 +14,11 @@ const ProfileBox = () => {
   return (
     <>
     {user? <div className='flex flex-col  border-b-2 border-slate-400 mt-4 pb-3 '>
-        <div className='flex flex-row flex-wrap  justify-center items-center h-full px-7 text-white'>
+        <div className={`flex flex-row  justify-center items-center h-full px-7 ${dark?"text-white":"text-black"}`}>
       <img src={logo} alt="logo" className='-ml-2 h-[60px] w-[60px] m-3 rounded-full' />
       <div className='flex flex-col'>
         <h3 className='font-bold text-xl mt-3'>{name}</h3>
-        <p className='text-[#dfd9ff] text-[0.9rem] '>#{email}</p>
+        <p className={`${dark?"text-[#dfd9ff]":"text-[#bf2bf1]"} text-[0.9rem] `}>#{email}</p>
       </div>
     </div>
     <div className='ml-10 mt-2 mb-2 text-white'>

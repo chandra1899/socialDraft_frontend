@@ -3,7 +3,7 @@ import {appState} from '../App'
 // import { useNavigate ,useParams} from "react-router-dom";
 
 const CommentForm = () => {
-    const {openComment,setOpenComment,commentpostId,setCommentpostId}=useContext(appState);
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark}=useContext(appState);
 
 
     const [comment,setComment]=useState("")
@@ -33,16 +33,16 @@ const CommentForm = () => {
           }
      }
   return (
-    <div className={`${openComment?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-4 w-[500px] bg-black-gradient rounded-2xl border-2 border-slate-600`}>
+    <div className={`${openComment?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-4 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2 `}>
     <form action=""  className=' flex flex-col gap-6'>
     <label className='flex flex-col'>
-          <span className='text-[#42f8ec] font-medium text-[1.125rem] mb-4'>Your Comment</span>
-          <textarea name="content" className='p-2 bg-black resize-none rounded-2xl' value={comment} onChange={(e)=>handleChange(e)} cols="30" rows="7"></textarea>
+          <span className={`${dark?"text-[#42f8ec]":"text-[#0f3330]"} font-medium text-[1.125rem] mb-4`}>Your Comment</span>
+          <textarea name="content" className={`p-2 ${dark?"bg-black":"bg-slate-100"} resize-none rounded-2xl`} value={comment} onChange={(e)=>handleChange(e)} cols="30" rows="7"></textarea>
         </label>
     </form>
     <div className='m-6 right-3 font-medium'>
-    <button className='h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-transparent plane' onClick={()=>{setOpenComment(false)}} >Cancel</button>
-      <button className='h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700' onClick={submit}>Comment</button>
+    <button className={`h-[42px] rounded-xl border-2 ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} border-slate-600 w-[80px] m-2 p-1 `} onClick={()=>{setOpenComment(false)}} >Cancel</button>
+      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`} onClick={submit}>Comment</button>
     </div>
   </div>
   )

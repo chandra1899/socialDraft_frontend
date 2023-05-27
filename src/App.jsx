@@ -1,10 +1,23 @@
 import React,{useState,createContext,useEffect} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Following,Profile,Post,CommentForm,EditProfile,People,CreatePostForm} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm} from './components'
 import {
   Routes,
   Route
 } from "react-router-dom";
 const appState=createContext()
+//back drop
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+import setBodyColor from './setBodyColor'
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 
 
@@ -30,6 +43,8 @@ function App() {
   //         console.log("no data sorry ", er);
   //       });
   //   }
+  const classes=useStyles();
+
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
   const [openComment,setOpenComment]=useState(false);
@@ -39,8 +54,13 @@ function App() {
   const [following,setFollowing]=useState([]);
   const [postForm,setPostForm]=useState(false);
   const [posts,setPosts]=useState([]);
+  const [calluserLoader,setCalluserLoader]=useState(false);
+  const [followingLoader,setFollowingLoader]=useState(false);
+  const [loading,setLoading]=useState(false);
+  const [dark,setDark]=useState(true);
     const calluser=async ()=>{
       try {
+        setLoading(true)
         let res= await fetch('http://localhost:8000/api/user/getuser',{
           method:'GET',
           // mode: 'no-cors',
@@ -52,8 +72,10 @@ function App() {
           credentials:'include', 
         });
         let data=await res.json();
+        setLoading(false)
         if(res.status===200){
           setUser(data.can);
+          callfollowing()
           // console.log(data);
 
       }
@@ -68,6 +90,7 @@ function App() {
       }
     }
     const callfollowing=async ()=>{
+      setFollowingLoader(true)
       let res= await fetch('http://localhost:8000/api/follow/following',{
           method:'GET',
           // mode: 'no-cors',
@@ -79,6 +102,8 @@ function App() {
           credentials:'include', 
         });
         let data=await res.json();
+      setFollowingLoader(false)
+
         if(res.status===200){
           // console.log("following",data.following);
           setFollowing(data.following)
@@ -88,14 +113,20 @@ function App() {
     }
     useEffect( () => {
        calluser();
-       callfollowing()
+         
+  
       // console.log(user);
     }, []);
+    setBodyColor({color: `${dark?"black":"white"}`})
 
   return (
     <>
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing}}>
-    <div className={`bg-primary text-white h-full w-full flex flex-row `}>
+    {loading && <Backdrop className={classes.backdrop} open>
+        <CircularProgress color="inherit" />
+      </Backdrop>}
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark}}>
+    <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
+      
      <Left/>
     <Signup/>
     {/* <Tweet/> */}
@@ -103,13 +134,12 @@ function App() {
     <CommentForm/>
     <CreatePostForm/>
     <Login/>
-    <div  className='bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 from-black to-blue-950 h-full max-w-[95%] sm:max-w-[69%] p-3 flex flex-row sm:border-2 border-slate-700 '>
+    <div  className={`bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[95%] sm:max-w-[69%] p-3 flex flex-row sm:border-2  `}>
       
       <Routes >
         <Route exact path='/' element={<Home/>} />
         <Route exact path='/bookmark' element={<Bookmark/>} />
         <Route exact path='/profile' element={<Profile/>} />
-        <Route exact path='/following' element={<Following/>} />
         <Route exact path='/post/:id' element={<Post/>} />
         <Route exact path='/people/:id' element={<People/>} />
       </Routes>
