@@ -5,14 +5,34 @@ import profile from '../assets/profile.png'
 import Dark from '../assets/dark.png'
 import close from '../assets/close.svg'
 import menu from '../assets/menu.svg'
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { appState } from '../App'
 
 
 const Left = () => {
-  const {calluser,postForm,setPostForm,dark,setDark}=useContext(appState);
+  const Navigate=useNavigate();
+  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenLogin}=useContext(appState);
   const [active,setActive]=useState('');
   const [toggle,setToggle]=useState(false);
+  const logout=async ()=>{
+    let res= await fetch(`http://localhost:8000/api/user/sign-out`,{
+      method:'GET',
+      // mode: 'no-cors',
+      headers:{
+        'Access-Control-Allow-Origin': '*',
+        Accept:"application/json",
+        "Content-Type":"application/json"
+      },
+      credentials:'include', 
+    });
+    let data=await res.json();
+    if(res.status===200){
+      Navigate('/');
+      calluser();
+    }else{
+      window.alert('error in logout')
+    }
+  }
   useEffect( () => {
     calluser();
    // console.log(user);
@@ -39,7 +59,7 @@ const Left = () => {
             active==='Post'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
           } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Post')}}>
             <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
-            <p className='ml-4' onClick={()=>{setPostForm((pre)=>!pre)}}>Post</p>
+            <p className='ml-4' onClick={()=>{if(user){setPostForm((pre)=>!pre)}else {setOpenLogin(true)}}}>Post</p>
         </div>
         <div className={`${
            active==='Bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
@@ -47,12 +67,12 @@ const Left = () => {
             <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <Link className='ml-4' to='/bookmark'>Bookmark</Link>
         </div>
-        <div className={`${
+        {user && <div className={`${
             active==='Log-Out'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
           } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Log-Out')}}>
             <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
-            <Link className='ml-4' to='/sign-out'>Log-Out</Link>
-        </div>
+            <p className='ml-4' onClick={logout}>Log-Out</p>
+        </div>}
       </div>
       <div  className='flex flex-row justify-start items-center border-t-2  border-slate-400 p-2 '>
       

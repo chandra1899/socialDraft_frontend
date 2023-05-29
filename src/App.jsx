@@ -57,7 +57,7 @@ function App() {
   const [calluserLoader,setCalluserLoader]=useState(false);
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
-  const [dark,setDark]=useState(true);
+  const [dark,setDark]=useState(false);
     const calluser=async ()=>{
       try {
         setLoading(true)
@@ -113,8 +113,6 @@ function App() {
     }
     useEffect( () => {
        calluser();
-         
-  
       // console.log(user);
     }, []);
     setBodyColor({color: `${dark?"black":"white"}`})

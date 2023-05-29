@@ -31,7 +31,7 @@ const Profile = () => {
   useEffect( () => {
     // calluser()
     if(user){
-    getposts();
+      getposts();
     calluser()
     }else{
       navigate('/')

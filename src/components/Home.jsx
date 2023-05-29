@@ -22,7 +22,7 @@ import Box from '@mui/material/Box';
 
 const Home = () => {
   const navigate=useNavigate()
-  const {posts,setPosts,user,dark}=useContext(appState);
+  const {posts,setPosts,user,dark,calluser}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
 
     const getposts=async ()=>{
@@ -40,6 +40,7 @@ const Home = () => {
     }
 
   useEffect( () => {
+    // calluser()
     getposts();
  }, []);
 
@@ -51,6 +52,7 @@ const Home = () => {
       
     {!homeLoader && posts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
+{/* {console.log(post)} */}
       <PostProfile user={post.user}/>
       <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>

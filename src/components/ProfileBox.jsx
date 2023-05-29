@@ -1,8 +1,12 @@
 import React,{useState,useContext} from 'react'
 import logo from '../assets/logo.png'
 import {appState} from '../App'
+import { useNavigate } from 'react-router-dom'
+import google from '../assets/google.png'
+import facebook from '../assets/facebook.png'
 
 const ProfileBox = () => {
+  const navigate=useNavigate();
   const {user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,dark}=useContext(appState)
   // console.log(user);
   let name,email,following,followers
@@ -11,9 +15,20 @@ const ProfileBox = () => {
      name=user.name;
      email=user.email;
   }
+  const handlegoogle=async ()=>{
+    // let w = window.outerWidth - width, h = window.outerHeight - height;
+		// let left = Math.round(window.screenX + (w / 2));
+		// let top = Math.round(window.screenY + (h / 2.5));
+    // window.open('http://localhost:8000/api/user/auth/google','width='+width+',height='+height+',left='+left+',top='+top+',toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0')
+    window.open('http://localhost:8000/api/user/auth/google','_self')
+  }
+  const handlefacebook=async ()=>{
+    window.open('http://localhost:8000/api/user/auth/facebook','_self')
+    
+  }
   return (
     <>
-    {user? <div className='flex flex-col  border-b-2 border-slate-400 mt-4 pb-3 '>
+    {user? <div onClick={()=>navigate('/profile')} className=' cursor-pointer flex flex-col  border-b-2 border-slate-400 mt-4 pb-3 '>
         <div className={`flex flex-row  justify-center items-center h-full px-7 ${dark?"text-white":"text-black"}`}>
       <img src={logo} alt="logo" className='-ml-2 h-[60px] w-[60px] m-3 rounded-full' />
       <div className='flex flex-col'>
@@ -25,12 +40,17 @@ const ProfileBox = () => {
         {/* <h3 className=' text-white text-bold'>{following.length} <span className='text-[#dfd9ff] text-[0.9rem]'>following</span>&nbsp; | &nbsp; {followers.length} <span className='text-[#dfd9ff] text-[0.9rem]'>followers</span></h3> */}
     </div>
     </div>
-   : <div className='fllex flex-row justify-center h-[60px] w-[200px] font-medium p-3 items-center'>
-      <button className='h-[35px] rounded-xl w-[70px] m-2 p-1 bg-green-600 cursor-pointer' 
+   : <div className='flex flex-col'>
+    <div className='fllex flex-row justify-center h-[60px] w-[200px] font-medium p-3 items-center'>
+      <button className='h-[35px] rounded-md w-[70px] m-2 p-1 bg-green-600 hover:bg-green-500 cursor-pointer' 
        onClick={()=>{setOpenLogin(prev=>!prev);setOpenSignUp(false)}} >Login</button>
-        <button className='h-[35px] rounded-xl w-[70px] m-2 p-1 bg-red-600 cursor-pointer' 
+        <button className='h-[35px] rounded-md w-[70px] m-2 p-1 bg-red-600 hover:bg-red-500 cursor-pointer' 
          onClick={()=>{setOpenSignUp(prev=>!prev);setOpenLogin(false)}}>SignUp</button>
-      </div>}
+      </div>
+      <button onClick={handlegoogle} className='flex justify-center items-center h-[35px] rounded-md m-2  mt-3 p-2 bg-red-600 cursor-pointer hover:bg-red-500 ' ><img className='h-[29px] mt-1' src={google} alt="google" /><p className='font-medium text-white mx-2 tracking-widest'>Google</p></button>
+      <button onClick={handlefacebook} className='flex justify-center items-center h-[35px] rounded-md m-2 mt-1 mb-0 p-2 bg-blue-600 cursor-pointer hover:bg-blue-500 ' ><img className='h-[35px] ' src={facebook} alt="facebook" /><p className='font-medium text-white mx-1 tracking-widest'>facebook</p></button>
+     
+    </div>}
     </>
   )
 }
