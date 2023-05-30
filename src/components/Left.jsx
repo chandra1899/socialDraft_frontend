@@ -11,7 +11,7 @@ import { appState } from '../App'
 
 const Left = () => {
   const Navigate=useNavigate();
-  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenLogin}=useContext(appState);
+  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenLogin,callfollowing}=useContext(appState);
   const [active,setActive]=useState('');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -29,6 +29,7 @@ const Left = () => {
     if(res.status===200){
       Navigate('/');
       calluser();
+      callfollowing()
     }else{
       window.alert('error in logout')
     }

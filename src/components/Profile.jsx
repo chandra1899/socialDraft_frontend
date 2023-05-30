@@ -43,7 +43,7 @@ const Profile = () => {
     <>
     {user && <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar`}>
       <div className='flex flex-row  pr-7 justify-center items-center my-3'>
-          <img src={logo} alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
+          <img src={`${user.avatar?`http://localhost:8000/photo/${user.avatar}`:logo}`}  alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
             <div className={`flex justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-400 border-2 mb-3 rounded-3xl` }onClick={()=>setEditProfile(true)}>Edit Profile</div>
             <div className='flex flex-wrap justify-center items-center mx-6 '>

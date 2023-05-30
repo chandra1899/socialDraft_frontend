@@ -108,12 +108,12 @@ function App() {
           // console.log("following",data.following);
           setFollowing(data.following)
         }else{
-          window.alert("something wrong in fetching following")
+          setFollowing([])
         }
     }
     useEffect( () => {
        calluser();
-      // console.log(user);
+      console.log(user);
     }, []);
     setBodyColor({color: `${dark?"black":"white"}`})
 
@@ -122,7 +122,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
