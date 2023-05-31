@@ -61,7 +61,7 @@ const EditProfileForm = () => {
      }
    }, []);
   return (
-    <div className={`${editProfile?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-[550px] p-8 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"}  rounded-2xl border-2 `}>
+    <div className={`${editProfile?"":"hidden"} absolute z-40 top-10 left-[10%] sm:left-[30%] h-auto p-8 pb-0 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"}  rounded-2xl border-2 `}>
     <form action=""  className=' flex flex-col gap-6' enctype="multipart/form-data"  >
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`} >Your Email</span>
@@ -99,11 +99,12 @@ const EditProfileForm = () => {
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Upload Profile Photo</span>
-          <input type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} />
+          <input className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} />
         </label>
+        
    
     </form>
-    <div className='m-6 right-3 font-medium'>
+    <div className='m-6 mb-3 right-3 font-medium'>
     <button className={`h-[42px] ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 `} onClick={()=>{setEditProfile(false)}} >Cancel</button>
       <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`} onClick={submit}>Update</button>
     </div>

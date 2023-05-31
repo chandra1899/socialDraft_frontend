@@ -43,13 +43,13 @@ const ProfileBox = () => {
     </div>
    : <div className='flex flex-col'>
     <div className='fllex flex-row justify-center h-[60px] w-[200px] font-medium p-3 items-center'>
-      <button className='h-[35px] rounded-md w-[70px] m-2 p-1 bg-green-600 hover:bg-green-500 cursor-pointer' 
+      <button className='h-[35px] transition duration-150 ease-in-out rounded-md w-[70px] m-2 p-1 bg-green-600 hover:bg-green-500 cursor-pointer' 
        onClick={()=>{setOpenLogin(prev=>!prev);setOpenSignUp(false)}} >Login</button>
-        <button className='h-[35px] rounded-md w-[70px] m-2 p-1 bg-red-600 hover:bg-red-500 cursor-pointer' 
+        <button className='h-[35px] transition duration-150 ease-in-out rounded-md w-[70px] m-2 p-1 bg-red-600 hover:bg-red-500 cursor-pointer' 
          onClick={()=>{setOpenSignUp(prev=>!prev);setOpenLogin(false)}}>SignUp</button>
       </div>
-      <button onClick={handlegoogle} className='flex justify-center items-center h-[35px] rounded-md m-2  mt-3 p-2 bg-red-600 cursor-pointer hover:bg-red-500 ' ><img className='h-[29px] mt-1' src={google} alt="google" /><p className='font-medium text-white mx-2 tracking-widest'>Google</p></button>
-      <button onClick={handlefacebook} className='flex justify-center items-center h-[35px] rounded-md m-2 mt-1 mb-0 p-2 bg-blue-600 cursor-pointer hover:bg-blue-500 ' ><img className='h-[35px] ' src={facebook} alt="facebook" /><p className='font-medium text-white mx-1 tracking-widest'>facebook</p></button>
+      <button onClick={handlegoogle} className='flex justify-center items-center transition duration-150 ease-in-out h-[35px] rounded-md m-2  mt-3 p-2 bg-red-600 cursor-pointer hover:bg-red-500 ' ><img className='h-[29px] mt-1' src={google} alt="google" /><p className='font-medium text-white mx-2 tracking-widest'>Google</p></button>
+      <button onClick={handlefacebook} className='flex justify-center items-center h-[35px] transition duration-150 ease-in-out rounded-md m-2 mt-1 mb-0 p-2 bg-blue-600 cursor-pointer hover:bg-blue-500 ' ><img className='h-[35px] ' src={facebook} alt="facebook" /><p className='font-medium text-white mx-1 tracking-widest'>facebook</p></button>
      
     </div>}
     </>

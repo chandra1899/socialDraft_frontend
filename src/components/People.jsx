@@ -124,7 +124,7 @@ const People = () => {
   return (
     <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>
      {!peopleLoader && <div className='flex flex-row  pr-7 justify-center items-center my-3'>
-          <img src={logo}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
+          <img src={`${userdetails.avatar?`http://localhost:8000/photo/${userdetails.avatar}`:logo}`}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
             <div className={`${isfollowing?`${dark?"hover:bg-slate-700":"hover:bg-slate-300"}`:"bg-white text-black hover:bg-slate-300"} flex   justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-700 border-2 mb-3 rounded-3xl`} onClick={handleFollow}>{follow}</div>
            
