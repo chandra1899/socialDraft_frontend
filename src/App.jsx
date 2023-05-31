@@ -48,7 +48,7 @@ function App() {
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
   const [openComment,setOpenComment]=useState(false);
-  const [openSignUp,setOpenSignUp]=useState(true);
+  const [openSignUp,setOpenSignUp]=useState(false);
   const [commentpostId,setCommentpostId]=useState(false);
   const [editProfile,setEditProfile]=useState(false);
   const [following,setFollowing]=useState([]);
@@ -111,6 +111,13 @@ function App() {
           setFollowing([])
         }
     }
+    const handleBackDrop=()=>{
+      setPostForm(false);
+      setEditProfile(false);
+      setOpenSignUp(false);
+      setOpenComment(false);
+      setOpenLogin(false);
+    }
     useEffect( () => {
        calluser();
       console.log(user);
@@ -128,7 +135,7 @@ function App() {
      <Left/>
     <Signup/>
     {/* <Tweet/> */}
-    {(openSignUp || openComment || openLogin || postForm || editProfile) && <div className='bg-gray-900 bg-opacity-70  h-[100vh] w-[100vw] z-[39]'></div>}
+    {(openSignUp || openComment || openLogin || postForm || editProfile) && <div className='bg-gray-900 bg-opacity-70  h-[100vh] w-[100vw] z-[39]' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
     <CreatePostForm/>

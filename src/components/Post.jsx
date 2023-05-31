@@ -6,6 +6,8 @@ import {appState} from '../App'
 //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import DeleteD from '../assets/delete_dark.png'
+import DeleteW from '../assets/delete_white.png'
 
 
 const Post = () => {
@@ -15,6 +17,25 @@ const Post = () => {
 
     const [post,setPost]=useState()
     const [postLoader,setPostLoader]=useState(false)
+    const handleDeletePost=async ()=>{
+      let res= await fetch(`http://localhost:8000/api/post/delete/${id}`,{
+          method:'GET',
+          // mode: 'no-cors',
+          headers:{
+            'Access-Control-Allow-Origin': '*',
+            Accept:"application/json",
+            "Content-Type":"application/json"
+          },
+          credentials:'include', 
+        });
+        if(res.status===200){
+          window.alert('sucessfully deleted post')
+        }
+        else{
+          window.alert('error in deleting post')
+
+        }
+    }
     const getpost=async ()=>{
       setPostLoader(true)
         let res=await fetch(`http://localhost:8000/api/post/getpost/${id}`,{
@@ -42,12 +63,19 @@ const Post = () => {
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
       {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
-        <div >
+        <div className='relative' >
         <PostProfile user={post.user}/>
         <div className='ml-2'>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
         <PostFooter post={post} />
+       {(post.user._id===user._id) && <img 
+        className={`absolute right-5 top-5 cursor-pointer h-[45px] w-[40px]`}
+        src={`${dark?DeleteD:DeleteW}`} 
+        alt="Delete_Post"
+        onClick={handleDeletePost}
+         />}
+
         </div>
         <button onClick={()=>{if(user){setOpenComment(true);setCommentpostId(id)}else{setOpenLogin(true)}}} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
         {/* {console.log("post=",post)} */}

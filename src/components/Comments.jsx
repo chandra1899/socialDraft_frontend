@@ -4,11 +4,13 @@ import Arrow from '../assets/arrow.png'
 import Like from '../assets/like.png'
 import Liked from '../assets/liked.png'
 import {appState} from '../App'
+import DeleteD from '../assets/delete_dark.png'
+import DeleteW from '../assets/delete_white.png'
 
 
 
 const Comments = ({comment}) => {
-  const {user,setOpenLogin}=useContext(appState)
+  const {user,setOpenLogin,dark}=useContext(appState)
 
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
@@ -68,11 +70,30 @@ const Comments = ({comment}) => {
     }
     setLikes(data.likes)
   }
+  const handleDeleteComment=async ()=>{
+    let res= await fetch(`http://localhost:8000/api/comment/delete/${comment._id}`,{
+      method:'GET',
+      // mode: 'no-cors',
+      headers:{
+        'Access-Control-Allow-Origin': '*',
+        Accept:"application/json",
+        "Content-Type":"application/json"
+      },
+      credentials:'include', 
+    });
+    if(res.status===200){
+      window.alert('sucessfully deleted comment')
+    }
+    else{
+      window.alert('error in deleting comment')
+
+    }
+  }
   useEffect( () => {
     likecomment();
  }, []);
   return (
-    <div className='flex flex-row pl-3  '>
+    <div className='flex flex-row pl-3 relative '>
       <img src={Arrow} className='h-[50px] ' alt="" />
       <div className='-ml-3'>
       <PostProfile user={comment.user} />
@@ -82,6 +103,12 @@ const Comments = ({comment}) => {
       </div>
       <p className='mt-7 ml-2 text-red-700'>{likes}</p>
       <img src={islike?Liked:Like} className='h-[20px] w-[20px] mt-7 ml-2 cursor-pointer' onClick={like} alt="" />
+      {(comment.user._id==user._id) && <img 
+        className={`absolute right-5 top-5 cursor-pointer h-[30px] w-[25px]`}
+        src={`${dark?DeleteD:DeleteW}`} 
+        alt="Delete_Post"
+        onClick={handleDeleteComment}
+         />}
      </div>
   )
 }
