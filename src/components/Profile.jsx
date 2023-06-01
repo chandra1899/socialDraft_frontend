@@ -6,7 +6,7 @@ import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
-  const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark}=useContext(appState);
+  const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast}=useContext(appState);
   const navigate=useNavigate()
   const [yourposts,setYourposts]=useState([])
   const getposts=async ()=>{
@@ -34,6 +34,18 @@ const Profile = () => {
       getposts();
     calluser()
     }else{
+     
+        toast.warn('please log-in', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      
       navigate('/')
       setOpenLogin(true)
     }

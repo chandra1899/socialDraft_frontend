@@ -2,7 +2,7 @@ import React,{useState,useContext} from 'react'
 import { appState } from '../App'
 
 const SignUp = () => {
-  const {openSignUp,setOpenSignUp,dark,setOpenLogin}=useContext(appState)
+  const {openSignUp,setOpenSignUp,dark,setOpenLogin,toast}=useContext(appState)
     const [form,setForm]=useState({
         name:'',
         email:'',
@@ -26,21 +26,69 @@ const SignUp = () => {
         })
         const data=await res.json();
         if(res.status===200){
-            window.alert("sucessfully registered")
+            // window.alert("sucessfully registered")
+            
+              toast.success('sucessfully registered', {
+                position: "bottom-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+            
             setOpenSignUp(false)
             setOpenLogin(true)
             console.log(data,resstatus);
         }
         else if(res.status===401){
-          window.alert('password does not match')
+        
+            toast.warn('password does not match', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+          // window.alert('password does not match')
         }
         else if(res.status===400){
-          window.alert('user already exists')
+          
+            toast.warn('user already exists .. please log-in', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+          // window.alert('user already exists')
           setOpenSignUp(false)
           setOpenLogin(true)
         }
         else{
-            window.alert("unable to register")
+            // window.alert("unable to register")
+           
+              toast.error('unable to register', {
+                position: "bottom-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+            
             console.log(data,res.tatus);
         }
         setForm({
@@ -50,9 +98,14 @@ const SignUp = () => {
           confirm_password:''
         })
       }
+      const handleKeyEnter=(e)=>{
+        if(e.key=='Enter'){
+          submit();
+        }
+       }
   return (
     <div className={`${openSignUp?"block":"hidden"} transition duration-1000 ease-in-out absolute z-40 top-4 left-[10%] sm:left-[30%] h-[580px] p-8 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2 `}>
-      <form action=""  className=' flex flex-col gap-6'>
+      <form action=""  className=' flex flex-col gap-6' onKeyUp={handleKeyEnter}>
       <label className='flex flex-col'>
             <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
             <input 

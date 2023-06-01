@@ -7,7 +7,7 @@ import {appState} from '../App'
 
 
 const PostFooter =  ({post}) => {
-  const {user,setOpenLogin,dark}=useContext(appState)
+  const {user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
   const [likelogo,setLikelogo]=useState(post.likes.length)
@@ -40,9 +40,33 @@ const PostFooter =  ({post}) => {
       // window.alert("successfully liked")
       // console.log("like=",res.status,data);
     }else{
-      window.alert("unable to make like")
+      // window.alert("unable to make like")
+     
+        toast.error('unable to make like', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      
     }
       }else{
+       
+          toast.warn('please log-in', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
         setOpenLogin(true)
       }
   }
@@ -65,7 +89,8 @@ const PostFooter =  ({post}) => {
       setIssaved("Save")
     }
     else{
-      // window.alert("some thing is wrong")
+      
+      window.alert("some thing is wrong")
     }
   }
   const likepost=async ()=>{
@@ -108,15 +133,63 @@ const PostFooter =  ({post}) => {
     if(res.status===200){
       if(data.deleted){
         setIssaved("Save")
+      
+          toast.info('Bookmark removed', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
       }
       else{
+       
+          toast.info('Bookmark added', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
         setIssaved("Saved")
       }
     }
     else{
-      window.alert("some thing is wrong in bookmark")
+   
+        toast.error('error in bookmark', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      
+      // window.alert("some thing is wrong in bookmark")
     }
    }else{
+   
+      toast.warn('please log-in', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    
     setOpenLogin(true)
   }
   }

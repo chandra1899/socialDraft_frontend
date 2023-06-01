@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EditProfileForm = () => {
   const Navigate=useNavigate()
-    const {editProfile,setEditProfile,user,setUser,dark}=useContext(appState);
+    const {editProfile,setEditProfile,user,setUser,dark,toast}=useContext(appState);
     const [form,setForm]=useState({
         email:'',
         name:'',
@@ -44,13 +44,37 @@ const EditProfileForm = () => {
   // }})
           const data=await res.json();
           if(res.status===200){
-            window.alert("updated")
+            // window.alert("updated")
+          
+              toast.success('sucessfully Updated your profile', {
+                position: "bottom-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+           
             setUser(data.user)
             // Navigate('/')
             setEditProfile(false)
           }
           else{
-            window.alert("something wrong in update")
+            // window.alert("something wrong in update")
+         
+              toast.error('error in updating profile', {
+                position: "bottom-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+            
           }
     }
     useEffect( () => {

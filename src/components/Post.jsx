@@ -11,7 +11,8 @@ import DeleteW from '../assets/delete_white.png'
 
 
 const Post = () => {
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark}=useContext(appState);
+  const navigate=useNavigate()
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast}=useContext(appState);
 
     const {id}=useParams()
 
@@ -29,10 +30,35 @@ const Post = () => {
           credentials:'include', 
         });
         if(res.status===200){
-          window.alert('sucessfully deleted post')
+          navigate('/')
+        
+            toast.success('Successfully deleted post', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+          // window.alert('sucessfully deleted post')
         }
         else{
-          window.alert('error in deleting post')
+          
+            toast.error('error in deleting post', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+          // window.alert('error in deleting post')
 
         }
     }
@@ -70,7 +96,7 @@ const Post = () => {
       </div>
       {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 bg-green-400' />}
         <PostFooter post={post} />
-       {(post.user._id===user._id) && <img 
+       {(user && post.user._id===user._id) && <img 
         className={`absolute right-5 top-5 cursor-pointer h-[45px] w-[40px]`}
         src={`${dark?DeleteD:DeleteW}`} 
         alt="Delete_Post"

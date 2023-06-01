@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 const People = () => {
-    const {user,setOpenLogin,callfollowing,dark}=useContext(appState);
+    const {user,setOpenLogin,callfollowing,dark,toast}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
     const [userdetails,setUserdetails]=useState({})
@@ -73,10 +73,35 @@ const People = () => {
           // window.alert("successfully toggled follow")
       }
       else{
-        window.alert("something wrong in toggling follow")
+        // window.alert("something wrong in toggling follow")
+       
+          toast.error('error in follow/unfollow', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
       }
       }else{
         setOpenLogin(true)
+       
+          toast.warn('please log-in', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+       
+        
       }
     }
     const isfollow=async ()=>{

@@ -9,6 +9,8 @@ const appState=createContext()
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import setBodyColor from './setBodyColor'
 
@@ -129,7 +131,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
@@ -156,6 +158,18 @@ function App() {
     </div>
     </div>
     </appState.Provider>
+    <ToastContainer
+      position="bottom-left"
+      autoClose={2000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+/>
     </>
   )
 }
