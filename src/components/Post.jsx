@@ -68,6 +68,7 @@ const Post = () => {
         <div className='ml-2'>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 bg-green-400' />}
         <PostFooter post={post} />
        {(post.user._id===user._id) && <img 
         className={`absolute right-5 top-5 cursor-pointer h-[45px] w-[40px]`}

@@ -55,6 +55,7 @@ const Bookmark = () => {
 ._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.bookmark.content}</p>
       </div>
+      {post.bookmark.photo && <img src={`http://localhost:8000/photo/${post.bookmark.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 bg-green-400' />}
         <PostFooter post={post.bookmark} />
     </div>
     ))}

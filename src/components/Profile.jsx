@@ -75,6 +75,7 @@ const Profile = () => {
       <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[40vh] w-[60%] rounded-xl ml-20 my-0 bg-green-400' />}
         <PostFooter post={post} />
     </div>
     ))}
