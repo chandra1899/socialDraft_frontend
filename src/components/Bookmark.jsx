@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 
 const Bookmark = () => {
   const navigate=useNavigate()
-  const {user,setOpenLogin,dark,toast}=useContext(appState);
+  const {user,setOpenLogin,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const [savedposts,setSavedposts]=useState([])
   const [bookmarkLoader,setBookmarkLoader]=useState(false);
   const getsavedposts=async ()=>{
@@ -30,6 +30,10 @@ const Bookmark = () => {
     else{
       window.alert("something wrong in fetching saved posts");
     }
+  }
+  const handleimgClick=(src)=>{
+    setimgsrc(src)
+    setImgPreview(true)
   }
   useEffect( () => {
     if(user){
@@ -63,11 +67,11 @@ const Bookmark = () => {
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black":"bg-white"} min-h-[50%]  ${dark?"hover:bg-[#112]":"hover:bg-slate-100"} `}>
       <PostProfile user={post.bookmark
 .user}/>
-      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post.bookmark
+      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post.bookmark
 ._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.bookmark.content}</p>
       </div>
-      {post.bookmark.photo && <img src={`http://localhost:8000/photo/${post.bookmark.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 bg-green-400' />}
+      {post.bookmark.photo && <img src={`http://localhost:8000/photo/${post.bookmark.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.bookmark.photo}`)} />}
         <PostFooter post={post.bookmark} />
     </div>
     ))}

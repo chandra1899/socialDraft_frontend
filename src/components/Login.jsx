@@ -3,7 +3,7 @@ import {appState} from '../App'
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const {openLogin,setOpenLogin,dark,calluser,setOpenSignUp,toast}=useContext(appState);
+  const {openLogin,setOpenLogin,dark,calluser,setOpenSignUp,toast,setForgotPasswdForm}=useContext(appState);
   const navigate=useNavigate();
     const [form,setForm]=useState({
         email:'',
@@ -95,14 +95,18 @@ const Login = () => {
             password:''
           })
      }
+     const forgotpassword=()=>{
+        setOpenLogin(false)
+        setForgotPasswdForm(true);
+     }
      const handleKeyEnter=(e)=>{
       if(e.key=='Enter'){
         submit();
       }
      }
   return (
-    <div className={`${openLogin?"":"hidden"} transition duration-1000 ease-in-out  absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-8 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2`}>
-    <form action=""  className=' flex flex-col gap-6' onKeyUp={handleKeyEnter}>
+    <div className={`${openLogin?"":"hidden"} transition duration-150 ease-in-out  absolute z-40 top-10 left-[10%] sm:left-[30%] h-auto p-8 pb-0 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2`}>
+    <form action=""  className=' flex flex-col gap-6 mb-3' onKeyUp={handleKeyEnter}>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
           <input 
@@ -127,7 +131,8 @@ const Login = () => {
         </label>
    
     </form>
-    <div className='m-6 right-3 font-medium' >
+    <span className={`${dark?"text-white hover:text-secondary":"text-red-700 hover:text-black"} cursor-pointer ml-5 text-[0.8rem]  tracking-widest`} onClick={forgotpassword} >forgot password?</span>
+    <div className='m-6 mb-4 right-3 font-medium' >
     <button className={`h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 ${dark?"hover:bg-slate-700":"hover:bg-slate-100"}`} onClick={()=>{setOpenLogin(false)}} >Cancel</button>
       <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700 ${dark?"":" text-white"}`} onClick={submit}>Login</button>
     <span className={`${dark?"text-white hover:text-secondary":"text-red-800 hover:text-black"} cursor-pointer ml-5 text-[0.8rem]  tracking-widest`} onClick={()=>{setOpenLogin(false);setOpenSignUp(true)}}>SignUp</span>

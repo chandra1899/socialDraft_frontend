@@ -6,7 +6,7 @@ import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
-  const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast}=useContext(appState);
+  const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const navigate=useNavigate()
   const [yourposts,setYourposts]=useState([])
   const getposts=async ()=>{
@@ -27,6 +27,10 @@ const Profile = () => {
   else{
     window.alert("something wrong in getting your posts")
   }
+  }
+  const handleimgClick=(src)=>{
+    setimgsrc(src)
+    setImgPreview(true)
   }
   useEffect( () => {
     // calluser()
@@ -84,10 +88,10 @@ const Profile = () => {
     {yourposts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]    transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 `}>
       <PostProfile user={user}/>
-      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
+      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[40vh] w-[60%] rounded-xl ml-20 my-0 bg-green-400' />}
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
     </div>
     ))}

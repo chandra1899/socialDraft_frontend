@@ -22,7 +22,7 @@ import Box from '@mui/material/Box';
 
 const Home = () => {
   const navigate=useNavigate()
-  const {posts,setPosts,user,dark,calluser}=useContext(appState);
+  const {posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
 
     const getposts=async ()=>{
@@ -37,6 +37,10 @@ const Home = () => {
       setPosts(data.posts)
       setHomeLoader(false);
       console.log(data.posts)
+    }
+    const handleimgClick=(src)=>{
+      setimgsrc(src)
+      setImgPreview(true)
     }
 
   useEffect( () => {
@@ -54,10 +58,10 @@ const Home = () => {
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
 {/* {console.log(post)} */}
       <PostProfile user={post.user}/>
-      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
-        <p className='font-medium text-[16px] p-2'>{post.content}</p>
+      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
+        <p className='font-medium text-[16px] p-2 '>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 bg-green-400' />}
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
     </div>
 

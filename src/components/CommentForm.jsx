@@ -33,7 +33,7 @@ const CommentForm = () => {
           }
      }
   return (
-    <div className={`${openComment?"":"hidden"} transition duration-1000 ease-in-out  absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-4 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2 `}>
+    <div className={`${openComment?"":"hidden"} transition duration-150 ease-in-out  absolute z-40 top-10 left-[10%] sm:left-[30%] h-[350px] p-4 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2 `}>
     <form action=""  className=' flex flex-col gap-6'>
     <label className='flex flex-col'>
           <span className={`${dark?"text-[#42f8ec]":"text-[#0f3330]"} font-medium text-[1.125rem] mb-4`}>Your Comment</span>

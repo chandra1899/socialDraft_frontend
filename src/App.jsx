@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview} from './components'
 import {
   Routes,
   Route
@@ -60,6 +60,11 @@ function App() {
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
   const [dark,setDark]=useState(false);
+  const [forgotPasswdForm,setForgotPasswdForm]=useState(false);
+  const [setpasswd,setSetpasswd]=useState(false);
+  const [forgotpasswdemail,setForgotpasswdemail]=useState('');
+  const [imgPreview,setImgPreview]=useState(false);
+  const [imgsrc,setimgsrc]=useState('');
     const calluser=async ()=>{
       try {
         setLoading(true)
@@ -131,13 +136,16 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
     <Signup/>
+    <ForgotPasswd/>
+    {imgPreview && <ImagePreview/>}
+    <SetPasswd/>
     {/* <Tweet/> */}
-    {(openSignUp || openComment || openLogin || postForm || editProfile) && <div className='bg-gray-900 bg-opacity-70  h-[100vh] w-[100vw] z-[39]' onClick={handleBackDrop}></div>}
+    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39]' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
     <CreatePostForm/>

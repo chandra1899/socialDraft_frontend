@@ -15,6 +15,9 @@ import CommentForm from './CommentForm'
 import EditProfile from './EditProfileForm'
 import People from './People'
 import CreatePostForm from './CreatePostForm'
+import ForgotPasswd from './ForgotPasswd'
+import SetPasswd from './SetPasswd'
+import ImagePreview from './ImagePreview'
 
 
 export {
@@ -34,5 +37,8 @@ export {
     CommentForm,
     EditProfile,
     People,
-    CreatePostForm
+    CreatePostForm,
+    ForgotPasswd,
+    SetPasswd,
+    ImagePreview
 }

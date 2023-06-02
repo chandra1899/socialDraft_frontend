@@ -95,10 +95,10 @@ const Comments = ({comment}) => {
   return (
     <div className='flex flex-row pl-3 relative '>
       <img src={Arrow} className='h-[50px] ' alt="" />
-      <div className='-ml-3'>
+      <div className='-ml-3 '>
       <PostProfile user={comment.user} />
-      <div className='ml-14 -mt-3'>
-        <p className=' text-[0.9rem] p-2'>{comment.content}</p>
+      <div className='ml-14 -mt-3 break-all'>
+        <p className=' text-[0.9rem] p-2 '>{comment.content}</p>
       </div>
       </div>
       <p className='mt-7 ml-2 text-red-700'>{likes}</p>

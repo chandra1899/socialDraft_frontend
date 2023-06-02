@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 const People = () => {
-    const {user,setOpenLogin,callfollowing,dark,toast}=useContext(appState);
+    const {user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
     const [userdetails,setUserdetails]=useState({})
@@ -132,6 +132,11 @@ const People = () => {
         window.alert("something wrong in checking isfollow")
       }
     }
+    const handleimgClick=(src)=>{
+      setimgsrc(src)
+      setImgPreview(true)
+    }
+
     useEffect( () => {
         getUser();
         console.log("user in follow",user);
@@ -172,16 +177,17 @@ const People = () => {
         <p className={`ml-6  ${dark?"text-[#b2e4ecf0]":"text-slate-700"}`}>{userdetails.description}</p>
       </div>}
       {!peopleLoader && <p className={`text-[1.125rem] font-bold flex justify-center my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}> Posts</p>}
+      {posts.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
       {!peopleLoader && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     <div className='flex flex-col overflow-scroll no-scrollbar '>
     {posts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]  transition duration-150   hover:border-3 hover:border-slate-600 `}>
       <PostProfile user={userdetails}/>
-      <div className='ml-2 cursor-pointer' onClick={()=>{navigate(`/post/${post._id}`)}}>
+      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[40vh] w-[60%] rounded-xl ml-20 my-0 bg-green-400' />}
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
     </div>
     ))}
