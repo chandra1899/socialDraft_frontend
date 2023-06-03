@@ -1,4 +1,4 @@
-import React,{useState,createContext,useEffect} from 'react'
+import React,{useState,createContext,useEffect,useRef} from 'react'
 import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm} from './components'
 import {
   Routes,
@@ -68,8 +68,11 @@ function App() {
   const [imgPreview,setImgPreview]=useState(false);
   const [confirm,setConfirm]=useState(false);
   const [confirmForm,setConfirmForm]=useState(false);
+  const [followingDiv,setFollowingDiv]=useState(false);
   const [postId,setPostId]=useState('');
   const [imgsrc,setimgsrc]=useState('');
+  const confirmFormchild=useRef(null);
+  const forgotPasswdFormchild=useRef(null);
     const calluser=async ()=>{
       try {
         setLoading(true)
@@ -129,6 +132,16 @@ function App() {
       setOpenSignUp(false);
       setOpenComment(false);
       setOpenLogin(false);
+      if(confirmForm){
+        confirmFormchild.current.classList.remove(`bg-black-gradient`)
+        confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
+      }
+      console.log(forgotPasswdForm);
+      if(forgotPasswdForm){
+        forgotPasswdFormchild.current.classList.remove(`bg-black-gradient`)
+        forgotPasswdFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
+        // forgotPasswdFormchild.current.classList.add('bg-slate-600')
+      }
     }
     const deletePost=async ()=>{
       let res= await fetch(`http://localhost:8000/api/post/delete/${postId}`,{
@@ -192,13 +205,13 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
     <Signup/>
-    <ForgotPasswd/>
-    <ConfirmForm/>
+    <ForgotPasswd ref={forgotPasswdFormchild}/>
+    <ConfirmForm ref={confirmFormchild}/>
     {imgPreview && <ImagePreview/>}
     <SetPasswd/>
     {/* <Tweet/> */}

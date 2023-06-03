@@ -4,9 +4,10 @@ import saved from '../assets/saved.png'
 import like from '../assets/like.png'
 import liked from '../assets/liked.png'
 import {appState} from '../App'
-
+import {Link,useLocation} from "react-router-dom";
 
 const PostFooter =  ({post}) => {
+  let location = useLocation();
   const {user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
@@ -117,7 +118,8 @@ const PostFooter =  ({post}) => {
     }
     setLikes(data.likes)
   }
-  const bookmark=async ()=>{
+  const bookmark=async (e)=>{
+    // console.log(e.target.parentElement.parentElement.class);
    if(user){
     let res=await fetch(`http://localhost:8000/api/bookmark?id=${post._id}`,{
       method:'post',
@@ -133,7 +135,9 @@ const PostFooter =  ({post}) => {
     if(res.status===200){
       if(data.deleted){
         setIssaved("Save")
-      
+        if(location.pathname==='/bookmark'){
+          e.target.parentElement.parentElement.classList.add('hidden');
+        }
           toast.info('Bookmark removed', {
             position: "bottom-left",
             autoClose: 2000,

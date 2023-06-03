@@ -7,11 +7,12 @@ import close from '../assets/close.svg'
 import menu from '../assets/menu.svg'
 import { Link,useNavigate } from "react-router-dom";
 import { appState } from '../App'
+import Followingsm from './Followingsm'
 
 
 const Left = () => {
   const Navigate=useNavigate();
-  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenLogin,callfollowing,toast}=useContext(appState);
+  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
   const [active,setActive]=useState('');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -110,14 +111,38 @@ const Left = () => {
          cursor-pointer`} >{` ${dark?"Dark on":"Dark off"}`}</h3>
       </div>
     </div>
-    <div className='sm:hidden fixed top-0 z-10 flex flex-1 h-[600px] max-w-[38px] bg-gradient-to-t from-black to-blue-950'>
+    <div className='sm:hidden fixed top-0 z-10 flex flex-1 h-[600px] w-[38px] bg-gradient-to-t from-black to-blue-950'>
     <img src={toggle?close:menu} alt="menu" 
       className='w-[28px] h-[28px] object-contain m-1 cursor-pointer'
       onClick={()=>setToggle(!toggle)}
       />
-      <div className={`${!toggle?'hidden':'flex'} p-6 bg-black-gradient absolute top-6 left-0 mx-6 my-3 min-w-[140px] z-10 rounded-xl`}>
-      <ul className='list-none flex justify-end z-10 items-start flex-col gap-4'>
+      <div className={`${!toggle?'hidden':'flex'} p-6 bg-black-gradient absolute top-6 left-0 mx-6 my-3 min-w-[170px] z-10 rounded-xl`}>
+      <ul className='list-none flex justify-end z-10 items-start flex-col gap-4 '>
      
+       {!user && <li
+        className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle);}}
+        >
+          <p onClick={()=>{setOpenLogin(prev=>!prev);setOpenSignUp(false)}}>login</p>
+        </li>}
+        {!user && <li
+       className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+       onClick={()=>{setToggle(!toggle);}}
+        >
+          <p  onClick={()=>{setOpenSignUp(prev=>!prev);setOpenLogin(false)}}>signUp</p>
+        </li>}
+        {!user && <li
+       className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+       onClick={()=>{setToggle(!toggle);}}
+        >
+          <Link to='http://localhost:8000/api/user/auth/google'>Google login</Link>
+        </li>}
+       {!user && <li
+        className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle);}}
+        >
+          <Link to='http://localhost:8000/api/user/auth/facebook'>Fackbook login</Link>
+        </li>}
         <li
         className={`${
           active==='Home'?"text-white":"text-secondary"
@@ -152,14 +177,26 @@ const Left = () => {
         </li>
         <li
         className={`${
+          active==='Following'?"text-white":"text-secondary"
+        } font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle);setActive('Following')}}
+        >
+          <p onClick={()=>{setFollowingDiv(true)}}>Following</p>
+        </li>
+       {user && <li
+        className={`${
           active==='Log-Out'?"text-white":"text-secondary"
         } font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle);setActive(Log-Out)}}
         >
-          <Link to='/sign-out'>Log-Out</Link>
-        </li>
+        <p className='' onClick={logout}>Log-Out</p>
+
+        </li>}
+        <h3 onClick={()=>{setDark((prev)=> !prev);}} className={`hover:text-secondary text-white  m-1 mt-0 text-[22px] font-medium 
+         cursor-pointer`} >{` ${dark?"Dark on":"Dark off"}`}</h3>
       
     </ul>
+    
     {/* <div className=' flex flex-col mt-4 py-5 '>
         <div className={`${
             active==='Home'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
@@ -194,7 +231,12 @@ const Left = () => {
       </div> */}
       </div>
     </div>
+    {followingDiv && <div className={`absolute sm:hidden z-[11] rounded-xl left-10 top-1 flex ${dark?"bg-primary text-white":"bg-white text-black"} h-full w-[80vw] `}>
+      
+    <Followingsm/>
+    </div>}
    </div>
+   
     
   )
 }

@@ -42,6 +42,26 @@ const Post = () => {
             window.alert("something wrong in geting post details")
           }
     }
+    const AddComment=()=>{
+      {if(user){
+        setOpenComment(true);
+        setCommentpostId(id);
+      }
+      else{
+        setOpenLogin(true)
+        toast.warn('please log-in', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+    }
+    }
     const handleimgClick=(src)=>{
       console.log(src);
       setimgsrc(src)
@@ -70,7 +90,7 @@ const Post = () => {
          />}
 
         </div>
-        <button onClick={()=>{if(user){setOpenComment(true);setCommentpostId(id)}else{setOpenLogin(true)}}} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
+        <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
         {/* {console.log("post=",post)} */}
         {post.comments.map((comment,i)=>(
         <Comment key={i} comment={comment}/>

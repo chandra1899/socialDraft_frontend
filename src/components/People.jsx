@@ -11,6 +11,7 @@ const People = () => {
     const {user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
+    // console.log(id);
     const [userdetails,setUserdetails]=useState({})
     const [peopleLoader,setPeopleLoader]=useState(false);
     const [isfollowing,setisfollowing]=useState(false)
@@ -149,7 +150,7 @@ const People = () => {
             navigate('/profile')
         }
         
-   }, []);
+   }, [id]);
   
   return (
     <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>

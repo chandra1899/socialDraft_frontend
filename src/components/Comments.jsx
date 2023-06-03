@@ -70,7 +70,8 @@ const Comments = ({comment}) => {
     }
     setLikes(data.likes)
   }
-  const handleDeleteComment=async ()=>{
+  const handleDeleteComment=async (e)=>{
+    // console.log(e.target.parentElement);
     let res= await fetch(`http://localhost:8000/api/comment/delete/${comment._id}`,{
       method:'GET',
       // mode: 'no-cors',
@@ -83,6 +84,7 @@ const Comments = ({comment}) => {
     });
     if(res.status===200){
       // window.alert('sucessfully deleted comment')
+    e.target.parentElement.classList.add('hidden');
       toast.success('Comment removed', {
         position: "bottom-left",
         autoClose: 2000,
