@@ -12,55 +12,16 @@ import DeleteW from '../assets/delete_white.png'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast}=useContext(appState);
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
 
     const {id}=useParams()
 
     const [post,setPost]=useState()
     const [postLoader,setPostLoader]=useState(false)
-    const handleDeletePost=async ()=>{
-      let res= await fetch(`http://localhost:8000/api/post/delete/${id}`,{
-          method:'GET',
-          // mode: 'no-cors',
-          headers:{
-            'Access-Control-Allow-Origin': '*',
-            Accept:"application/json",
-            "Content-Type":"application/json"
-          },
-          credentials:'include', 
-        });
-        if(res.status===200){
-          navigate('/')
-        
-            toast.success('Successfully deleted post', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
-          
-          // window.alert('sucessfully deleted post')
-        }
-        else{
-          
-            toast.error('error in deleting post', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
-          
-          // window.alert('error in deleting post')
-
-        }
+    const handleDeletePost=async (id)=>{
+      setConfirmForm(true);
+      // console.log(id);
+      setPostId(id)
     }
     const getpost=async ()=>{
       setPostLoader(true)
@@ -81,6 +42,11 @@ const Post = () => {
             window.alert("something wrong in geting post details")
           }
     }
+    const handleimgClick=(src)=>{
+      console.log(src);
+      setimgsrc(src)
+      setImgPreview(true)
+    }
     useEffect( () => {
         getpost();
         
@@ -92,15 +58,15 @@ const Post = () => {
         <div className='relative' >
         <PostProfile user={post.user}/>
         <div className='ml-2 '>
-        <p className='font-medium text-[16px] p-2'>{post.content}</p>
+        <p className='font-medium text-[16px] p-2 break-words'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className='h-[50vh] w-[80%] rounded-xl ml-14 my-2 object-contain' />}
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[50vh] w-[80%] rounded-xl ml-14 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"} `} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
        {(user && post.user._id===user._id) && <img 
-        className={`absolute right-5 top-5 cursor-pointer h-[45px] w-[40px]`}
+        className={`absolute right-5 top-5 cursor-pointer h-[40px] w-[35px]`}
         src={`${dark?DeleteD:DeleteW}`} 
         alt="Delete_Post"
-        onClick={handleDeletePost}
+        onClick={()=>handleDeletePost(post._id)}
          />}
 
         </div>

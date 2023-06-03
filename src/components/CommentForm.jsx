@@ -3,7 +3,7 @@ import {appState} from '../App'
 // import { useNavigate ,useParams} from "react-router-dom";
 
 const CommentForm = () => {
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark}=useContext(appState);
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast}=useContext(appState);
 
 
     const [comment,setComment]=useState("")
@@ -25,11 +25,31 @@ const CommentForm = () => {
           const data=await res.json();
           if(res.status===200){
             setOpenComment(false)
+            toast.success('Comment created', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
               // window.alert("sucessfully created comment")
               
           }
           else{
-              window.alert("unable to create comment")
+              // window.alert("unable to create comment")
+              toast.error('error in creating a Comment', {
+                position: "bottom-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
           }
      }
   return (

@@ -18,6 +18,7 @@ import CreatePostForm from './CreatePostForm'
 import ForgotPasswd from './ForgotPasswd'
 import SetPasswd from './SetPasswd'
 import ImagePreview from './ImagePreview'
+import ConfirmForm from './ConfirmForm'
 
 
 export {
@@ -40,5 +41,6 @@ export {
     CreatePostForm,
     ForgotPasswd,
     SetPasswd,
-    ImagePreview
+    ImagePreview,
+    ConfirmForm
 }

@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm} from './components'
 import {
   Routes,
   Route
@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 import setBodyColor from './setBodyColor'
 
@@ -45,6 +46,7 @@ function App() {
   //         console.log("no data sorry ", er);
   //       });
   //   }
+  const navigate=useNavigate();
   const classes=useStyles();
 
   const [user,setUser]=useState(undefined);
@@ -64,6 +66,9 @@ function App() {
   const [setpasswd,setSetpasswd]=useState(false);
   const [forgotpasswdemail,setForgotpasswdemail]=useState('');
   const [imgPreview,setImgPreview]=useState(false);
+  const [confirm,setConfirm]=useState(false);
+  const [confirmForm,setConfirmForm]=useState(false);
+  const [postId,setPostId]=useState('');
   const [imgsrc,setimgsrc]=useState('');
     const calluser=async ()=>{
       try {
@@ -125,10 +130,61 @@ function App() {
       setOpenComment(false);
       setOpenLogin(false);
     }
+    const deletePost=async ()=>{
+      let res= await fetch(`http://localhost:8000/api/post/delete/${postId}`,{
+        method:'GET',
+        // mode: 'no-cors',
+        headers:{
+          'Access-Control-Allow-Origin': '*',
+          Accept:"application/json",
+          "Content-Type":"application/json"
+        },
+        credentials:'include', 
+      });
+      let data=await res.json();
+      console.log(data);
+      if(res.status===200){
+        navigate('/')
+        setConfirmForm(false)
+        setPostId('')
+        setConfirmForm(false)
+          toast.success('Successfully deleted post', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
+        // window.alert('sucessfully deleted post')
+      }
+      else{
+        
+          toast.error('error in deleting post', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
+        // window.alert('error in deleting post')
+
+      }
+    }
     useEffect( () => {
        calluser();
+       if(postId){
+        deletePost();
+       }
       console.log(user);
-    }, []);
+    }, [confirm]);
     setBodyColor({color: `${dark?"black":"white"}`})
 
   return (
@@ -136,16 +192,17 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
     <Signup/>
     <ForgotPasswd/>
+    <ConfirmForm/>
     {imgPreview && <ImagePreview/>}
     <SetPasswd/>
     {/* <Tweet/> */}
-    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39]' onClick={handleBackDrop}></div>}
+    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39]' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
     <CreatePostForm/>

@@ -10,7 +10,7 @@ import DeleteW from '../assets/delete_white.png'
 
 
 const Comments = ({comment}) => {
-  const {user,setOpenLogin,dark}=useContext(appState)
+  const {user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
@@ -82,10 +82,30 @@ const Comments = ({comment}) => {
       credentials:'include', 
     });
     if(res.status===200){
-      window.alert('sucessfully deleted comment')
+      // window.alert('sucessfully deleted comment')
+      toast.success('Comment removed', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     else{
-      window.alert('error in deleting comment')
+      // window.alert('error in deleting comment')
+      toast.error('Comment removed', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
 
     }
   }
