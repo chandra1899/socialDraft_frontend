@@ -1,9 +1,11 @@
 import React,{useState,useContext} from 'react'
 import {appState} from '../App'
+import {Comment} from '../components'
+import {render} from 'react-dom';
 // import { useNavigate ,useParams} from "react-router-dom";
 
 const CommentForm = () => {
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast}=useContext(appState);
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast,commentEvent,setCommentEvent,user}=useContext(appState);
 
 
     const [comment,setComment]=useState("")
@@ -24,6 +26,22 @@ const CommentForm = () => {
           })
           const data=await res.json();
           if(res.status===200){
+            console.log(data.comment);
+            // setCommentcre(data.comment)
+
+            let parentElement =commentEvent.parentElement.querySelector('.commentDiv');
+            // console.log(parentElement);
+           if(user){
+            const newDiv = document.createElement('div');
+            const containerElement = document.createElement('div');
+            render(
+              <Comment comment={data.comment}/>,
+              containerElement
+            );
+            newDiv.appendChild(containerElement);
+            parentElement.appendChild(newDiv);
+
+           }
             setOpenComment(false)
             toast.success('Comment created', {
               position: "bottom-left",

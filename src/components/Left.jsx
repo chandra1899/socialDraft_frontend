@@ -231,7 +231,7 @@ const Left = () => {
       </div> */}
       </div>
     </div>
-    {followingDiv && <div className={`absolute sm:hidden z-[11] rounded-xl left-10 top-1 flex ${dark?"bg-primary text-white":"bg-white text-black"} h-full w-[80vw] `}>
+    {followingDiv && <div className={`absolute flex ss:hidden z-[11] rounded-xl left-10 top-1  ${dark?"bg-primary text-white":"bg-white text-black"} h-full w-[90vw]  `}>
       
     <Followingsm/>
     </div>}

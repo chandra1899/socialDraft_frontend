@@ -12,7 +12,7 @@ import DeleteW from '../assets/delete_white.png'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent}=useContext(appState);
 
     const {id}=useParams()
 
@@ -42,7 +42,9 @@ const Post = () => {
             window.alert("something wrong in geting post details")
           }
     }
-    const AddComment=()=>{
+    const AddComment=(e)=>{
+      // console.log(e.target.parentElement.querySelector('.commentDiv'));
+      setCommentEvent(e.target)
       {if(user){
         setOpenComment(true);
         setCommentpostId(id);
@@ -92,9 +94,11 @@ const Post = () => {
         </div>
         <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
         {/* {console.log("post=",post)} */}
-        {post.comments.map((comment,i)=>(
+       <div className='commentDiv'>
+       {post.comments.map((comment,i)=>(
         <Comment key={i} comment={comment}/>
         ))}
+       </div>
       </div>}
       {postLoader && <div className='m-auto mt-[40%]'> <Box sx={{ display: 'flex' }}>
       <CircularProgress />
