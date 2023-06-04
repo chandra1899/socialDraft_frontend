@@ -40,12 +40,16 @@ return (
 }
 
 const Right = () => {
-  const {following,setFollowing,followingLoader,dark}=useContext(appState);
+  const {following,setFollowing,followingLoader,dark,user}=useContext(appState);
 
   return (
-    <div className={`h-full hidden ss:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 ${dark?"border-slate-700 ":"border-slate-300"} scroll-smooth`}>
+    <div className={`relative h-full hidden ss:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 ${dark?"border-slate-700 ":"border-slate-300"} scroll-smooth`}>
     {!followingLoader && <h3 className='font-medium text-[23px] my-3'>Following</h3>}
     {!followingLoader && <div className='border-t-2 border-slate-500 py-3 min-w-[95%] overflow-scroll no-scrollbar'>
+   {!user && <div className={`bg-gray-900 ${dark?'bg-opacity-80':'bg-opacity-20'} rounded-xl  h-[100vh] w-[100%] z-[39]`}></div>}
+
+    {!user && following.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Please login .........</p></>}
+    {user && following.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Legends don't Following Anyone .........</p></>}
       {following.map((following)=>(
         <Following following={following}  />
       ))}

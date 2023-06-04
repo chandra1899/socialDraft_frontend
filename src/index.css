@@ -21,6 +21,11 @@
 }
 body {
   background-color: var(--bodyColor);
+  overflow: scroll;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 * {

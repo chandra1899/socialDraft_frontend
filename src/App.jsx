@@ -58,7 +58,8 @@ function App() {
   const [following,setFollowing]=useState([]);
   const [postForm,setPostForm]=useState(false);
   const [posts,setPosts]=useState([]);
-  const [calluserLoader,setCalluserLoader]=useState(false);
+  const [comments,setComments]=useState([]);
+  // const [calluserLoader,setCalluserLoader]=useState(false);
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
   const [dark,setDark]=useState(false);
@@ -134,10 +135,12 @@ function App() {
       setOpenComment(false);
       setOpenLogin(false);
       if(confirmForm){
+        console.log(confirmFormchild.current);
         confirmFormchild.current.classList.remove(`bg-black-gradient`)
+        confirmFormchild.current.classList.remove(`bg-slate-300`)
         confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
       }
-      console.log(forgotPasswdForm);
+      console.log(confirmForm);
       if(forgotPasswdForm){
         forgotPasswdFormchild.current.classList.remove(`bg-black-gradient`)
         forgotPasswdFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
@@ -206,7 +209,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
@@ -216,7 +219,7 @@ function App() {
     {imgPreview && <ImagePreview/>}
     <SetPasswd/>
     {/* <Tweet/> */}
-    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39]' onClick={handleBackDrop}></div>}
+    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39] ' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
     <CreatePostForm/>

@@ -125,7 +125,7 @@ const Comments = ({comment}) => {
       </div>
       <p className='mt-7 ml-2 text-red-700'>{likes}</p>
       <img src={islike?Liked:Like} className='h-[20px] w-[20px] mt-7 ml-2 cursor-pointer' onClick={like} alt="" />
-      {(comment.user._id==user._id) && <img 
+      {user && (comment.user._id==user._id) && <img 
         className={`absolute right-5 top-5 cursor-pointer h-[30px] w-[25px]`}
         src={`${dark?DeleteD:DeleteW}`} 
         alt="Delete_Post"
