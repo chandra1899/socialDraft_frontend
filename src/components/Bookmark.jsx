@@ -1,6 +1,7 @@
 import React,{useEffect,useContext, useState} from 'react'
 import { appState } from '../App'
 import logo from '../assets/logo.png'
+import BACK from '../assets/BACK.png'
 import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
  //loader
@@ -59,6 +60,7 @@ const Bookmark = () => {
   return (
    <>
    {user &&  <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-gray-200"} flex flex-col overflow-scroll no-scrollbar `}>
+   <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
       <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     {!bookmarkLoader &&  <div className='flex flex-col overflow-scroll no-scrollbar '>

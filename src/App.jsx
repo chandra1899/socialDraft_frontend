@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect,useRef} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm} from './components'
+import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm,Chat} from './components'
 import {
   Routes,
   Route
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
+import { io } from "socket.io-client";
 import setBodyColor from './setBodyColor'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,17 +48,20 @@ function App() {
   //   }
   const navigate=useNavigate();
   const classes=useStyles();
+  const socket= io('http://localhost:8000');
 
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
   const [openComment,setOpenComment]=useState(false);
   const [openSignUp,setOpenSignUp]=useState(false);
+  const [isEmojiOpen,setIsEmojiOpen]=useState(false);
   const [commentpostId,setCommentpostId]=useState(false);
   const [editProfile,setEditProfile]=useState(false);
   const [following,setFollowing]=useState([]);
   const [postForm,setPostForm]=useState(false);
   const [posts,setPosts]=useState([]);
   const [comments,setComments]=useState([]);
+  const [msgs,setMsgs]=useState([])
   // const [calluserLoader,setCalluserLoader]=useState(false);
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
@@ -203,13 +206,14 @@ function App() {
       console.log(user);
     }, [confirm]);
     setBodyColor({color: `${dark?"black":"white"}`})
+    
 
   return (
     <>
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
@@ -224,7 +228,7 @@ function App() {
     <CommentForm/>
     <CreatePostForm/>
     <Login/>
-    <div  className={`bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[95%] sm:max-w-[69%] p-3 flex flex-row sm:border-2  `}>
+    <div  className={`bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[95%] sm:max-w-[69%] p-1 flex flex-row sm:border-2  `}>
       
       <Routes >
         <Route exact path='/' element={<Home/>} />
@@ -232,6 +236,7 @@ function App() {
         <Route exact path='/profile' element={<Profile/>} />
         <Route exact path='/post/:id' element={<Post/>} />
         <Route exact path='/people/:id' element={<People/>} />
+        <Route exact path='/chat/:id' element={<Chat msgs={msgs} setMsgs={setMsgs} socket={socket}/>} />
       </Routes>
      
      <Right/>

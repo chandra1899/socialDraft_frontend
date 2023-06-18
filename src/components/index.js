@@ -19,7 +19,7 @@ import ForgotPasswd from './ForgotPasswd'
 import SetPasswd from './SetPasswd'
 import ImagePreview from './ImagePreview'
 import ConfirmForm from './ConfirmForm'
-
+import Chat from './Chat'
 
 export {
     Left,
@@ -42,5 +42,6 @@ export {
     ForgotPasswd,
     SetPasswd,
     ImagePreview,
-    ConfirmForm
+    ConfirmForm,
+    Chat
 }

@@ -4,6 +4,7 @@ import { appState } from '../App'
 import logo from '../assets/logo.png'
 import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
+ import BACK from '../assets/BACK.png'
 
 const Profile = () => {
   const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
@@ -58,6 +59,7 @@ const Profile = () => {
   return (
     <>
     {user && <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar`}>
+    <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
       <div className='flex flex-row  pr-7 justify-center items-center my-3'>
           <img src={`${user.avatar?`http://localhost:8000/photo/${user.avatar}`:logo}`}  alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>

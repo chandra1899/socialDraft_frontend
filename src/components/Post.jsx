@@ -3,6 +3,7 @@ import { useNavigate ,useParams} from "react-router-dom";
 import {PostFooter,PostProfile} from '.'
 import {Comment} from '../components'
 import {appState} from '../App'
+import BACK from '../assets/BACK.png'
 //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -77,6 +78,7 @@ const Post = () => {
 
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
+       <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
       {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
         <div className='relative' >
         <PostProfile user={post.user}/>
