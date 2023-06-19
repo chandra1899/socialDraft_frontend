@@ -20,6 +20,7 @@ import SetPasswd from './SetPasswd'
 import ImagePreview from './ImagePreview'
 import ConfirmForm from './ConfirmForm'
 import Chat from './Chat'
+import Retweets from './Retweets'
 
 export {
     Left,
@@ -43,5 +44,6 @@ export {
     SetPasswd,
     ImagePreview,
     ConfirmForm,
-    Chat
+    Chat,
+    Retweets
 }

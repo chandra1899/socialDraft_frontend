@@ -4,10 +4,11 @@ import saved from '../assets/saved.png'
 import like from '../assets/like.png'
 import liked from '../assets/liked.png'
 import {appState} from '../App'
-import {Link,useLocation} from "react-router-dom";
+import {Link,useLocation, useNavigate} from "react-router-dom";
 
 const PostFooter =  ({post}) => {
   let location = useLocation();
+  const navigate=useNavigate();
   const {user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)

@@ -2,7 +2,7 @@
 import React,{useEffect,useContext, useState} from 'react'
 import { appState } from '../App'
 import logo from '../assets/logo.png'
-import {PostFooter,PostProfile} from '.'
+import {PostFooter,PostProfile,Retweets} from '.'
  import { useNavigate } from 'react-router-dom'
  import BACK from '../assets/BACK.png'
 
@@ -10,6 +10,7 @@ const Profile = () => {
   const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const navigate=useNavigate()
   const [yourposts,setYourposts]=useState([])
+  const [selected,setSelected]=useState('Posts')
   const getposts=async ()=>{
     let res= await fetch('http://localhost:8000/api/post/yourposts',{
     method:'GET',
@@ -24,6 +25,7 @@ const Profile = () => {
   let data=await res.json();
   if(res.status===200){
     setYourposts(data.yourposts)
+    console.log(data.yourposts)
   }
   else{
     window.alert("something wrong in getting your posts")
@@ -54,7 +56,7 @@ const Profile = () => {
       navigate('/')
       setOpenLogin(true)
     }
- }, []);
+ }, [selected]);
 
   return (
     <>
@@ -82,9 +84,17 @@ const Profile = () => {
         <h3 className={`font-bold ${dark?"text-[#3ff63f]":"text-black"} text-[1.125rem] ml-3`}>Description :</h3>
         <p className={`ml-6 ${dark?"text-[#b2e4ecf0]":"text-slate-700"}`}>{user.description}</p>
       </div>
-      <p className={`text-[1.125rem] font-bold flex justify-center my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}>Your Posts</p>
-      {yourposts.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
-      <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
+      <div className={`text-[1.125rem] font-bold flex flex-col   my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}>
+        <div className='flex flex-row justify-around items-center w-[100%]'>
+        <p className='cursor-pointer' onClick={()=>{setSelected('Posts')}}>Your Posts</p>
+        <p className='cursor-pointer' onClick={()=>{setSelected('Retweets')}}>Your Retweets</p>
+        </div>
+        <div className=' h-[10px] mx-3 relative mt-1'>
+          <div className={`h-[50%] bg-blue-500 w-[70px] rounded-full absolute ${selected==='Posts'?'left-[15%]':'right-[17%]'} translate-all duration-[5000ms] ease-in-out`}></div>       
+        </div>
+        </div>
+      {yourposts.length===0 && selected==='Posts' &&<><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
+      {selected==='Posts' && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     <div className='flex flex-col overflow-scroll no-scrollbar '>
     {yourposts.map((post,i)=>(
@@ -98,7 +108,8 @@ const Profile = () => {
     </div>
     ))}
     </div>
-   </div>
+   </div>}
+   {selected!=='Posts' && <Retweets/>}
     </div>}
     </>
   )

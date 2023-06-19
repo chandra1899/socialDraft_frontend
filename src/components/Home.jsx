@@ -55,7 +55,8 @@ const Home = () => {
     <div className='flex flex-col overflow-scroll no-scrollbar '>
       
     {!homeLoader && posts.map((post,i)=>(
-      <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
+     <>
+      {post.type!=='Retweet'?<div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
 {/* {console.log(post)} */}
       <PostProfile user={post.user}/>
       <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
@@ -63,7 +64,22 @@ const Home = () => {
       </div>
       {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
+    </div>:
+
+    <div className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black ":"bg-white "} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
+      <PostProfile user={post.user}/>
+      <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600 border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.retweetedRef._id}`)}} >
+      {/* {console.log(post)} */}
+      <PostProfile user={post.retweetedRef.user}/>
+      <div className='ml-2 break-words'>
+        <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
+      </div>
+      {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain `} />}
     </div>
+    <PostFooter post={post} />
+    </div>
+    }
+     </>
 
 
     ))}

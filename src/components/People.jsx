@@ -159,7 +159,7 @@ const People = () => {
      {!peopleLoader && <div className='flex flex-row  pr-7 justify-center items-center my-3'>
           <img src={`${userdetails.avatar?`http://localhost:8000/photo/${userdetails.avatar}`:logo}`}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
-            <div className={` flex ${dark?'bg-green-600 hover:bg-green-700':'bg-blue-600 hover:bg-blue-700'}  justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-medium tracking-[0.08em] transition duration-150 ease-in-out -mb-2 rounded-3xl`} onClick={()=>{navigate(`/chat/${id}`)}}>Message</div>
+            <div className={` flex ${dark?'bg-green-600 hover:bg-green-700':'bg-blue-600 hover:bg-blue-700'}  justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-medium tracking-[0.08em] transition duration-150 ease-in-out -mb-5 rounded-3xl`} onClick={()=>{navigate(`/chat/${id}`)}}>Message</div>
             <div className={`${isfollowing?`${dark?"hover:bg-slate-700":"hover:bg-slate-300"}`:"bg-white text-black hover:bg-slate-300"} flex   justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-700 border-2 mb-3 rounded-3xl`} onClick={handleFollow}>{follow}</div>
            
             <div className='flex flex-wrap justify-center items-center mx-6 '>

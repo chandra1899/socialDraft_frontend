@@ -31,7 +31,7 @@ return (
       </div>
       <div className='flex justify-center items-center'>
         <img src={retweet} className='h-[20px] w-[20px] mr-1' alt="retweet" />
-        <p className=''>0</p>
+        <p className=''>{following.followable.retweets?following.followable.retweets.length:'0'}</p>
       </div>
     </div>
 
