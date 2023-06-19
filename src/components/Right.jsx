@@ -13,20 +13,20 @@ const Following=({following})=>{
   const navigate=useNavigate()
 return (
   <div key={following._id} className={`flex flex-col  transition duration-150 ease-in-out ${dark?"bg-black hover:bg-[#232334]":"bg-white hover:bg-slate-100"} rounded-2xl left-2  p-2 mb-2 min-w-[97%] cursor-pointer`} onClick={()=>navigate(`/people/${following.followable._id}`)}>
-    <div className='flex flex-row justify-center items-center'>
+    <div className='flex flex-row justify-start items-center'>
       <img src={`${following.followable.avatar?`http://localhost:8000/photo/${following.followable.avatar}`:logo}`}  className='h-[40px] w-[40px] mr-2 rounded-full' alt="" />
-      <div className='-mt-3'>
+      <div className='-mt-3 break-all'>
         <h3 className='font-medium text-[0.9rem] mt-3'>{following.followable.name}</h3>
         <p className={`${dark?"text-[#42a5c6]":"text-[#414ced]"} text-[0.75rem]`}>#{following.followable.email}</p>
       </div>
     </div>
-    <div className='flex flex-row justify-around text-[0.7rem] mt-3'>
-      <div className='flex justify-center items-center text-[#f4c838]'>
-        <p className={`text-[0.8rem] ${dark?"text-[#f4c838]":"text-[#f1af29]"}`}>Followers &nbsp;</p>
+    <div className='flex flex-wrap justify-around text-[0.7rem] mt-3 '>
+      <div className='flex justify-center items-center text-[#f4c838] '>
+        <p className={`text-[0.8rem] ${dark?"text-[#f4c838]":"text-[#fd980c]"}`}>Followers &nbsp;</p>
         <p>{following.followable.followers?following.followable.followers.length:'0'}</p>
       </div>
       <div className='flex justify-center items-center text-[#f4c838]'>
-        <p className={`text-[0.8rem] ${dark?"text-[#f4c838]":"text-[#f1af29]"}`}>following &nbsp;</p>
+        <p className={`text-[0.8rem] ${dark?"text-[#f4c838]":"text-[#fd980c]"}`}>following &nbsp;</p>
         <p className=''>{following.followable.following?following.followable.following.length:'0'}</p>
       </div>
       <div className='flex justify-center items-center'>

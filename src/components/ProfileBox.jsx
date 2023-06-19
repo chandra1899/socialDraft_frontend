@@ -32,7 +32,7 @@ const ProfileBox = () => {
     {user? <div onClick={()=>navigate('/profile')} className=' cursor-pointer flex flex-col  border-b-2 border-slate-400 mt-4 pb-3 '>
         <div className={`flex flex-row  justify-center items-center h-full px-7 ${dark?"text-white":"text-black"}`}>
       <img src={`${profile?`http://localhost:8000/photo/${profile}`:logo}`} alt="logo" className='-ml-2 h-[60px] w-[60px] m-3 rounded-full' />
-      <div className='flex flex-col'>
+      <div className='flex flex-col break-all'>
         <h3 className='font-bold text-xl mt-3'>{name}</h3>
         <p className={`${dark?"text-[#dfd9ff]":"text-[#bf2bf1]"} text-[0.9rem] `}>#{email}</p>
       </div>

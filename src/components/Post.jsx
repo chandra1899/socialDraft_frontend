@@ -74,13 +74,14 @@ const Post = () => {
     useEffect( () => {
         getpost();
         
-     }, []);
+     }, [id]);
 
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
        <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
       {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
-        <div className='relative' >
+       <>
+       {post.type!=='Retweet'? <div className='relative' >
         <PostProfile user={post.user}/>
         <div className='ml-2 '>
         <p className='font-medium text-[16px] p-2 break-words'>{post.content}</p>
@@ -94,7 +95,22 @@ const Post = () => {
         onClick={()=>handleDeletePost(post._id)}
          />}
 
-        </div>
+        </div>:
+         <div className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black ":"bg-white "} hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
+         <PostProfile user={post.user}/>
+         <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600 border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.retweetedRef._id}`)}} >
+         {/* {console.log(post)} */}
+         <PostProfile user={post.retweetedRef.user}/>
+         <div className='ml-2 break-words'>
+           <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
+         </div>
+         {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain `} />}
+       </div>
+       <PostFooter post={post} />
+       </div>
+        
+      }
+       </>
         <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
         {/* {console.log("post=",post)} */}
        <div className='commentDiv'>
