@@ -14,6 +14,8 @@ const PostFooter =  ({post}) => {
   const [likelogo,setLikelogo]=useState(post.likes.length)
   const [savelogo,setSavelogo]=useState(post.likes.length)
   const [issave,setIssaved]=useState("Save")
+  const [isretweet,setIsretweet]=useState("Retweet")
+  const [disable,setDisable]=useState(false)
   const [islike,setIslike]=useState("Like")
   const like=async ()=>{
     // console.log(post._id);
@@ -197,17 +199,106 @@ const PostFooter =  ({post}) => {
     setOpenLogin(true)
   }
   }
+  const retweet=async ()=>{
+    if(user){
+      let res=await fetch(`http://localhost:8000/api/retweet?id=${post._id}`,{
+        method:'post',
+        // mode: 'no-cors',
+        headers:{
+          'Access-Control-Allow-Origin': '*',
+          Accept:"application/json",
+          "Content-Type":"application/json"
+        },
+        credentials:'include', 
+      });
+      let data=await res.json();
+      if(res.status===200){
+        if(data.deleted){
+          setIsretweet("Retweet")
+          // if(location.pathname==='/bookmark'){
+          //   e.target.parentElement.parentElement.classList.add('hidden');
+          // }
+            toast.info('Retweet removed', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+        }
+        else{
+         
+            toast.info('Retweet added', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          
+              setIsretweet("Retweeted")
+        }
+      }
+      else{
+     
+          toast.error('error in Retweet', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        
+        // window.alert("some thing is wrong in bookmark")
+      }
+    }else{
+      toast.warn('please log-in', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    
+    setOpenLogin(true)
+    }
+  }
+  const isRetweeted=async ()=>{
+
+  }
   useEffect( () => {
     if(user){
     likepost()
     savepost()
+    isRetweeted()
     }
  }, []);
+  useEffect( () => {
+    if(post.type==='Retweet'){
+      setDisable(true);
+      let retweetDiv=document.getElementById("retweet");
+      retweetDiv.disabled = true;
+      retweetDiv.classList.remove('cursor-pointer')
+    }
+ }, [user]);
   return (
     <div className='flex flex-row justify-around items-center p-3'>
         <p onClick={like} className={`${dark?"text-[#f93838]":"text-red-700"} text-[0.9rem] font-bold cursor-pointer`}>{likes} {islike}</p>
         <p className={`${dark?"text-[#f4c838]":"text-[#fd980c]"} text-[0.9rem] font-bold cursor-pointer`} onClick={()=>{navigate(`/post/${post._id}`)}}>{post.comments.length} Comments</p>
-        <p className={`text-[#3a3afb] text-[0.9rem] font-bold`}>Retweets</p>
+        <button onClick={retweet} id='retweet' className={` ${disable?`${dark?'text-[#262671]':'text-[#acacf3]'}`:'text-[#3a3afb]'} text-[0.9rem] font-bold cursor-pointer`} >{isretweet}</button>
         <p onClick={bookmark} className={`${dark?"text-[#3ff339]":"text-green-600"} text-[0.9rem] font-bold cursor-pointer`}>{issave}</p>      
     </div>
   )
