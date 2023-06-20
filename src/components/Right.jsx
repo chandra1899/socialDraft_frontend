@@ -49,7 +49,7 @@ const Right = () => {
    {!user && <div className={`bg-gray-900 ${dark?'bg-opacity-80':'bg-opacity-20'} rounded-xl  h-[100vh] w-[100%] z-[39]`}></div>}
 
     {!user && following.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Please login .........</p></>}
-    {user && following.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Legends don't Following Anyone .........</p></>}
+    {user && following.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[10%] text-red-600 mt-10'>..... Not Following Anyone .....</p></>}
       {following.map((following)=>(
         <Following following={following}  />
       ))}

@@ -75,33 +75,33 @@ const Left = () => {
 
   return (
    <div >
-    <div className={`bg-gradient-to-b hidden sm:flex rounded-3xl fixed overflow-y-scroll top-6 left-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[27%] p-3 overflow-hidden flex-col no-scrollbar border-2 `}>
+    <div className={`bg-gradient-to-b hidden sm:flex rounded-3xl fixed overflow-y-scroll top-6 left-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[25%] p-3 overflow-hidden flex-col no-scrollbar border-2 `}>
       <ProfileBox/>
       <div className=' flex flex-col mt-4 py-5 '>
         <div className={`${
             active==='/'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-bold text-[20px] font-medium cursor-pointer flex mb-4 `}>
-            <img src={homeimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+          } ${dark?"hover:text-white":"hover:text-black"} text-bold text-[20px] font-medium cursor-pointer flex justify-start items-center mb-4 `}>
+            <img src={homeimg} alt="" className='ml-10 h-[20px] w-[20px]' />
             <Link className='ml-4' to='/'>Home</Link>
         </div>
         <div className={`${
             active==='/profile'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
-            <img src={profileimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
+            <img src={profileimg} alt="" className='ml-10 h-[20px] w-[20px]' />
             <Link className='ml-4' to='/profile'>Profile</Link>
         </div>
-        <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
-            <img src={postimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+        <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
+            <img src={postimg} alt="" className='ml-10 h-[20px] w-[20px]' />
             <p className='ml-4' onClick={()=>{if(user){setPostForm((pre)=>!pre)}else {setOpenLogin(true)}}}>Post</p>
         </div>
         <div className={`${
            active==='/bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
-            <img src={bookmarkimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
+            <img src={bookmarkimg} alt="" className='ml-10 h-[20px] w-[20px]' />
             <Link className='ml-4' to='/bookmark'>Bookmark</Link>
         </div>
-        {user && <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
-            <img src={logoutimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+        {user && <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
+            <img src={logoutimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <p className='ml-4' onClick={logout}>Log-Out</p>
         </div>}
       </div>
@@ -179,7 +179,7 @@ const Left = () => {
           <Link to='/bookmark'>Bookmark</Link>
         </li>
         <li
-        className={`hover:text-white text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        className={`hover:text-white ss:hidden text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle)}}
         >
           <p onClick={()=>{setFollowingDiv(true)}}>Following</p>

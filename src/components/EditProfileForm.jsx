@@ -45,7 +45,8 @@ const EditProfileForm = () => {
           const data=await res.json();
           if(res.status===200){
             // window.alert("updated")
-          
+            setForm({...form,photo:''})
+            document.getElementById("update_profile").value = "";
               toast.success('sucessfully Updated your profile', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -79,11 +80,13 @@ const EditProfileForm = () => {
     }
     useEffect( () => {
      if(user){
-      form.email=user.email,
-      form.name=user.name,
+      form.email=user.email;
+      form.name=user.name;
+      if(user.description===undefined)
+      form.description='';
       form.description=user.description
      }
-   }, []);
+   }, [user]);
   return (
     <div className={`${editProfile?"":"hidden"} transition duration-150 ease-in-out absolute z-40 top-10 left-[10%] sm:left-[30%] h-auto p-8 pb-0 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"}  rounded-2xl border-2 `}>
     <form action=""  className=' flex flex-col gap-6' enctype="multipart/form-data"  >
@@ -122,8 +125,8 @@ const EditProfileForm = () => {
            ></textarea>
         </label>
     <label className='flex flex-col'>
-          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Upload Profile Photo</span>
-          <input className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} />
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Update Profile Photo with</span>
+          <input id='update_profile' className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} />
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Change password !</span>

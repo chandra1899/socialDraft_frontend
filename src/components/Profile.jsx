@@ -86,11 +86,11 @@ const Profile = () => {
       </div>
       <div className={`text-[1.125rem] font-bold flex flex-col   my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}>
         <div className='flex flex-row justify-around items-center w-[100%]'>
-        <p className='cursor-pointer' onClick={()=>{setSelected('Posts')}}>Your Posts</p>
-        <p className='cursor-pointer' onClick={()=>{setSelected('Retweets')}}>Your Retweets</p>
+        <p className='cursor-pointer flex flex-row' onClick={()=>{setSelected('Posts')}}><span className='hidden sm:block'>Your&nbsp;</span>Posts&nbsp;</p>
+        <p className='cursor-pointer flex flex-row' onClick={()=>{setSelected('Retweets')}}><span className='hidden sm:block'>Your&nbsp;</span>Retweets&nbsp;</p>
         </div>
         <div className=' h-[10px] mx-3 relative mt-1'>
-          <div className={`h-[50%] bg-blue-500 w-[70px] rounded-full absolute ${selected==='Posts'?'left-[15%]':'right-[17%]'} translate-all duration-[5000ms] ease-in-out`}></div>       
+          <div className={`h-[50%] bg-blue-500 w-[45px] xs:w-[70px] rounded-full absolute ${selected==='Posts'?'left-[5%] xs:left-[13%]':'right-[13%] xs:right-[17%]'} translate-all duration-[5000ms] ease-in-out`}></div>       
         </div>
         </div>
       {yourposts.length===0 && selected==='Posts' &&<><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
@@ -103,7 +103,7 @@ const Profile = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
+      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
     </div>
     ))}

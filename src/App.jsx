@@ -223,7 +223,7 @@ function App() {
     {imgPreview && <ImagePreview/>}
     <SetPasswd/>
     {/* <Tweet/> */}
-    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[150vh] w-[150vw] z-[39] ' onClick={handleBackDrop}></div>}
+    {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[170vh] w-[150vw] z-[39] ' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
     <CreatePostForm/>

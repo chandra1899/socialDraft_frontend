@@ -109,7 +109,7 @@ const Post = () => {
          <div className='ml-2 whitespace-pre-wrap break-words'>
            <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
          </div>
-         {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain `} />}
+         {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
        </div>
        <PostFooter post={post} />
        </div>
