@@ -322,29 +322,29 @@ const PostFooter =  ({post}) => {
 
         <p onClick={like} className={`hidden xs:block ${dark?"text-[#f93838]":"text-red-700"} text-[0.9rem] font-bold cursor-pointer`}>{likes} {islike}</p>
 
-        <div className='flex xs:hidden flex-row text-[#f93838] justify-center items-center'>{likes} 
+        <div className='flex xs:hidden flex-row cursor-pointer text-[#f93838] justify-center items-center'>{likes} 
         {islike==='Like' && <img src={llike} alt="like" onClick={like} className='block xs:hidden h-[23px] w-[23px] m-1' />} 
         {islike!=='Like' && <img src={liked} alt="liked" onClick={like} className='block xs:hidden h-[23px] w-[23px] m-1' /> }
         </div>
 
         <p className={`hidden xs:block ${dark?"text-[#f4c838]":"text-[#fd980c]"} text-[0.9rem] font-bold cursor-pointer`} onClick={()=>{navigate(`/post/${post._id}`)}}>{post.comments.length} Comments</p>
 
-        <div className={`flex xs:hidden flex-row ${dark?"text-[#f4c838]":"text-[#fd980c]"} justify-center items-center`}>{post.comments.length} 
+        <div className={`flex xs:hidden cursor-pointer flex-row ${dark?"text-[#f4c838]":"text-[#fd980c]"} justify-center items-center`}>{post.comments.length} 
          <img src={comment} alt="comment" onClick={()=>{navigate(`/post/${post._id}`)}} className='block xs:hidden h-[25px] w-[25px] m-1' />
         </div>
 
         {post.type!=='Retweet' && <button onClick={retweet} id='retweet' className={`hidden xs:block text-[#3a3afb] text-[0.9rem] font-bold cursor-pointer`} >{retweets} {isretweet}</button>}
 
-        <div className='flex xs:hidden flex-row text-[#3a3afb] justify-center items-center'>{retweets} 
+        {post.type!=='Retweet' && <div className='flex xs:hidden cursor-pointer flex-row text-[#3a3afb] justify-center items-center'>{retweets} 
         {isretweet==='Retweet' && <img src={Rretweet} alt="retweet" onClick={retweet} className='block xs:hidden h-[23px] w-[23px] m-1' />} 
         {isretweet!=='Retweet' && <img src={Rretweeted} alt="retweeted" onClick={retweet} className='block xs:hidden h-[23px] w-[23px] m-1' /> }
-        </div>
+        </div>}
 
 
         <p onClick={bookmark} className={`hidden xs:block ${dark?"text-[#3ff339]":"text-green-600"} text-[0.9rem] font-bold cursor-pointer`}>{issave}</p> 
 
-        {issave==='Save' && <img src={save} alt="save" onClick={bookmark} className='block xs:hidden h-[23px] w-[23px]' />}  
-        {issave!=='Save' && <img src={saved} alt="saved" onClick={bookmark} className='block xs:hidden h-[23px] w-[23px]' /> }
+        {issave==='Save' && <img src={save} alt="save" onClick={bookmark} className='block xs:hidden cursor-pointer h-[23px] w-[23px]' />}  
+        {issave!=='Save' && <img src={saved} alt="saved" onClick={bookmark} className='block xs:hidden cursor-pointer h-[23px] w-[23px]' /> }
     </div>
   )
 }

@@ -1,19 +1,24 @@
 import React,{useState,useContext,useEffect } from 'react'
 import {ProfileBox} from '../components'
-import {menubList} from '../constants'
-import profile from '../assets/profile.png'
-import Dark from '../assets/dark.png'
+
+import profileimg from '../assets/profile.png'
+import homeimg from '../assets/home.png'
+import postimg from '../assets/post.png'
+import bookmarkimg from '../assets/bookmark.png'
+import logoutimg from '../assets/logout.png'
+
 import close from '../assets/close.svg'
 import menu from '../assets/menu.svg'
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import { appState } from '../App'
 import Followingsm from './Followingsm'
 
 
 const Left = () => {
   const Navigate=useNavigate();
+  let location = useLocation();
   const {calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
-  const [active,setActive]=useState('');
+  const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
     let res= await fetch(`http://localhost:8000/api/user/sign-out`,{
@@ -63,6 +68,10 @@ const Left = () => {
     calluser();
    // console.log(user);
  }, []);
+  useEffect( () => {
+    setActive(location.pathname)
+    // console.log(location.pathname)
+ }, [location.pathname]);
 
   return (
    <div >
@@ -70,33 +79,29 @@ const Left = () => {
       <ProfileBox/>
       <div className=' flex flex-col mt-4 py-5 '>
         <div className={`${
-            active==='Home'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-bold text-[20px] font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Home')}}>
-            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            active==='/'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
+          } ${dark?"hover:text-white":"hover:text-black"} text-bold text-[20px] font-medium cursor-pointer flex mb-4 `}>
+            <img src={homeimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <Link className='ml-4' to='/'>Home</Link>
         </div>
         <div className={`${
-            active==='Profile'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Profile')}}>
-            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+            active==='/profile'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
+          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
+            <img src={profileimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <Link className='ml-4' to='/profile'>Profile</Link>
         </div>
-        <div className={`${
-            active==='Post'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Post')}}>
-            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+        <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
+            <img src={postimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <p className='ml-4' onClick={()=>{if(user){setPostForm((pre)=>!pre)}else {setOpenLogin(true)}}}>Post</p>
         </div>
         <div className={`${
-           active==='Bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Bookmark')}}>
-            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+           active==='/bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
+          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
+            <img src={bookmarkimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <Link className='ml-4' to='/bookmark'>Bookmark</Link>
         </div>
-        {user && <div className={`${
-            active==='Log-Out'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
-          } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `} onClick={()=>{setActive('Log-Out')}}>
-            <img src={profile} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
+        {user && <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex mb-4 `}>
+            <img src={logoutimg} alt="" className='ml-10 h-[15px] mt-1 w-[15px]' />
             <p className='ml-4' onClick={logout}>Log-Out</p>
         </div>}
       </div>
@@ -120,74 +125,70 @@ const Left = () => {
       <ul className='list-none flex justify-end z-10 items-start flex-col gap-4 '>
      
        {!user && <li
-        className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle);}}
         >
           <p onClick={()=>{setOpenLogin(prev=>!prev);setOpenSignUp(false)}}>login</p>
         </li>}
         {!user && <li
-       className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+       className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
        onClick={()=>{setToggle(!toggle);}}
         >
           <p  onClick={()=>{setOpenSignUp(prev=>!prev);setOpenLogin(false)}}>signUp</p>
         </li>}
         {!user && <li
-       className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+       className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
        onClick={()=>{setToggle(!toggle);}}
         >
           <Link to='http://localhost:8000/api/user/auth/google'>Google login</Link>
         </li>}
        {!user && <li
-        className={`text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle);}}
         >
           <Link to='http://localhost:8000/api/user/auth/facebook'>Fackbook login</Link>
         </li>}
         <li
         className={`${
-          active==='Home'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive("Home")}}
+          active==='/'?"text-white":"text-secondary"
+        } hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle)}}
         >
           <Link to='/'>Home</Link>
         </li>
         <li
         className={`${
-          active==='Profile'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive('Profile')}}
+          active==='/profile'?"text-white":"text-secondary"
+        } hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle)}}
         >
           <Link to='/profile'>Profile</Link>
         </li>
         <li
-        className={`${
-          active==='Post'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive('Post')}}
+        className={` font-poppins hover:text-white font-medium cursor-pointer text-[16px] text-secondary`}
+        onClick={()=>{setToggle(!toggle)}}
         >
           <p className='' onClick={()=>{setPostForm((pre)=>!pre)}}>Post</p>
         </li>
         <li
         className={`${
-          active==='Bookmark'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive('Bookmark')}}
+          active==='/bookmark'?"text-white":"text-secondary"
+        } hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle)}}
         >
           <Link to='/bookmark'>Bookmark</Link>
         </li>
         <li
-        className={`${
-          active==='Following'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive('Following')}}
+        className={`hover:text-white text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle)}}
         >
           <p onClick={()=>{setFollowingDiv(true)}}>Following</p>
         </li>
        {user && <li
         className={`${
           active==='Log-Out'?"text-white":"text-secondary"
-        } font-poppins font-medium cursor-pointer text-[16px]`}
-        onClick={()=>{setToggle(!toggle);setActive(Log-Out)}}
+        } hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
+        onClick={()=>{setToggle(!toggle);}}
         >
         <p className='' onClick={logout}>Log-Out</p>
 

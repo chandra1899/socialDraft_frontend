@@ -62,7 +62,7 @@ const Retweets = () => {
     {yourretweets.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]    transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 `}>
       <PostProfile user={post.retweet.user}/>
-      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post.retweet._id}`)}}>
+      <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post.retweet._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.retweet.content}</p>
       </div>
       {post.retweet.photo && <img src={`http://localhost:8000/photo/${post.retweet.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.retweet.photo}`)} />}

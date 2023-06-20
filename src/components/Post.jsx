@@ -36,11 +36,15 @@ const Post = () => {
           })
           let data=await res.json();
           setPostLoader(false)
-          if(res.status===200){
+          if(res.status===200 && data.post!==null){
             setPost(data.post)
+            console.log(data.post);
             setComments(data.post.comments)
             console.log(data.post);
-          }else{
+          }else if(data.post===null){
+            console.log(post);
+          }
+          else{
             window.alert("something wrong in geting post details")
           }
     }
@@ -79,12 +83,13 @@ const Post = () => {
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
        <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
+       {post===undefined && <p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-[33%]'>....... No such Post found .........</p>}
       {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
        <>
        {post.type!=='Retweet'? <div className='relative' >
         <PostProfile user={post.user}/>
         <div className='ml-2 '>
-        <p className='font-medium text-[16px] p-2 break-words'>{post.content}</p>
+        <p className='font-medium text-[16px] p-2 whitespace-pre-wrap break-words'>{post.content}</p>
       </div>
       {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[50vh] w-[80%] rounded-xl ml-14 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"} `} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
         <PostFooter post={post} />
@@ -101,7 +106,7 @@ const Post = () => {
          <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600 border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.retweetedRef._id}`)}} >
          {/* {console.log(post)} */}
          <PostProfile user={post.retweetedRef.user}/>
-         <div className='ml-2 break-words'>
+         <div className='ml-2 whitespace-pre-wrap break-words'>
            <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
          </div>
          {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain `} />}

@@ -188,7 +188,7 @@ const People = () => {
     {posts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]  transition duration-150   hover:border-3 hover:border-slate-600 `}>
       <PostProfile user={userdetails}/>
-      <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
+      <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
       {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-32 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
