@@ -42,11 +42,11 @@ const EditProfileForm = () => {
   //     withCredentials: true,
   //     headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'
   // }})
+  document.getElementById("update_profile").value = "";
           const data=await res.json();
           if(res.status===200){
             // window.alert("updated")
             setForm({...form,photo:''})
-            document.getElementById("update_profile").value = "";
               toast.success('sucessfully Updated your profile', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -82,9 +82,10 @@ const EditProfileForm = () => {
      if(user){
       form.email=user.email;
       form.name=user.name;
-      if(user.description===undefined)
-      form.description='';
-      form.description=user.description
+      if(user.description===undefined){
+        form.description='';
+      }
+      else form.description=user.description
      }
    }, [user]);
   return (

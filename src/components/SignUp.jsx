@@ -6,6 +6,7 @@ import avatar_3 from '../assets/avatar_3.png'
 
 const SignUp = () => {
   const {openSignUp,setOpenSignUp,dark,setOpenLogin,toast}=useContext(appState)
+  const [latest,setlatest]=useState('');
     const [form,setForm]=useState({
         name:'',
         email:'',
@@ -25,7 +26,8 @@ const SignUp = () => {
         formData.append('password', form.password);
         formData.append('confirm_password', form.confirm_password);
         formData.append('name', form.name);
-        console.log(form);
+        formData.append('latest', latest);
+        console.log(formData);
         console.log(avatar_1);
         if(form.password!==form.confirm_password) {
           toast.warn('Password does not match', {
@@ -40,7 +42,7 @@ const SignUp = () => {
             });
             return ;
         }
-        if(form.photo==='') {
+        if(latest==='') {
           toast.warn('Photo is compulsary', {
             position: "bottom-left",
             autoClose: 2000,
@@ -53,7 +55,7 @@ const SignUp = () => {
             });
             return ;
         }
-       let res= await fetch('http://localhost:8000/api/user/create',{
+       let res= await fetch(`http://localhost:8000/api/user/create`,{
             method:"POST",
             // headers:{
             //     "Content-type":"application/json"
@@ -61,6 +63,7 @@ const SignUp = () => {
             body:formData
         })
         const data=await res.json();
+        document.getElementById("update_profile").value = "";
         if(res.status===200){
             // window.alert("sucessfully registered")
             
@@ -77,7 +80,7 @@ const SignUp = () => {
             
             setOpenSignUp(false)
             setOpenLogin(true)
-            console.log(data,resstatus);
+            console.log(data,res.status);
         }
         else if(res.status===401){
         
@@ -125,7 +128,7 @@ const SignUp = () => {
                 theme: "dark",
                 });
             
-            console.log(data,res.tatus);
+            console.log(data.error,res.tatus);
         }
         setForm({
           name:'',
@@ -143,20 +146,6 @@ const SignUp = () => {
         setForm({...form,photo:e.target.files[0]})
         // console.log("photo",form.photo);
         // console.log("photo2",e.target.files[0]);
-      }
-      const populateInputFeild=(imageURL, inputFieldId)=> {
-        fetch(imageURL)
-        .then(response => response.blob())
-        .then(blob => {
-          const file = new File([blob], 'image.jpg', { type: blob.type });
-    
-          // Get the input field and set its value to the file
-          const inputField = document.getElementById(inputFieldId);
-          inputField.files = [file];
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
       }
   return (
     <div className={`${openSignUp?"block":"hidden"} transition duration-150 ease-in-out absolute z-40 top-4 left-[10%] sm:left-[30%] h-auto p-8 pb-3 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2 `}>
@@ -209,16 +198,16 @@ const SignUp = () => {
       <label className='flex flex-col'>
             <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Choose Avatar</span>
             <div className='flex flex-row justify-around items-center'>
-              <img src={avatar_1} alt="avatar_1" className='rounded-full h-[100px] w-[100px] hover:bg-slate-400 p-1 delay-75 cursor-pointer' onClick={()=>{populateInputFeild('http://localhost:8000/photo//frontend//src//assets//avatar_1.png','update_profile')}}/>
-              <img src={avatar_2} alt="avatar_2" className='rounded-full h-[100px] w-[100px] hover:bg-slate-400 p-1 delay-75 cursor-pointer' />
-              <img src={avatar_3} alt="avatar_3" className='rounded-full h-[100px] w-[100px] hover:bg-slate-400 p-1 delay-75 cursor-pointer' />
+              <img src={avatar_1} alt="avatar_1" className={`rounded-full h-[100px] w-[100px] hover:bg-slate-400 ${latest==='avatar_1'?'bg-slate-400':''} p-1 delay-75 cursor-pointer`} onClick={()=>{setlatest('avatar_1');setForm({...form,photo:''})}}/>
+              <img src={avatar_2} alt="avatar_2" className={`rounded-full h-[100px] w-[100px] hover:bg-slate-400 ${latest==='avatar_2'?'bg-slate-400':''} p-1 delay-75 cursor-pointer`} onClick={()=>{setlatest('avatar_2');setForm({...form,photo:''})}}/>
+              <img src={avatar_3} alt="avatar_3" className={`rounded-full h-[100px] w-[100px] hover:bg-slate-400 ${latest==='avatar_3'?'bg-slate-400':''} p-1 delay-75 cursor-pointer`} onClick={()=>{setlatest('avatar_3');setForm({...form,photo:''})}}/>
             </div>
           </label>
 
           <p className='flex justify-center items-center text-[1.125rem] font-medium left-[20%] text-red-600 -mb-3'>....... OR ........</p>
           <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Upload Profile Photo</span>
-          <input id='update_profile' className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} />
+          <input id='update_profile' className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePhotoUpload} onClick={()=>{setlatest('upload')}} />
         </label>
       </form>
       <div className='m-6 mb-3 right-3 font-medium'>

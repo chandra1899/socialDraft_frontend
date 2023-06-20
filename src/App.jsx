@@ -65,6 +65,7 @@ function App() {
   // const [calluserLoader,setCalluserLoader]=useState(false);
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
+  const [retweetLoader,setRetweetLoader]=useState(false);
   const [dark,setDark]=useState(false);
   const [forgotPasswdForm,setForgotPasswdForm]=useState(false);
   const [setpasswd,setSetpasswd]=useState(false);
@@ -213,7 +214,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen}}>
+    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,callfollowing,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>

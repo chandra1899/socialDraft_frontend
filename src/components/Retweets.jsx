@@ -3,12 +3,17 @@ import { appState } from '../App'
 import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
 
+ //loader
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 const Retweets = () => {
-    const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+    const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview,retweetLoader,setRetweetLoader}=useContext(appState);
     const navigate=useNavigate()
     const [yourretweets,setYourretweets]=useState([])
 
     const getretweets=async ()=>{
+      setRetweetLoader(true);
       let res= await fetch('http://localhost:8000/api/post/yourretweets',{
       method:'GET',
       // mode: 'no-cors',
@@ -19,6 +24,7 @@ const Retweets = () => {
       },
       credentials:'include', 
     });
+    setRetweetLoader(false)
     let data=await res.json();
     if(res.status===200){
         setYourretweets(data.yourretweets)
@@ -56,8 +62,8 @@ const Retweets = () => {
    }, []);
   return (
     <>
-      {yourretweets.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-blue-600 mt-10'>....... No Retweets .........</p></>}
-      <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
+      {yourretweets.length===0 && !retweetLoader && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-blue-600 mt-10'>....... No Retweets .........</p></>}
+      {!retweetLoader && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     <div className='flex flex-col overflow-scroll no-scrollbar '>
     {yourretweets.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]    transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 `}>
@@ -70,7 +76,10 @@ const Retweets = () => {
     </div>
     ))}
     </div>
-   </div>
+   </div>}
+   {retweetLoader && <div className='m-auto'> <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box></div>}
     </>
   )
 }
