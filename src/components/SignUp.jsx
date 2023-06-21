@@ -158,7 +158,7 @@ const SignUp = () => {
             value={form.name}
             onChange={handleChange}
             placeholder="what's your name?"
-            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
             />
           </label>
       <label className='flex flex-col'>
@@ -169,7 +169,7 @@ const SignUp = () => {
             value={form.email}
             onChange={handleChange}
             placeholder="what's your email?"
-            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
             />
           </label>
       <label className='flex flex-col'>
@@ -180,7 +180,7 @@ const SignUp = () => {
             value={form.password}
             onChange={handleChange}
             placeholder="Enter password?"
-            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
             />
           </label>
       <label className='flex flex-col'>
@@ -191,7 +191,7 @@ const SignUp = () => {
             value={form.confirm_password}
             onChange={handleChange}
             placeholder="Enter Confirm_password?"
-            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+            className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
             />
           </label>
           

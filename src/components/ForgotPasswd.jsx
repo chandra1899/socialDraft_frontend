@@ -73,7 +73,7 @@ const ForgotPasswd = forwardRef((props,ref) => {
           value={email}
           onChange={handleChange}
           placeholder="Enter Email"
-          className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+          className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
         </label>   
     </form>

@@ -48,7 +48,8 @@ function App() {
   //   }
   const navigate=useNavigate();
   const classes=useStyles();
-  const socket= io('http://localhost:8000');
+  const postsSocket = io("http://localhost:8000/posts");
+  // console.log(postsSocket);
 
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
@@ -79,6 +80,7 @@ function App() {
   const [imgsrc,setimgsrc]=useState('');
   const confirmFormchild=useRef(null);
   const forgotPasswdFormchild=useRef(null);
+  
     const calluser=async ()=>{
       try {
         setLoading(true)
@@ -167,8 +169,8 @@ function App() {
       if(res.status===200){
         navigate('/')
         setConfirmForm(false)
+        setConfirm(false);
         setPostId('')
-        setConfirmForm(false)
           toast.success('Successfully deleted post', {
             position: "bottom-left",
             autoClose: 2000,
@@ -201,13 +203,15 @@ function App() {
     }
     useEffect( () => {
        calluser();
-       if(postId){
+      console.log(user);
+    }, []);
+    useEffect( () => {
+       if(postId && confirm){
         deletePost();
        }
-      console.log(user);
     }, [confirm]);
     setBodyColor({color: `${dark?"black":"white"}`})
-    
+   
 
   return (
     <>
@@ -226,17 +230,17 @@ function App() {
     {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[170vh] w-[150vw] z-[39] ' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>
-    <CreatePostForm/>
+    <CreatePostForm postsSocket={postsSocket}/>
     <Login/>
     <div  className={`bg-gradient-to-b rounded-3xl fixed left-[9%] sm:left-[29%] top-6 right-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[95%] sm:max-w-[69%] p-1 flex flex-row sm:border-2  `}>
       
       <Routes >
-        <Route exact path='/' element={<Home/>} />
+        <Route exact path='/' element={<Home postsSocket={postsSocket}/>} />
         <Route exact path='/bookmark' element={<Bookmark/>} />
         <Route exact path='/profile' element={<Profile/>} />
         <Route exact path='/post/:id' element={<Post/>} />
         <Route exact path='/people/:id' element={<People/>} />
-        <Route exact path='/chat/:id' element={<Chat msgs={msgs} setMsgs={setMsgs} socket={socket}/>} />
+        <Route exact path='/chat/:id' element={<Chat msgs={msgs} setMsgs={setMsgs}/>} />
       </Routes>
      
      <Right/>

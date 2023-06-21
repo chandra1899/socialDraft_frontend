@@ -3,8 +3,10 @@ import {appState} from '../App'
 import Chat_bottom from './Chat_bottom'
 import Chat_top from './Chat_top'
 import { useNavigate ,useParams} from 'react-router-dom'
+import { io } from "socket.io-client";
 
-const Chat = ({msgs,setMsgs,socket}) => {
+const Chat = ({msgs,setMsgs}) => {
+  const chatSocket= io('http://localhost:8000/chat');
   const scrollRef = useRef();
     const {dark,user,setIsEmojiOpen}=useContext(appState);
     const {id}=useParams()
@@ -30,13 +32,13 @@ const Chat = ({msgs,setMsgs,socket}) => {
      }, [user]);
       useEffect(() => {
         if (id && user) {
-          socket.emit("add-user", user._id);
+          chatSocket.emit("add-user", user._id);
         }
       }, [id]);
      
       useEffect(() => {
-        if (socket) {
-            socket.on("msg-recieve", (msg) => {
+        if (chatSocket) {
+          chatSocket.on("msg-recieve", (msg) => {
                 // console.log('msgs',msgs);
                 setArrivalMessage({ fromSelf: false, message: msg });
               });
@@ -59,7 +61,7 @@ const Chat = ({msgs,setMsgs,socket}) => {
                </div>
         ))}
         </div>
-        <Chat_bottom msgs={msgs} setMsgs={setMsgs} socket={socket}/> 
+        <Chat_bottom msgs={msgs} setMsgs={setMsgs} chatSocket={chatSocket}/> 
     </div>
   )
 }

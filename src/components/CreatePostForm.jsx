@@ -3,8 +3,8 @@ import {appState} from '../App'
 
 // import { useNavigate ,useParams} from "react-router-dom";
 
-const CreatePostForm = () => {
-    const {postForm,setPostForm,dark,toast}=useContext(appState);
+const CreatePostForm = ({postsSocket}) => {
+    const {postForm,setPostForm,dark,toast,setPosts,posts}=useContext(appState);
 
 
     const [post,setpost]=useState("")
@@ -32,7 +32,7 @@ const CreatePostForm = () => {
         const formData = new FormData();
         formData.append('postPhoto', photo);
         formData.append('content', post);
-        console.log(photo);
+        // console.log(photo);
         // const {name,description,photo}=form
         let res=await fetch("http://localhost:8000/api/post/create",{
             method:"POST",
@@ -42,10 +42,16 @@ const CreatePostForm = () => {
             credentials:'include', 
             body:formData
           })
+          let data=await res.json();
+          // console.log(data.post);
           if(res.status===200){
             setPostForm(false)
             setpost("")
+            // setPosts([data.post,...posts])
               // window.alert("sucessfully created post")
+              let newPost=data.post;
+              // console.log(newPost);
+              postsSocket.emit("uploadedPost",{newPost});
             
               toast.success('sucessfully created post', {
                 position: "bottom-left",

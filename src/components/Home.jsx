@@ -20,10 +20,11 @@ import Box from '@mui/material/Box';
 //   </div>
 //   )
 
-const Home = () => {
+const Home = ({postsSocket}) => {
   const navigate=useNavigate()
   const {posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
+  const [arrivalPost, setArrivalPost] = useState(null);
 
     const getposts=async ()=>{
       setHomeLoader(true);
@@ -43,10 +44,22 @@ const Home = () => {
       setImgPreview(true)
     }
 
+    useEffect(() => {
+      if (postsSocket) {
+        postsSocket.on('postarrived',(data)=>{
+          setArrivalPost(data.newPost)
+        })
+      }
+    }, []);
+    useEffect(() => {
+      // console.log('in arrival post',arrivalPost);
+      arrivalPost && setPosts((prev) => [arrivalPost,...prev]);
+    }, [arrivalPost]);
   useEffect( () => {
     calluser()
     getposts();
  }, []);
+ 
 
   return (
     

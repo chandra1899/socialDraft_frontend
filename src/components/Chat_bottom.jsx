@@ -5,7 +5,7 @@ import { IoMdSend } from "react-icons/io";
 import {appState} from '../App'
 import { useNavigate ,useParams} from 'react-router-dom'
 
-const Chat_bottom = ({msgs,setMsgs,socket}) => {
+const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
     const {id}=useParams()
     const {dark,isEmojiOpen,setIsEmojiOpen,user}=useContext(appState);
     const [message,setMessage]=useState('')
@@ -30,7 +30,7 @@ const Chat_bottom = ({msgs,setMsgs,socket}) => {
           if(res.status===200){
             setMessage('');
             setMsgs([...msgs,data.msg])
-            socket.emit("send-msg", {
+            chatSocket.emit("send-msg", {
               to: id,
               from: user._id,
               msg:message,
