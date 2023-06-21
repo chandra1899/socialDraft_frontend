@@ -99,7 +99,7 @@ const EditProfileForm = () => {
           value={form.email}
           onChange={handleChange}
           placeholder="what's your email?"
-          className={`${dark?"bg-blue-900 placeholder:text-secondary":"bg-white"} py-4 px-6  text-red-400 rounded-lg outline-none border-none font-medium`}
+          className={`${dark?"bg-blue-900 placeholder:text-secondary":"bg-white"} py-4 px-4  text-red-400 rounded-lg outline-none border-none font-medium`}
           disabled
           />
         </label>
@@ -111,7 +111,7 @@ const EditProfileForm = () => {
           value={form.name}
           onChange={handleChange}
           placeholder="Enter Name?"
-          className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-6  rounded-lg outline-none border-none font-medium`}
+          className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
         </label>
     <label className='flex flex-col'>
@@ -122,7 +122,7 @@ const EditProfileForm = () => {
            cols="30" 
            rows="5"
            onChange={handleChange}
-           className={`${dark?"bg-blue-900 text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black"} py-4 px-6   rounded-lg outline-none border-none font-medium resize-none`}
+           className={`${dark?"bg-blue-900 text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black"} py-4 px-3 rounded-lg outline-none border-none font-medium resize-none`}
            ></textarea>
         </label>
     <label className='flex flex-col'>

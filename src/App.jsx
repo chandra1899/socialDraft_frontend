@@ -1,5 +1,5 @@
 import React,{useState,createContext,useEffect,useRef} from 'react'
-import {Left,Home,Right,Signup,Login,Tweet,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm,Chat} from './components'
+import {Left,Home,Right,Signup,Login,Bookmark,Profile,Post,CommentForm,EditProfile,People,CreatePostForm,SetPasswd,ForgotPasswd,ImagePreview,ConfirmForm,Chat} from './components'
 import {
   Routes,
   Route
@@ -223,7 +223,6 @@ function App() {
     <ConfirmForm ref={confirmFormchild}/>
     {imgPreview && <ImagePreview/>}
     <SetPasswd/>
-    {/* <Tweet/> */}
     {(openSignUp || openComment || openLogin || postForm || editProfile || forgotPasswdForm || setpasswd || confirmForm) && <div className='bg-gray-900 bg-opacity-70  h-[170vh] w-[150vw] z-[39] ' onClick={handleBackDrop}></div>}
     <EditProfile/>
     <CommentForm/>

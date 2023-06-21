@@ -5,7 +5,6 @@ import ProfileBox from "./ProfileBox";
 import PostFooter from "./PostFooter";
 import Signup from "./SignUp";
 import Login from "./Login";
-import Tweet from './Tweet'
 import PostProfile from './PostProfile'
 import Profile from './Profile'
 import Bookmark from './Bookmark'
@@ -30,7 +29,6 @@ export {
     PostFooter,
     Signup,
     Login,
-    Tweet,
     PostProfile,
     Profile,
     Bookmark,
