@@ -52,7 +52,6 @@ const People = () => {
     }
     const handleFollow=async ()=>{
       if(user){
-        // setPeopleLoader(true)
         let res= await fetch(`http://localhost:8000/api/follow?id=${userdetails._id}`,{
         method:'Post',
         // mode: 'no-cors',
@@ -64,7 +63,6 @@ const People = () => {
         credentials:'include', 
       });
       let data=await res.json();
-      // setPeopleLoader(false)
       if(res.status===200){
         if(data.deleted){
           setfollow("Follow")
