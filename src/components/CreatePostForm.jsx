@@ -3,8 +3,8 @@ import {appState} from '../App'
 
 // import { useNavigate ,useParams} from "react-router-dom";
 
-const CreatePostForm = ({postsSocket}) => {
-    const {postForm,setPostForm,dark,toast,setPosts,posts}=useContext(appState);
+const CreatePostForm = () => {
+    const {postForm,setPostForm,dark,toast,setPosts,posts,postsSocket}=useContext(appState);
 
 
     const [post,setpost]=useState("")

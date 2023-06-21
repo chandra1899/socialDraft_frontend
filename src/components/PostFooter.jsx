@@ -12,7 +12,7 @@ import {Link,useLocation, useNavigate} from "react-router-dom";
 const PostFooter =  ({post}) => {
   let location = useLocation();
   const navigate=useNavigate();
-  const {user,setOpenLogin,dark,toast}=useContext(appState)
+  const {user,setOpenLogin,dark,toast,posts,setPosts,postsSocket}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
   const [retweets,setRetweets]=useState(post.retweets.length)
@@ -237,6 +237,10 @@ const PostFooter =  ({post}) => {
           
         }
         else{
+          // console.log(data.post);
+          // setPosts([data.post,...posts]);
+          let newPost=data.post;
+          postsSocket.emit("uploadedPost",{newPost});
           setRetweets(retweets+1);
           setIsretweet("Retweeted")
             toast.info('Retweet added', {

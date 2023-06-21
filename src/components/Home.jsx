@@ -3,28 +3,18 @@ import {PostFooter,PostProfile} from '.'
 // import {posts} from '../constants'
 import { appState } from '../App'
 import { useNavigate ,useParams} from "react-router-dom";
+import dropDown from '../assets/dropDown.png'
 
 //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-
-// const Post=({index})=>(
-  
-//     <div key={index} className='flex flex-col rounded-2xl mb-2 p-1 bg-black min-h-[50%]  border-2 border-slate-700 hover:border-3 hover:border-slate-300 '>
-//     <ProfileBox/>
-//     <div>
-//       <p className='font-medium text-[18px] p-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nulla modi cumque ducimus magni natus beatae autem cum? Nostrum sint incidunt cupiditate dolorum.</p>
-//     </div>
-//       <PostFooter/>
-//   </div>
-//   )
-
-const Home = ({postsSocket}) => {
+const Home = () => {
   const navigate=useNavigate()
-  const {posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+  const {posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview,postsSocket}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
   const [arrivalPost, setArrivalPost] = useState(null);
+  const [latestPosts, setLatestPosts] = useState([]);
 
     const getposts=async ()=>{
       setHomeLoader(true);
@@ -44,6 +34,11 @@ const Home = ({postsSocket}) => {
       setImgPreview(true)
     }
 
+    const updateLatestPosts=()=>{
+      setPosts((prev) => [...latestPosts,...prev]);
+      setLatestPosts([])
+    }
+
     useEffect(() => {
       if (postsSocket) {
         postsSocket.on('postarrived',(data)=>{
@@ -53,7 +48,7 @@ const Home = ({postsSocket}) => {
     }, []);
     useEffect(() => {
       // console.log('in arrival post',arrivalPost);
-      arrivalPost && setPosts((prev) => [arrivalPost,...prev]);
+      arrivalPost && setLatestPosts((prev) => [arrivalPost,...prev]);
     }, [arrivalPost]);
   useEffect( () => {
     calluser()
@@ -64,9 +59,12 @@ const Home = ({postsSocket}) => {
   return (
     
    <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2  ${homeLoader?`${dark?"bg-black":"bg-slate-200"}`:""} overflow-scroll no-scrollbar`}>
-    {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
+
+    {latestPosts.length!==0 && <div onClick={updateLatestPosts} className='absolute flex justify-center items-center top-0 left-[43%] ss:left-[28%] rounded-b-full bg-blue-600 hover:bg-blue-700 h-[38px] w-[43px]'>
+    <img src={dropDown} alt="dropDown" className='mt-1 cursor-pointer h-[40px] w-[40px]'  />
+    </div>}
+    
     <div className='flex flex-col overflow-scroll no-scrollbar '>
-      
     {!homeLoader && posts.map((post,i)=>(
      <>
       {post.type!=='Retweet'?<div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>

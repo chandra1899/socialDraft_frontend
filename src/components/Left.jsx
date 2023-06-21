@@ -81,27 +81,27 @@ const Left = () => {
         <div className={`${
             active==='/'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
           } ${dark?"hover:text-white":"hover:text-black"} text-bold text-[20px] font-medium cursor-pointer flex justify-start items-center mb-4 `}>
-            <img src={homeimg} alt="" className='ml-10 h-[20px] w-[20px]' />
+            <img src={homeimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <Link className='ml-4' to='/'>Home</Link>
         </div>
         <div className={`${
             active==='/profile'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
           } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
-            <img src={profileimg} alt="" className='ml-10 h-[20px] w-[20px]' />
+            <img src={profileimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <Link className='ml-4' to='/profile'>Profile</Link>
         </div>
         <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
-            <img src={postimg} alt="" className='ml-10 h-[20px] w-[20px]' />
+            <img src={postimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <p className='ml-4' onClick={()=>{if(user){setPostForm((pre)=>!pre)}else {setOpenLogin(true)}}}>Post</p>
         </div>
         <div className={`${
            active==='/bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`
           } ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
-            <img src={bookmarkimg} alt="" className='ml-10 h-[20px] w-[20px]' />
+            <img src={bookmarkimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <Link className='ml-4' to='/bookmark'>Bookmark</Link>
         </div>
         {user && <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
-            <img src={logoutimg} alt="" className='ml-10 h-[25px] w-[25px]' />
+            <img src={logoutimg} alt="" className='ml-10 h-[28px] w-[28px]' />
             <p className='ml-4' onClick={logout}>Log-Out</p>
         </div>}
       </div>
