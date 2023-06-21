@@ -13,7 +13,6 @@ const ForgotPasswd = forwardRef((props,ref) => {
       const handleKeyEnter=(e)=>{
         if(e.key=='Enter'){
           submit();
-          console.log('run');
         }
        }
       const submit=async ()=>{
@@ -31,7 +30,6 @@ const ForgotPasswd = forwardRef((props,ref) => {
           if(res.status===200){
             setForgotPasswdForm(false)
             setSetpasswd(true)
-            // console.log(data.email);
             setEmail('');
             setForgotpasswdemail(data.email);
             toast.info('OTP sent to email', {
@@ -44,9 +42,7 @@ const ForgotPasswd = forwardRef((props,ref) => {
                 progress: undefined,
                 theme: "dark",
                 });
-            // window.alert('successfully send otp to email');
           }else{
-            // window.alert('error in send otp to email');
             toast.error('error in sending OTP to email', {
                 position: "bottom-left",
                 autoClose: 2000,

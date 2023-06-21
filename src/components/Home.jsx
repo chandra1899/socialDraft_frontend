@@ -27,7 +27,6 @@ const Home = () => {
       let data=await res.json();
       setPosts(data.posts)
       setHomeLoader(false);
-      console.log(data.posts)
     }
     const handleimgClick=(src)=>{
       setimgsrc(src)
@@ -47,7 +46,6 @@ const Home = () => {
       }
     }, []);
     useEffect(() => {
-      // console.log('in arrival post',arrivalPost);
       arrivalPost && setLatestPosts((prev) => [arrivalPost,...prev]);
     }, [arrivalPost]);
   useEffect( () => {
@@ -68,7 +66,6 @@ const Home = () => {
     {!homeLoader && posts.map((post,i)=>(
      <>
       {post.type!=='Retweet'?<div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
-{/* {console.log(post)} */}
       <PostProfile user={post.user}/>
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-poppins text-[15px] p-2'>{post.content}</p>
@@ -80,7 +77,6 @@ const Home = () => {
     <div className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black ":"bg-white "} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
       <PostProfile user={post.user}/>
       <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600 border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.retweetedRef._id}`)}} >
-      {/* {console.log(post)} */}
       <PostProfile user={post.retweetedRef.user}/>
       <div className='ml-2 whitespace-pre-wrap break-words'>
         <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>

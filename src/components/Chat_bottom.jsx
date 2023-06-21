@@ -26,7 +26,6 @@ const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
             })
           })
           let data=await res.json();
-          console.log(data.msg);
           if(res.status===200){
             setMessage('');
             setMsgs([...msgs,data.msg])
@@ -39,13 +38,11 @@ const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
           
     }
     const handleEmojiClick = (emojiObject) => {
-        // console.log(emojiObject);
         let msg = message;
         msg += emojiObject.emoji;
         setMessage(msg);
       };
       const handleEnter=(e)=>{
-        // console.log(e.key);
         if(e.key==='Enter'){
           sendMsg();
         }

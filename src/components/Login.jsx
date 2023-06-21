@@ -27,7 +27,6 @@ const Login = () => {
           })
           const data=await res.json();
           if(res.status===200){
-              // window.alert("sucessfully logged in")
               calluser();
               
                 toast.success('sucessfully Logged In', {
@@ -43,12 +42,8 @@ const Login = () => {
               
               navigate('/')
               setOpenLogin(false)
-              console.log("data=",data,res.status);
           }
-          else if(res.status===401){
-              // window.alert("invalid email/password")
-              // console.log(data,res.status);
-              
+          else if(res.status===401){              
                 toast.warn('Invalid email/password', {
                   position: "bottom-left",
                   autoClose: 2000,
@@ -62,9 +57,7 @@ const Login = () => {
               
     
           }
-          else if(res.status===404){
-            // window.alert('unable to login');
-            
+          else if(res.status===404){            
               toast.warn('Please Sign-up', {
                 position: "bottom-left",
                 autoClose: 2000,

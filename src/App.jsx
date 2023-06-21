@@ -25,31 +25,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function App() {
-  // const [dark, setDark] = useState(true)
-  //      const submit=async ()=>{
-  //       const  url= "http://localhost:8000/api/user/create-session";
-  //       let data = {
-  //         Email: "c4746665@gmail.com",
-  //         Password: 6
-  //       };
-  //       let options = {
-  //         method: "POST",
-  //         headers: { "content-type": "application/x-www-form-urlencoded" },
-  //         data: qs.stringify(data),
-  //         url
-  //       };
-  //       axios(options)
-  //       .then(res => {
-  //         console.log("yeh we have", res);
-  //       })
-  //       .catch(er => {
-  //         console.log("no data sorry ", er);
-  //       });
-  //   }
   const navigate=useNavigate();
   const classes=useStyles();
   const postsSocket = io("http://localhost:8000/posts");
-  // console.log(postsSocket);
 
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
@@ -63,7 +41,6 @@ function App() {
   const [posts,setPosts]=useState([]);
   const [comments,setComments]=useState([]);
   const [msgs,setMsgs]=useState([])
-  // const [calluserLoader,setCalluserLoader]=useState(false);
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
   const [retweetLoader,setRetweetLoader]=useState(false);
@@ -99,17 +76,31 @@ function App() {
         if(res.status===200){
           setUser(data.can);
           callfollowing()
-          // console.log(data);
-
       }
       else{
-          // window.alert("no user found")
           setUser(undefined)
-          console.log(data.status);
+          toast.warn('please log-in', {
+            position: "bottom-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
       }
-      // console.log(data);
       } catch (err) {
-        console.log(err);
+        toast.error('error in authentication', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
       }
     }
     const callfollowing=async ()=>{
@@ -128,7 +119,6 @@ function App() {
       setFollowingLoader(false)
 
         if(res.status===200){
-          // console.log("following",data.following);
           setFollowing(data.following)
         }else{
           setFollowing([])
@@ -141,16 +131,13 @@ function App() {
       setOpenComment(false);
       setOpenLogin(false);
       if(confirmForm){
-        console.log(confirmFormchild.current);
         confirmFormchild.current.classList.remove(`bg-black-gradient`)
         confirmFormchild.current.classList.remove(`bg-slate-300`)
         confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
       }
-      console.log(confirmForm);
       if(forgotPasswdForm){
         forgotPasswdFormchild.current.classList.remove(`bg-black-gradient`)
         forgotPasswdFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
-        // forgotPasswdFormchild.current.classList.add('bg-slate-600')
       }
     }
     const deletePost=async ()=>{
@@ -165,7 +152,6 @@ function App() {
         credentials:'include', 
       });
       let data=await res.json();
-      console.log(data);
       if(res.status===200){
         navigate('/')
         setConfirmForm(false)
@@ -181,8 +167,6 @@ function App() {
             progress: undefined,
             theme: "dark",
             });
-        
-        // window.alert('sucessfully deleted post')
       }
       else{
         
@@ -196,14 +180,10 @@ function App() {
             progress: undefined,
             theme: "dark",
             });
-        
-        // window.alert('error in deleting post')
-
       }
     }
     useEffect( () => {
        calluser();
-      console.log(user);
     }, []);
     useEffect( () => {
        if(postId && confirm){

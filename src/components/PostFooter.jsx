@@ -16,18 +16,14 @@ const PostFooter =  ({post}) => {
 
   const [likes,setLikes]=useState(post.likes.length)
   const [retweets,setRetweets]=useState(post.retweets.length)
-  // const [likelogo,setLikelogo]=useState(post.likes.length)
-  // const [savelogo,setSavelogo]=useState(post.likes.length)
   const [issave,setIssaved]=useState("Save")
   const [isretweet,setIsretweet]=useState("Retweet")
   const [disable,setDisable]=useState(false)
   const [islike,setIslike]=useState("Like")
   const like=async ()=>{
-    // console.log(post._id);
       if(user){
         let res=await fetch(`http://localhost:8000/api/like?id=${post._id}&type=Post`,{
       method:'POST',
-      // mode: 'no-cors',
       headers:{
         'Access-Control-Allow-Origin': '*',
         Accept:"application/json",
@@ -45,11 +41,7 @@ const PostFooter =  ({post}) => {
         setIslike("Liked")
 
       }
-      // window.alert("successfully liked")
-      // console.log("like=",res.status,data);
-    }else{
-      // window.alert("unable to make like")
-     
+    }else{     
         toast.error('unable to make like', {
           position: "bottom-left",
           autoClose: 2000,
@@ -97,8 +89,16 @@ const PostFooter =  ({post}) => {
       setIssaved("Save")
     }
     else{
-      
-      window.alert("some thing is wrong")
+      toast.error('server side error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
   }
   const likepost=async ()=>{
@@ -113,7 +113,6 @@ const PostFooter =  ({post}) => {
       credentials:'include', 
     });
     let data=await res.json();
-    // console.log("liked",data.likeexit);
     if(res.status===200){
       if(data.likeexist)
       setIslike("Liked")
@@ -121,12 +120,20 @@ const PostFooter =  ({post}) => {
       setIslike("Like")
     }
     else{
-      // window.alert("some thing is wrong")
+      toast.error('server side error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     setLikes(data.likes)
   }
   const bookmark=async (e)=>{
-    // console.log(e.target.parentElement.parentElement.class);
    if(user){
     let res=await fetch(`http://localhost:8000/api/bookmark?id=${post._id}`,{
       method:'post',
@@ -185,8 +192,6 @@ const PostFooter =  ({post}) => {
           progress: undefined,
           theme: "dark",
           });
-      
-      // window.alert("some thing is wrong in bookmark")
     }
    }else{
    
@@ -221,9 +226,6 @@ const PostFooter =  ({post}) => {
         if(data.deleted){
             setRetweets(retweets-1);
             setIsretweet("Retweet")   
-          // if(location.pathname==='/bookmark'){
-          //   e.target.parentElement.parentElement.classList.add('hidden');
-          // }
             toast.info('Retweet removed', {
               position: "bottom-left",
               autoClose: 2000,
@@ -237,8 +239,6 @@ const PostFooter =  ({post}) => {
           
         }
         else{
-          // console.log(data.post);
-          // setPosts([data.post,...posts]);
           let newPost=data.post;
           postsSocket.emit("uploadedPost",{newPost});
           setRetweets(retweets+1);
@@ -294,7 +294,6 @@ const PostFooter =  ({post}) => {
       credentials:'include', 
     });
     let data=await res.json();
-    // console.log("liked",data.likeexit);
     if(res.status===200){
       if(data.retweetexist)
       setIsretweet("Retweeted")
@@ -302,7 +301,16 @@ const PostFooter =  ({post}) => {
       setIsretweet("Retweet")
     }
     else{
-      // window.alert("some thing is wrong")
+      toast.error('server side error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     setRetweets(data.retweets)
   }
@@ -312,15 +320,7 @@ const PostFooter =  ({post}) => {
     savepost()
     isRetweeted()
     }
- }, []);
-//   useEffect( () => {
-//     if(post.type==='Retweet'){
-//       setDisable(true);
-//       let retweetDiv=document.getElementById("retweet");
-//       retweetDiv.disabled = true;
-//       retweetDiv.classList.remove('cursor-pointer')
-//     }
-//  }, [user]);
+ }, [user]);
   return (
     <div className='flex flex-row justify-around items-center p-3'>
 

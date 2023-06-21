@@ -22,7 +22,6 @@ const Chat_top = () => {
             credentials:'include', 
           });
           let data=await res.json();
-        //   console.log(data.user,"receiver");
           setReceiver(data.user);
     }
     useEffect( () => {

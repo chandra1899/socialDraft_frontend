@@ -28,10 +28,18 @@ const Retweets = () => {
     let data=await res.json();
     if(res.status===200){
         setYourretweets(data.yourretweets)
-      console.log(data.yourretweets)
     }
     else{
-      window.alert("something wrong in getting your posts")
+      toast.error('server side error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     }
     const handleimgClick=(src)=>{
@@ -39,7 +47,6 @@ const Retweets = () => {
       setImgPreview(true)
     }
     useEffect( () => {
-      // calluser()
       if(user){
         getretweets();
       calluser()

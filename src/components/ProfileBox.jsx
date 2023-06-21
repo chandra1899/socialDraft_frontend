@@ -8,7 +8,6 @@ import facebook from '../assets/facebook.png'
 const ProfileBox = () => {
   const navigate=useNavigate();
   const {user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,dark}=useContext(appState)
-  // console.log(user);
   let name,email,following,followers,profile
   if(user)
   {
@@ -17,10 +16,6 @@ const ProfileBox = () => {
      profile=user.avatar
   }
   const handlegoogle=async ()=>{
-    // let w = window.outerWidth - width, h = window.outerHeight - height;
-		// let left = Math.round(window.screenX + (w / 2));
-		// let top = Math.round(window.screenY + (h / 2.5));
-    // window.open('http://localhost:8000/api/user/auth/google','width='+width+',height='+height+',left='+left+',top='+top+',toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0')
     window.open('http://localhost:8000/api/user/auth/google','_self')
   }
   const handlefacebook=async ()=>{

@@ -48,9 +48,7 @@ const Left = () => {
       Navigate('/');
       calluser();
       callfollowing()
-    }else{
-      // window.alert('error in logout')
-      
+    }else{      
               toast.error('error in logging out', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -66,11 +64,9 @@ const Left = () => {
   }
   useEffect( () => {
     calluser();
-   // console.log(user);
  }, []);
   useEffect( () => {
     setActive(location.pathname)
-    // console.log(location.pathname)
  }, [location.pathname]);
 
   return (
@@ -92,7 +88,21 @@ const Left = () => {
         </div>
         <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
             <img src={postimg} alt="" className='ml-10 h-[25px] w-[25px]' />
-            <p className='ml-4' onClick={()=>{if(user){setPostForm((pre)=>!pre)}else {setOpenLogin(true)}}}>Post</p>
+            <p className='ml-4' onClick={()=>{
+              if(user){setPostForm((pre)=>!pre)}
+              else {
+                setOpenLogin(true)
+                toast.warn('please log-in', {
+                  position: "bottom-left",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  });
+                }}}>Post</p>
         </div>
         <div className={`${
            active==='/bookmark'?`${dark?"text-white":"text-black"}`:`${dark?"text-secondary":"text-[#841808]"}`

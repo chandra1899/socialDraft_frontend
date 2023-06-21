@@ -2,7 +2,6 @@ import React,{useState,useContext} from 'react'
 import {appState} from '../App'
 import {Comment} from '../components'
 import ReactDOM from 'react-dom';
-// import { useNavigate ,useParams} from "react-router-dom";
 
 const CommentForm = () => {
     const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast,commentEvent,setCommentEvent,user,comments,setComments}=useContext(appState);
@@ -26,7 +25,6 @@ const CommentForm = () => {
           })
           const data=await res.json();
           if(res.status===200){
-            console.log(data.comment);
             setComments([...comments,data.comment]);
             setOpenComment(false)
             setComment('')
@@ -39,12 +37,9 @@ const CommentForm = () => {
               draggable: true,
               progress: undefined,
               theme: "dark",
-              });
-              // window.alert("sucessfully created comment")
-              
+              });              
           }
           else{
-              // window.alert("unable to create comment")
               toast.error('error in creating a Comment', {
                 position: "bottom-left",
                 autoClose: 2000,

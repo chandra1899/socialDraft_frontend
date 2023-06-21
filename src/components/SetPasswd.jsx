@@ -19,8 +19,6 @@ const SetPasswd = () => {
        }
       const submit=async ()=>{
         const {password,confirm_password,otp}=form
-        console.log(form);
-        console.log('hello');
         let res=await fetch("http://localhost:8000/api/user/verifyOtp",{
             method:"POST",
             headers:{
@@ -40,7 +38,6 @@ const SetPasswd = () => {
                 confirm_password:'',
                 otp:''
               })
-            // window.alert('successfully set password');
             toast.success('sucessfully changed password', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -75,7 +72,6 @@ const SetPasswd = () => {
                 });
           }
           else{
-            // window.alert('error in et password');
             toast.error('error in changing password', {
                 position: "bottom-left",
                 autoClose: 2000,

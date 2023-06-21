@@ -21,7 +21,6 @@ const Post = () => {
     const [postLoader,setPostLoader]=useState(false)
     const handleDeletePost=async (id)=>{
       setConfirmForm(true);
-      // console.log(id);
       setPostId(id)
     }
     const getpost=async ()=>{
@@ -38,18 +37,23 @@ const Post = () => {
           setPostLoader(false)
           if(res.status===200 && data.post!==null){
             setPost(data.post)
-            console.log(data.post);
             setComments(data.post.comments)
-            console.log(data.post);
           }else if(data.post===null){
-            console.log(post);
           }
           else{
-            window.alert("something wrong in geting post details")
+            toast.error('server side error', {
+              position: "bottom-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
           }
     }
     const AddComment=(e)=>{
-      // console.log(e.target.parentElement.querySelector('.commentDiv'));
       setCommentEvent(e.target)
       {if(user){
         setOpenComment(true);
@@ -71,7 +75,6 @@ const Post = () => {
     }
     }
     const handleimgClick=(src)=>{
-      console.log(src);
       setimgsrc(src)
       setImgPreview(true)
     }
@@ -104,7 +107,6 @@ const Post = () => {
          <div className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black ":"bg-white "} hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
          <PostProfile user={post.user}/>
          <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600 border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.retweetedRef._id}`)}} >
-         {/* {console.log(post)} */}
          <PostProfile user={post.retweetedRef.user}/>
          <div className='ml-2 whitespace-pre-wrap break-words'>
            <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
@@ -117,7 +119,6 @@ const Post = () => {
       }
        </>
         <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
-        {/* {console.log("post=",post)} */}
        <div className='commentDiv'>
        {comments.map((comment,i)=>(
         <Comment key={i} comment={comment}/>

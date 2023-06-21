@@ -15,7 +15,6 @@ const Comments = ({comment}) => {
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
   const like=async ()=>{
-    // console.log(post._id);
     if(user){
       let res=await fetch(`http://localhost:8000/api/like?id=${comment._id}&type=Comment`,{
       method:'POST',
@@ -37,13 +36,30 @@ const Comments = ({comment}) => {
         setIslike(true)
 
       }
-      // window.alert("successfully liked")
-      // console.log("like=",res.status,data);
     }else{
-      window.alert("unable to make like")
+      toast.error('serverside error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     }else{
-      setOpenLogin(true)
+      setOpenLogin(true)    
+      toast.warn('please log-in', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
   }
   const likecomment=async ()=>{
@@ -58,7 +74,6 @@ const Comments = ({comment}) => {
       credentials:'include', 
     });
     let data=await res.json();
-    // console.log("liked",data.likeexit);
     if(res.status===200){
       if(data.likeexist)
       setIslike(true)
@@ -66,12 +81,20 @@ const Comments = ({comment}) => {
       setIslike(false)
     }
     else{
-      // window.alert("some thing is wrong in checking like")
+      toast.error('serverside error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     setLikes(data.likes)
   }
   const handleDeleteComment=async (e)=>{
-    // console.log(e.target.parentElement);
     let res= await fetch(`http://localhost:8000/api/comment/delete/${comment._id}`,{
       method:'GET',
       // mode: 'no-cors',
@@ -83,7 +106,6 @@ const Comments = ({comment}) => {
       credentials:'include', 
     });
     if(res.status===200){
-      // window.alert('sucessfully deleted comment')
     e.target.parentElement.classList.add('hidden');
       toast.success('Comment removed', {
         position: "bottom-left",
@@ -97,7 +119,6 @@ const Comments = ({comment}) => {
         });
     }
     else{
-      // window.alert('error in deleting comment')
       toast.error('Comment removed', {
         position: "bottom-left",
         autoClose: 2000,

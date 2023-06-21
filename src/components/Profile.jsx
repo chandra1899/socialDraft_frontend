@@ -5,13 +5,18 @@ import logo from '../assets/logo.png'
 import {PostFooter,PostProfile,Retweets} from '.'
  import { useNavigate } from 'react-router-dom'
  import BACK from '../assets/BACK.png'
+ //loader
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Profile = () => {
   const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const navigate=useNavigate()
   const [yourposts,setYourposts]=useState([])
+  const [postLoader,setPostLoader]=useState(false);
   const [selected,setSelected]=useState('Posts')
   const getposts=async ()=>{
+    setPostLoader(true)
     let res= await fetch('http://localhost:8000/api/post/yourposts',{
     method:'GET',
     // mode: 'no-cors',
@@ -22,13 +27,22 @@ const Profile = () => {
     },
     credentials:'include', 
   });
+  setPostLoader(false)
   let data=await res.json();
   if(res.status===200){
     setYourposts(data.yourposts)
-    console.log(data.yourposts)
   }
   else{
-    window.alert("something wrong in getting your posts")
+    toast.error('server side error', {
+      position: "bottom-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
   }
   const handleimgClick=(src)=>{
@@ -36,7 +50,6 @@ const Profile = () => {
     setImgPreview(true)
   }
   useEffect( () => {
-    // calluser()
     if(user){
       getposts();
     calluser()
@@ -93,10 +106,13 @@ const Profile = () => {
           <div className={`h-[50%] bg-blue-500 w-[45px] xs:w-[70px] rounded-full absolute ${selected==='Posts'?'left-[5%] xs:left-[13%]':'right-[13%] xs:right-[17%]'} translate-all duration-[5000ms] ease-in-out`}></div>       
         </div>
         </div>
-      {yourposts.length===0 && selected==='Posts' &&<><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
+        {postLoader && <div className='m-auto mt-1'> <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box></div>}
+      {yourposts.length===0 && !postLoader && selected==='Posts' &&<><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
       {selected==='Posts' && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
-    <div className='flex flex-col overflow-scroll no-scrollbar '>
+    {!postLoader && <div className='flex flex-col overflow-scroll no-scrollbar '>
     {yourposts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]    transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 `}>
       <PostProfile user={user}/>
@@ -107,10 +123,11 @@ const Profile = () => {
         <PostFooter post={post} />
     </div>
     ))}
-    </div>
+    </div>}
    </div>}
    {selected!=='Posts' && <Retweets/>}
     </div>}
+    
     </>
   )
 }

@@ -24,7 +24,6 @@ const Chat = ({msgs,setMsgs}) => {
             })
           })
           let data=await res.json();
-          console.log(data.projectedMessages);
           setMsgs(data.projectedMessages)
     }
     useEffect( () => {
@@ -39,7 +38,6 @@ const Chat = ({msgs,setMsgs}) => {
       useEffect(() => {
         if (chatSocket) {
           chatSocket.on("msg-recieve", (msg) => {
-                // console.log('msgs',msgs);
                 setArrivalMessage({ fromSelf: false, message: msg });
               });
         }

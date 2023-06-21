@@ -18,34 +18,20 @@ const EditProfileForm = () => {
       }
       const handlePhotoUpload=(e)=>{
         setForm({...form,photo:e.target.files[0]})
-        // console.log("photo",form.photo);
-        // console.log("photo2",e.target.files[0]);
       }
     const submit=async ()=>{
     const formData = new FormData();
     formData.append('avatar', form.photo);
     formData.append('description', form.description);
     formData.append('name', form.name);
-      console.log(form.photo);
-        // const {name,description,photo}=form
         let res=await fetch("http://localhost:8000/api/user/update",{
             method:"POST",
-            // headers:{
-            //   // 'Content-Type': 'multipart/form-data; boundary=MyBoundary'
-            // },
             credentials:'include', 
             body:formData
           })
-    
-
-  //   let res=await axios.post('http://localhost:8000/api/user/update', formData,{
-  //     withCredentials: true,
-  //     headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'
-  // }})
   document.getElementById("update_profile").value = "";
           const data=await res.json();
           if(res.status===200){
-            // window.alert("updated")
             setForm({...form,photo:''})
               toast.success('sucessfully Updated your profile', {
                 position: "bottom-left",
@@ -59,12 +45,9 @@ const EditProfileForm = () => {
                 });
            
             setUser(data.user)
-            // Navigate('/')
             setEditProfile(false)
           }
-          else{
-            // window.alert("something wrong in update")
-         
+          else{         
               toast.error('error in updating profile', {
                 position: "bottom-left",
                 autoClose: 2000,

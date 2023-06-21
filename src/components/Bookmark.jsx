@@ -26,10 +26,18 @@ const Bookmark = () => {
     setBookmarkLoader(false);
     if(res.status===200){
       setSavedposts(data.savedposts)
-      // console.log(data.savedposts);
     }
     else{
-      window.alert("something wrong in fetching saved posts");
+      toast.error('server side error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
   }
   const handleimgClick=(src)=>{
@@ -68,7 +76,6 @@ const Bookmark = () => {
     {savedposts.map((post,i)=>(
       <>
       {post.bookmark.type!=='Retweet'?<div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
-{/* {console.log(post)} */}
       <PostProfile user={post.bookmark.user}/>
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post.bookmark._id}`)}}>
         <p className='font-medium text-[16px] p-2 '>{post.bookmark.content}</p>
@@ -80,7 +87,6 @@ const Bookmark = () => {
     <div className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black ":"bg-white "} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
       <PostProfile user={post.bookmark.user}/>
       <div className={`flex flex-col ml-6 rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  border-t-2 border-l-2 ${dark?'border-slate-700':'border-slate-300'} transition duration-150 ease-in-out  cursor-pointer`} onClick={()=>{navigate(`/post/${post.bookmark.retweetedRef._id}`)}} >
-      {/* {console.log(post)} */}
       <PostProfile user={post.bookmark.retweetedRef.user}/>
       <div className='ml-2 break-words'>
         <p className='font-medium text-[16px] p-2 '>{post.bookmark.retweetedRef.content}</p>
@@ -91,16 +97,6 @@ const Bookmark = () => {
     </div>
     }
      </>
-//       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black":"bg-white"} min-h-[50%]  ${dark?"hover:bg-[#112]":"hover:bg-slate-100"} `}>
-//       <PostProfile user={post.bookmark
-// .user}/>
-//       <div className='ml-2 cursor-pointer break-words' onClick={()=>{navigate(`/post/${post.bookmark
-// ._id}`)}}>
-//         <p className='font-medium text-[16px] p-2'>{post.bookmark.content}</p>
-//       </div>
-//       {post.bookmark.photo && <img src={`http://localhost:8000/photo/${post.bookmark.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.bookmark.photo}`)} />}
-//         <PostFooter post={post.bookmark} />
-//     </div>
     ))}
     </div>}
     {bookmarkLoader && <div className='m-auto ml-[40%] mt-[40%]'> <Box sx={{ display: 'flex' }}>

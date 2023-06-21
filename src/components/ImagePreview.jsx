@@ -9,7 +9,6 @@ const ImagePreview = () => {
    <div className='bg-gray-900 bg-opacity-80 relative  transition duration-150 ease-in-out  flex justify-center items-center  h-[100vh] w-[100vw] z-40' >
     <img src={close} alt="close" className='absolute top-5 right-9 cursor-pointer' onClick={()=>{setImgPreview(false)}}/>
     <img className=' px-5 w-[70%] h-[95%] rounded-xl object-contain mt-3' src={imgsrc} alt="imagePreview" />
-    {/* http://localhost:8000/photo//frontend/src/assets/uploads/users/posts/postPhoto-1685734472483-768104805 */}
    </div>
   )
 }

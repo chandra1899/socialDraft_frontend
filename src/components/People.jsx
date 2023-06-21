@@ -12,7 +12,6 @@ const People = () => {
     const {user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
-    // console.log(id);
     const [userdetails,setUserdetails]=useState({})
     const [peopleLoader,setPeopleLoader]=useState(false);
     const [isfollowing,setisfollowing]=useState(false)
@@ -37,10 +36,18 @@ const People = () => {
     if(res.status===200){
         setUserdetails(data.user)
         setPost(data.posts)
-        console.log(data.user);
     }
     else{
-      window.alert("something wrong in getting your posts")
+      toast.error('serverside error', {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     }
     }
     const handleFollow=async ()=>{
@@ -59,7 +66,6 @@ const People = () => {
       let data=await res.json();
       // setPeopleLoader(false)
       if(res.status===200){
-        console.log(data.deleted);
         if(data.deleted){
           setfollow("Follow")
           setfollowers(followers-1)
@@ -72,11 +78,8 @@ const People = () => {
 
         }
         callfollowing()
-          // window.alert("successfully toggled follow")
       }
-      else{
-        // window.alert("something wrong in toggling follow")
-       
+      else{       
           toast.error('error in follow/unfollow', {
             position: "bottom-left",
             autoClose: 2000,
@@ -131,7 +134,16 @@ const People = () => {
         setfollowers(data.followers)
       }
       else{
-        window.alert("something wrong in checking isfollow")
+        toast.error('serverside error', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
       }
     }
     const handleimgClick=(src)=>{
@@ -139,14 +151,31 @@ const People = () => {
       setImgPreview(true)
     }
 
+    const handleMessage=()=>{
+      if(user)
+      navigate(`/chat/${id}`);
+      else
+       {
+        setOpenLogin(true)
+       
+        toast.warn('please log-in', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+       }
+    }
+
     useEffect( () => {
         getUser();
-        console.log("user in follow",user);
         if(user){
           isfollow()
         }
-        
-        // console.log("id=",id,'user.id=',user._id);
         if(user && id==user._id){
             navigate('/profile')
         }
@@ -159,7 +188,7 @@ const People = () => {
      {!peopleLoader && <div className='flex flex-row  pr-7 justify-center items-center my-3'>
           <img src={`${userdetails.avatar?`http://localhost:8000/photo/${userdetails.avatar}`:logo}`}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
-            <div className={` flex ${dark?'bg-green-600 hover:bg-green-700':'bg-blue-600 hover:bg-blue-700'}  justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-medium tracking-[0.08em] transition duration-150 ease-in-out -mb-5 rounded-3xl`} onClick={()=>{navigate(`/chat/${id}`)}}>Message</div>
+            <div className={` flex ${dark?'bg-green-600 hover:bg-green-700':'bg-blue-600 hover:bg-blue-700'}  justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-medium tracking-[0.08em] transition duration-150 ease-in-out -mb-5 rounded-3xl`} onClick={handleMessage}>Message</div>
             <div className={`${isfollowing?`${dark?"hover:bg-slate-700":"hover:bg-slate-300"}`:"bg-white text-black hover:bg-slate-300"} flex   justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-700 border-2 mb-3 rounded-3xl`} onClick={handleFollow}>{follow}</div>
            
             <div className='flex flex-wrap justify-center items-center mx-6 '>
@@ -181,7 +210,7 @@ const People = () => {
         <p className={`ml-6  ${dark?"text-[#b2e4ecf0]":"text-slate-700"}`}>{userdetails.description}</p>
       </div>}
       {!peopleLoader && <p className={`text-[1.125rem] font-bold flex justify-center my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}> Posts</p>}
-      {posts.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
+      {posts.length===0 && !peopleLoader && <><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
       {!peopleLoader && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     <div className='flex flex-col overflow-scroll no-scrollbar '>
