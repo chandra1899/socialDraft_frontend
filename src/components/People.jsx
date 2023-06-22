@@ -160,7 +160,7 @@ const People = () => {
             navigate('/profile')
         }
         
-   }, [id]);
+   }, [id,user]);
   
   return (
     <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>
