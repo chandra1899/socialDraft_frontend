@@ -89,16 +89,7 @@ const PostFooter =  ({post}) => {
       setIssaved("Save")
     }
     else{
-      toast.error('server side error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+     
     }
   }
   const likepost=async ()=>{
@@ -120,16 +111,7 @@ const PostFooter =  ({post}) => {
       setIslike("Like")
     }
     else{
-      toast.error('server side error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+     
     }
     setLikes(data.likes)
   }
@@ -301,16 +283,7 @@ const PostFooter =  ({post}) => {
       setIsretweet("Retweet")
     }
     else{
-      toast.error('server side error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+      
     }
     setRetweets(data.retweets)
   }

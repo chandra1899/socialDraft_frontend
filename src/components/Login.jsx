@@ -1,20 +1,14 @@
 import React,{useState,useContext} from 'react'
 import {appState} from '../App'
 import { useNavigate } from 'react-router-dom';
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
 const Login = () => {
   const {openLogin,setOpenLogin,dark,calluser,setOpenSignUp,toast,setForgotPasswdForm}=useContext(appState);
   const navigate=useNavigate();
-    const [form,setForm]=useState({
-        email:'',
-        password:''
-      })
-      const handleChange=(e)=>{
-        const {name,value} =e.target;
-        setForm({...form,[name]:value})
-      }
      const submit=async ()=>{
-        const {email,password}=form
+        const {email,password}=formik.values
         let res=await fetch("http://localhost:8000/api/user/create-session",{
             method:"POST",
             headers:{
@@ -83,18 +77,35 @@ const Login = () => {
                 });
             
           }
-          setForm({
-            email:'',
-            password:''
-          })
+       formik.values.email='';
+       formik.values.password='';
      }
      const forgotpassword=()=>{
         setOpenLogin(false)
         setForgotPasswdForm(true);
      }
+     const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: ''
+      },
+      validationSchema:Yup.object({
+        email:Yup.string()
+        .email('Enter valid email')
+        .required('required'),
+        password:Yup.string()
+        .min(6,'password must be min 6 characters')
+        .matches(/[0-9]/, 'Password requires a number')
+        .matches(/[a-z]/, 'Password requires a lowercase letter')
+        .matches(/[A-Z]/, 'Password requires an uppercase letter')
+        .matches(/[^\w]/, 'Password requires a symbol')
+        .required('required'),
+      }),
+      onSubmit:submit
+    });
      const handleKeyEnter=(e)=>{
       if(e.key=='Enter'){
-        submit();
+        formik.handleSubmit()
       }
      }
   return (
@@ -105,30 +116,35 @@ const Login = () => {
           <input 
           type="email" 
           name='email'
-          value={form.email}
-          onChange={handleChange}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           placeholder="what's your email?"
           className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
+          {formik.touched.email && formik.errors.email && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.email}</p>}
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
           <input 
           type="password" 
           name='password'
-          value={form.password}
-          onChange={handleChange}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           placeholder="Enter password?"
           className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
+          {formik.touched.password && formik.errors.password && <p className={`${dark?"text-white ":"text-red-600 "} text-[0.8rem] ml-1  tracking-widest`}>{formik.errors.password}</p>}
         </label>
    
     </form>
     <span className={`${dark?"text-white hover:text-secondary":"text-red-700 hover:text-black"} cursor-pointer ml-5 text-[0.8rem]  tracking-widest`} onClick={forgotpassword} >forgot password?</span>
     <div className='m-6 mb-4 right-3 font-medium' >
     <button className={`h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 ${dark?"hover:bg-slate-700":"hover:bg-slate-100"}`} onClick={()=>{setOpenLogin(false)}} >Cancel</button>
-      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700 ${dark?"":" text-white"}`} onClick={submit}>Login</button>
-    <span className={`${dark?"text-white hover:text-secondary":"text-red-800 hover:text-black"} cursor-pointer ml-5 text-[0.8rem]  tracking-widest`} onClick={()=>{setOpenLogin(false);setOpenSignUp(true)}}>SignUp</span>
+      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 bg-green-600 hover:bg-green-700 ${dark?"":" text-white"}`} onClick={formik.handleSubmit}>Login</button>
+    <span className={`${dark?"text-white hover:text-secondary":"text-red-800 hover:text-black"} cursor-pointer ml-5 text-[0.8rem]  tracking-widest`} onClick={()=>{setOpenLogin(false);setOpenSignUp(true);formik.values.email='';
+       formik.values.password='';}}>SignUp</span>
 
     </div>
   </div>

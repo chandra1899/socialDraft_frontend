@@ -38,16 +38,7 @@ const People = () => {
         setPost(data.posts)
     }
     else{
-      toast.error('serverside error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+     
     }
     }
     const handleFollow=async ()=>{
@@ -132,16 +123,7 @@ const People = () => {
         setfollowers(data.followers)
       }
       else{
-        toast.error('serverside error', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+        
       }
     }
     const handleimgClick=(src)=>{

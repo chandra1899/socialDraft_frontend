@@ -1,29 +1,22 @@
 import React,{useContext,useEffect,useState} from 'react'
 import { appState } from '../App'
 import { useNavigate } from 'react-router-dom';
-
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
 const EditProfileForm = () => {
   const Navigate=useNavigate()
     const {editProfile,setEditProfile,user,setUser,dark,toast}=useContext(appState);
-    const [form,setForm]=useState({
-        email:'',
-        name:'',
-        description:'',
-        photo:''
-      })
-      const handleChange=(e)=>{
-        const {name,value} =e.target;
-        setForm({...form,[name]:value})
-      }
+    const [photo,setPhoto]=useState('')
+
       const handlePhotoUpload=(e)=>{
-        setForm({...form,photo:e.target.files[0]})
+        setPhoto(e.target.files[0])
       }
     const submit=async ()=>{
     const formData = new FormData();
-    formData.append('avatar', form.photo);
-    formData.append('description', form.description);
-    formData.append('name', form.name);
+    formData.append('avatar', photo);
+    formData.append('description', formik.values.description);
+    formData.append('name', formik.values.name);
         let res=await fetch("http://localhost:8000/api/user/update",{
             method:"POST",
             credentials:'include', 
@@ -32,7 +25,7 @@ const EditProfileForm = () => {
   document.getElementById("update_profile").value = "";
           const data=await res.json();
           if(res.status===200){
-            setForm({...form,photo:''})
+            setPhoto('')
               toast.success('sucessfully Updated your profile', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -61,14 +54,30 @@ const EditProfileForm = () => {
             
           }
     }
+    const formik = useFormik({
+      initialValues: {
+        email:'',
+        name:'',
+        description:'',
+      },
+      validationSchema:Yup.object({
+        name:Yup.string()
+        .min(6,'password must be min 6 characters')
+        .required('required'),
+        email:Yup.string()
+        .email('Enter valid email')
+        .required('required'),
+      }),
+      onSubmit:submit
+    });
     useEffect( () => {
      if(user){
-      form.email=user.email;
-      form.name=user.name;
+      formik.values.email=user.email;
+      formik.values.name=user.name;
       if(user.description===undefined){
-        form.description='';
+        formik.values.description='';
       }
-      else form.description=user.description
+      else formik.values.description=user.description
      }
    }, [user]);
   return (
@@ -79,34 +88,40 @@ const EditProfileForm = () => {
           <input 
           type="email" 
           name='email'
-          value={form.email}
-          onChange={handleChange}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           placeholder="what's your email?"
           className={`${dark?"bg-blue-900 placeholder:text-secondary":"bg-white"} py-4 px-4  text-red-400 rounded-lg outline-none border-none font-medium`}
           disabled
           />
+          {formik.touched.email && formik.errors.email && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.email}</p>}
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
           <input 
           type="text" 
           name='name'
-          value={form.name}
-          onChange={handleChange}
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           placeholder="Enter Name?"
           className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
+          {formik.touched.name && formik.errors.name && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.name}</p>}
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Description About You</span>
           <textarea 
           name="description"
-           value={form.description} 
+          value={formik.values.description}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
            cols="30" 
            rows="5"
-           onChange={handleChange}
            className={`${dark?"bg-blue-900 text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black"} py-4 px-3 rounded-lg outline-none border-none font-medium resize-none`}
            ></textarea>
+           {formik.touched.description && formik.errors.description && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.description}</p>}
         </label>
     <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Update Profile Photo with</span>
@@ -120,8 +135,13 @@ const EditProfileForm = () => {
    
     </form>
     <div className='m-6 mb-3 right-3 font-medium'>
-    <button className={`h-[42px] ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 `} onClick={()=>{setEditProfile(false)}} >Cancel</button>
-      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`} onClick={submit}>Update</button>
+    <button className={`h-[42px] ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 `} onClick={()=>{setEditProfile(false); formik.values.email=user.email;
+      formik.values.name=user.name;
+      if(user.description===undefined){
+        formik.values.description='';
+      }
+      else formik.values.description=user.description}} >Cancel</button>
+      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1 ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`} onClick={formik.handleSubmit}>Update</button>
     </div>
   </div>
   )

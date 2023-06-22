@@ -1,18 +1,16 @@
 import React,{useState,useContext,forwardRef } from 'react'
 import {appState} from '../App'
 import backArrow from '../assets/backArrow.gif'
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
 
 const ForgotPasswd = forwardRef((props,ref) => {
   const {forgotPasswdForm,setForgotPasswdForm,dark,setOpenLogin,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,toast}=useContext(appState);
 
-   const [email,setEmail]=useState('')
-      const handleChange=(e)=>{
-        setEmail(e.target.value)
-      }
       const handleKeyEnter=(e)=>{
         if(e.key=='Enter'){
-          submit();
+          formik.handleSubmit()
         }
        }
       const submit=async ()=>{
@@ -23,14 +21,13 @@ const ForgotPasswd = forwardRef((props,ref) => {
             },
             credentials:'include', 
             body:JSON.stringify({
-                email
+                email:formik.values.email
             })
           })
           let data=await res.json();
           if(res.status===200){
             setForgotPasswdForm(false)
             setSetpasswd(true)
-            setEmail('');
             setForgotpasswdemail(data.email);
             toast.info('OTP sent to email', {
                 position: "bottom-left",
@@ -54,8 +51,19 @@ const ForgotPasswd = forwardRef((props,ref) => {
                 theme: "dark",
                 });
           }
-        
+        formik.values.email="";
       }
+      const formik = useFormik({
+        initialValues: {
+          email: ''
+        },
+        validationSchema:Yup.object({
+          email:Yup.string()
+          .email('Enter valid email')
+          .required('required')
+        }),
+        onSubmit:submit
+      });
      
       
   return (
@@ -66,16 +74,18 @@ const ForgotPasswd = forwardRef((props,ref) => {
           <input 
           type="email" 
           name='email'
-          value={email}
-          onChange={handleChange}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           placeholder="Enter Email"
           className={`${dark?"bg-blue-900  text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black" } py-4 px-4  rounded-lg outline-none border-none font-medium`}
           />
+           {formik.touched.email && formik.errors.email && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.email}</p>}
         </label>   
     </form>
     <div className='m-6 mb-4 right-3 font-medium' >
-    <button className={`h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-red-500 hover:bg-red-600`} onClick={()=>{setForgotPasswdForm(false);setOpenLogin(true)}} >&larr;Back</button>
-      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1  ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`}  onClick={submit}>Send OTP</button>
+    <button className={`h-[42px] rounded-xl border-2 border-slate-600 w-[80px] m-2 p-1 bg-red-500 hover:bg-red-600`} onClick={()=>{setForgotPasswdForm(false);setOpenLogin(true);formik.values.email="";}} >&larr;Back</button>
+      <button className={`h-[42px] rounded-xl w-[80px] m-2 p-1  ${dark?"bg-green-600 hover:bg-green-700":"bg-blue-600 hover:bg-blue-700 text-white"}`}  onClick={formik.handleSubmit}>Send OTP</button>
     </div>
   </div>
   )

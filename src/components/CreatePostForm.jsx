@@ -16,6 +16,19 @@ const CreatePostForm = () => {
       }
       
      const submit=async ()=>{
+      if(post==='' && photo===''){
+        toast.info('Comment cannot be empty', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+          return ;
+      }
         const formData = new FormData();
         formData.append('postPhoto', photo);
         formData.append('content', post);

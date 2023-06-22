@@ -37,16 +37,7 @@ const Comments = ({comment,key}) => {
 
       }
     }else{
-      toast.error('serverside error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+   
     }
     }else{
       setOpenLogin(true)    
@@ -81,16 +72,7 @@ const Comments = ({comment,key}) => {
       setIslike(false)
     }
     else{
-      toast.error('serverside error', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+     
     }
     setLikes(data.likes)
   }

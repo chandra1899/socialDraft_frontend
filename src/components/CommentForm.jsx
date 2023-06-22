@@ -12,6 +12,19 @@ const CommentForm = () => {
         setComment(e.target.value)
       }
      const submit=async ()=>{
+      if(comment===''){
+        toast.info('Comment cannot be empty', {
+          position: "bottom-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+          return ;
+      }
         let res=await fetch("http://localhost:8000/api/comment/create",{
             method:"POST",
             headers:{
