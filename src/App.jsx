@@ -44,7 +44,7 @@ function App() {
   const [followingLoader,setFollowingLoader]=useState(false);
   const [loading,setLoading]=useState(false);
   const [retweetLoader,setRetweetLoader]=useState(false);
-  const [dark,setDark]=useState(false);
+  const [dark,setDark]=useState(true);
   const [forgotPasswdForm,setForgotPasswdForm]=useState(false);
   const [setpasswd,setSetpasswd]=useState(false);
   const [forgotpasswdemail,setForgotpasswdemail]=useState('');

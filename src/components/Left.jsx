@@ -89,7 +89,7 @@ const Left = () => {
         <div className={`${dark?"text-secondary":"text-[#841808]"} ${dark?"hover:text-white":"hover:text-black"} text-[18px]  font-medium cursor-pointer flex justify-start items-center mb-4 `}>
             <img src={postimg} alt="" className='ml-10 h-[25px] w-[25px]' />
             <p className='ml-4' onClick={()=>{
-              if(user){setPostForm((pre)=>!pre)}
+              if(user){setPostForm((pre)=>!pre);Navigate('/')}
               else {
                 setOpenLogin(true)
                 toast.warn('please log-in', {
@@ -178,7 +178,7 @@ const Left = () => {
         className={` font-poppins hover:text-white font-medium cursor-pointer text-[16px] text-secondary`}
         onClick={()=>{setToggle(!toggle)}}
         >
-          <p className='' onClick={()=>{setPostForm((pre)=>!pre)}}>Post</p>
+          <p className='' onClick={()=>{setPostForm((pre)=>!pre);Navigate('/')}}>Post</p>
         </li>
         <li
         className={`${

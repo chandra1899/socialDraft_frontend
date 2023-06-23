@@ -86,7 +86,7 @@ const Profile = () => {
       </div>
       <div className='m-2'>
         <h3 className={`font-bold ${dark?"text-[#3ff63f]":"text-black"} text-[1.125rem] ml-3`}>Description :</h3>
-        <p className={`ml-6 ${dark?"text-[#b2e4ecf0]":"text-slate-700"}`}>{user.description}</p>
+        <p className={`ml-6 whitespace-pre-wrap break-words ${dark?"text-[#b2e4ecf0]":"text-slate-700"}`}>{user.description}</p>
       </div>
       <div className={`text-[1.125rem] font-bold flex flex-col   my-2 ${dark?"text-[#06ceedf0]":"text-black"}`}>
         <div className='flex flex-row justify-around items-center w-[100%]'>
@@ -102,7 +102,6 @@ const Profile = () => {
       </Box></div>}
       {yourposts.length===0 && !postLoader && selected==='Posts' &&<><p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-10'>....... No Posts .........</p></>}
       {selected==='Posts' && <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
-    {/* <div className='m-2 rounded-xl  text-white w-[100%] h-[50px] border-b-2 border-slate-600 p-2'>dfdsfv</div> */}
     {!postLoader && <div className='flex flex-col overflow-scroll no-scrollbar '>
     {yourposts.map((post,i)=>(
       <div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]    transition duration-150 ease-in-out  hover:border-3 hover:border-slate-600 `}>
