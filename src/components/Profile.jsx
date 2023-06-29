@@ -94,7 +94,7 @@ const Profile = () => {
         <p className='cursor-pointer flex flex-row' onClick={()=>{setSelected('Retweets')}}><span className='hidden sm:block'>Your&nbsp;</span>Retweets&nbsp;</p>
         </div>
         <div className=' h-[10px] mx-3 relative mt-1'>
-          <div className={`h-[50%] bg-blue-500 w-[45px] xs:w-[70px] rounded-full absolute ${selected==='Posts'?'left-[5%] xs:left-[13%]':'right-[13%] xs:right-[17%]'} translate-all duration-[5000ms] ease-in-out`}></div>       
+          <div className={`h-[50%] bg-blue-500 w-[45px] xs:w-[70px] rounded-full absolute ${selected==='Posts'?'left-[11%] xs:left-[15%]':'left-[68%] xs:left-[69%]'} transition-all duration-500 ease-in-out`}></div>       
         </div>
         </div>
         {postLoader && <div className='m-auto mt-1'> <Box sx={{ display: 'flex' }}>

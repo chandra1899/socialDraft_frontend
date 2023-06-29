@@ -112,7 +112,7 @@ const Login = () => {
     <div className={`${openLogin?"":"hidden"} transition duration-150 ease-in-out  absolute z-40 top-10 left-[10%] sm:left-[30%] h-auto p-8 pb-0 w-[85%] ss:w-[500px] ${dark?"bg-black-gradient border-slate-600":"bg-slate-300 border-slate-200"} rounded-2xl border-2`}>
     <form action=""  className=' flex flex-col gap-6 mb-3' onKeyUp={handleKeyEnter}>
     <label className='flex flex-col'>
-          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Email</span>
           <input 
           type="email" 
           name='email'
@@ -125,7 +125,7 @@ const Login = () => {
           {formik.touched.email && formik.errors.email && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.email}</p>}
         </label>
     <label className='flex flex-col'>
-          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Name</span>
+          <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Your Password</span>
           <input 
           type="password" 
           name='password'
