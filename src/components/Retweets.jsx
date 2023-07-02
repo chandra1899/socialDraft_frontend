@@ -69,7 +69,7 @@ const Retweets = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post.retweet._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.retweet.content}</p>
       </div>
-      {post.retweet.photo && <img src={`http://localhost:8000/photo/${post.retweet.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.retweet.photo}`)} />}
+      {post.retweet.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.retweet._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post.retweet._id}`)} />}
         <PostFooter post={post.retweet} />
     </div>
     ))}

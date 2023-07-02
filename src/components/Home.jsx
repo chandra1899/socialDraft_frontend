@@ -69,7 +69,7 @@ const Home = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-poppins text-[15px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/photo/${post.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/photo/${post.photo}`)} />}
+      {post.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post._id}`)} />}
         <PostFooter post={post} />
     </div>:
 
@@ -80,14 +80,12 @@ const Home = () => {
       <div className='ml-2 whitespace-pre-wrap break-words'>
         <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
       </div>
-      {post.retweetedRef.photo && <img src={`http://localhost:8000/photo/${post.retweetedRef.photo}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
+      {post.retweetedRef.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.retweetedRef._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
     </div>
     <PostFooter post={post} />
     </div>
     }
      </div>
-
-
     ))}
     {homeLoader && <div className='m-auto mt-[40%]'> <Box sx={{ display: 'flex' }}>
       <CircularProgress />

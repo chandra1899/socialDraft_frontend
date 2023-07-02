@@ -40,10 +40,11 @@ const CreatePostForm = () => {
           let data=await res.json();
           if(res.status===200){
             setPostForm(false)
+            document.getElementById("create_post").value = "";
             setpost("")
               let newPost=data.post;
+              console.log(newPost);
               postsSocket.emit("uploadedPost",{newPost});
-              document.getElementById("update_profile").value = "";
               toast.success('sucessfully created post', {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -80,7 +81,7 @@ const CreatePostForm = () => {
         </label>
         <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Upload Post Photo</span>
-          <input id='update_profile' className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePostUpload} />
+          <input id='create_post' className='rounded-full cursor-pointer h-[1.9rem] bg-slate-600 text-[#3ddcf9]' type="file" name='photo'  placeholder="profile picture" onChange={handlePostUpload} />
         </label>
     </form>
     <div className='m-6 mb-3 right-3 font-medium'>

@@ -30,7 +30,7 @@ const Chat_top = () => {
   return (
     <div className={`absolute top-0 w-[100%] h-[80px] flex flex-row items-center ${dark?'bg-blue-950':'bg-slate-300'} px-5 z-10`}>
       <img src={backArrow} alt="back" className='h-[45px] w-[45px] mr-2 -ml-1 cursor-pointer' onClick={()=>{navigate(-1)}} />
-      {receiver && <img src={`http://localhost:8000/photo/${receiver.avatar}`} alt="logo" onClick={()=>{navigate(`/people/${id}`)}} className='-ml-1 h-[60px] w-[60px] m-3 rounded-full cursor-pointer' />}
+      {receiver && <img src={`${receiver.photoLocal?`http://localhost:8000/photo/${receiver.photoLocal_path}?${Date.now()}`:`http://localhost:8000/api/user/userAvatar/${receiver._id}?${Date.now()}`}`} alt="logo" onClick={()=>{navigate(`/people/${id}`)}} className='-ml-1 h-[60px] w-[60px] m-3 rounded-full cursor-pointer' />}
      {receiver && <div className='flex flex-col'>
         <h3 className='font-bold text-xl mt-3'>{receiver.name}</h3>
         <p className={`${dark?"text-[#f9990a]":"text-[#bf2bf1]"} text-[0.9rem] `}>#{receiver.email}</p>
