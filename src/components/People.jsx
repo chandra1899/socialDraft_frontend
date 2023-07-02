@@ -7,6 +7,7 @@ import {PostFooter,PostProfile} from '.'
  //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import config from '../source'
 
 const People = () => {
     const {user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
@@ -21,7 +22,7 @@ const People = () => {
     const [posts,setPost]=useState([])
     const getUser=async ()=>{
       setPeopleLoader(true)
-      let res= await fetch(`http://localhost:8000/api/user/userdetails/${id}`,{
+      let res= await fetch(`${config.baseUrl}/api/user/userdetails/${id}`,{
       method:'GET',
       // mode: 'no-cors',
       headers:{
@@ -43,7 +44,7 @@ const People = () => {
     }
     const handleFollow=async ()=>{
       if(user){
-        let res= await fetch(`http://localhost:8000/api/follow?id=${userdetails._id}`,{
+        let res= await fetch(`${config.baseUrl}/api/follow?id=${userdetails._id}`,{
         method:'Post',
         // mode: 'no-cors',
         headers:{
@@ -100,7 +101,7 @@ const People = () => {
     }
     const isfollow=async ()=>{
       setPeopleLoader(true)
-      let res= await fetch(`http://localhost:8000/api/is/follow?id=${id}`,{
+      let res= await fetch(`${config.baseUrl}/api/is/follow?id=${id}`,{
         method:'GET',
         // mode: 'no-cors',
         headers:{
@@ -166,7 +167,7 @@ const People = () => {
     <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>
        <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
      {!peopleLoader && <div className='flex flex-row  pr-7 justify-center items-center my-3'>
-          <img src={`${userdetails.photoLocal?`http://localhost:8000/photo/${userdetails.photoLocal_path}`:`http://localhost:8000/api/user/userAvatar/${userdetails._id}`}`}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
+          <img src={`${userdetails.photoLocal?`${config.baseUrl}/photo/${userdetails.photoLocal_path}`:`${config.baseUrl}/api/user/userAvatar/${userdetails._id}`}`}  className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
             <div className={` flex ${dark?'bg-green-600 hover:bg-green-700':'bg-blue-600 hover:bg-blue-700'}  justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-medium tracking-[0.08em] transition duration-150 ease-in-out -mb-5 rounded-3xl`} onClick={handleMessage}>Message</div>
             <div className={`${isfollowing?`${dark?"hover:bg-slate-700":"hover:bg-slate-300"}`:"bg-white text-black hover:bg-slate-300"} flex   justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer  font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-700 border-2 mb-3 rounded-3xl`} onClick={handleFollow}>{follow}</div>
@@ -200,7 +201,7 @@ const People = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post._id}`)} />}
+      {post.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`${config.baseUrl}/api/post/postPhoto/${post._id}`)} />}
         <PostFooter post={post} />
     </div>
     ))}

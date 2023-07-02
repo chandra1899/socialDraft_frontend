@@ -4,15 +4,16 @@ import Chat_bottom from './Chat_bottom'
 import Chat_top from './Chat_top'
 import { useNavigate ,useParams} from 'react-router-dom'
 import { io } from "socket.io-client";
+import config from '../source'
 
 const Chat = ({msgs,setMsgs}) => {
-  const chatSocket= io('http://localhost:8000/chat');
+  const chatSocket= io(`${config.baseUrl}/chat`);
   const scrollRef = useRef();
     const {dark,user,setIsEmojiOpen}=useContext(appState);
     const {id}=useParams()
   const [arrivalMessage, setArrivalMessage] = useState(null);
     const getmsgs=async ()=>{
-        let res=await fetch("http://localhost:8000/api/chat/getMessages",{
+        let res=await fetch(`${config.baseUrl}/api/chat/getMessages`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

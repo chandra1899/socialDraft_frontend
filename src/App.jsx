@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { io } from "socket.io-client";
 import setBodyColor from './setBodyColor'
+import config from './source'
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const navigate=useNavigate();
   const classes=useStyles();
-  const postsSocket = io("http://localhost:8000/posts");
+  const postsSocket = io(`${config.baseUrl}/posts`);
 
   const [user,setUser]=useState(undefined);
   const [openLogin,setOpenLogin]=useState(false);
@@ -61,7 +62,7 @@ function App() {
     const calluser=async ()=>{
       try {
         setLoading(true)
-        let res= await fetch('http://localhost:8000/api/user/getuser',{
+        let res= await fetch(`${config.baseUrl}/api/user/getuser`,{
           method:'GET',
           // mode: 'no-cors',
           headers:{
@@ -105,7 +106,7 @@ function App() {
     }
     const callfollowing=async ()=>{
       setFollowingLoader(true)
-      let res= await fetch('http://localhost:8000/api/follow/following',{
+      let res= await fetch(`${config.baseUrl}/api/follow/following`,{
           method:'GET',
           // mode: 'no-cors',
           headers:{
@@ -141,7 +142,7 @@ function App() {
       }
     }
     const deletePost=async ()=>{
-      let res= await fetch(`http://localhost:8000/api/post/delete/${postId}`,{
+      let res= await fetch(`${config.baseUrl}/api/post/delete/${postId}`,{
         method:'GET',
         // mode: 'no-cors',
         headers:{
@@ -183,6 +184,7 @@ function App() {
       }
     }
     useEffect( () => {
+      // console.log(config.baseUrl);
        calluser();
     }, []);
     useEffect( () => {

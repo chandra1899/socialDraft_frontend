@@ -3,6 +3,7 @@ import { appState } from '../App'
 import { useNavigate } from 'react-router-dom';
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import config from '../source'
 
 const EditProfileForm = () => {
   const Navigate=useNavigate()
@@ -17,7 +18,7 @@ const EditProfileForm = () => {
     formData.append('avatar', photo);
     formData.append('description', formik.values.description);
     formData.append('name', formik.values.name);
-        let res=await fetch("http://localhost:8000/api/user/update",{
+        let res=await fetch(`${config.baseUrl}/api/user/update`,{
             method:"POST",
             credentials:'include', 
             body:formData

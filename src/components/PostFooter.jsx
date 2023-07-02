@@ -8,6 +8,7 @@ import Rretweeted from '../assets/retweeted.png'
 import comment from '../assets/comment.png'
 import {appState} from '../App'
 import {Link,useLocation, useNavigate} from "react-router-dom";
+import config from '../source'
 
 const PostFooter =  ({post}) => {
   let location = useLocation();
@@ -22,7 +23,7 @@ const PostFooter =  ({post}) => {
   const [islike,setIslike]=useState("Like")
   const like=async ()=>{
       if(user){
-        let res=await fetch(`http://localhost:8000/api/like?id=${post._id}&type=Post`,{
+        let res=await fetch(`${config.baseUrl}/api/like?id=${post._id}&type=Post`,{
       method:'POST',
       headers:{
         'Access-Control-Allow-Origin': '*',
@@ -71,7 +72,7 @@ const PostFooter =  ({post}) => {
       }
   }
   const savepost=async ()=>{
-    let res=await fetch(`http://localhost:8000/api/is/saved?id=${post._id}`,{
+    let res=await fetch(`${config.baseUrl}/api/is/saved?id=${post._id}`,{
       method:'get',
       // mode: 'no-cors',
       headers:{
@@ -93,7 +94,7 @@ const PostFooter =  ({post}) => {
     }
   }
   const likepost=async ()=>{
-    let res=await fetch(`http://localhost:8000/api/is/liked?id=${post._id}&type=Post`,{
+    let res=await fetch(`${config.baseUrl}/api/is/liked?id=${post._id}&type=Post`,{
       method:'get',
       // mode: 'no-cors',
       headers:{
@@ -117,7 +118,7 @@ const PostFooter =  ({post}) => {
   }
   const bookmark=async (e)=>{
    if(user){
-    let res=await fetch(`http://localhost:8000/api/bookmark?id=${post._id}`,{
+    let res=await fetch(`${config.baseUrl}/api/bookmark?id=${post._id}`,{
       method:'post',
       // mode: 'no-cors',
       headers:{
@@ -193,7 +194,7 @@ const PostFooter =  ({post}) => {
   }
   const retweet=async ()=>{
     if(user){
-      let res=await fetch(`http://localhost:8000/api/retweet?id=${post._id}`,{
+      let res=await fetch(`${config.baseUrl}/api/retweet?id=${post._id}`,{
         method:'post',
         // mode: 'no-cors',
         headers:{
@@ -265,7 +266,7 @@ const PostFooter =  ({post}) => {
     }
   }
   const isRetweeted=async ()=>{
-    let res=await fetch(`http://localhost:8000/api/is/retweeted?id=${post._id}`,{
+    let res=await fetch(`${config.baseUrl}/api/is/retweeted?id=${post._id}`,{
       method:'get',
       // mode: 'no-cors',
       headers:{

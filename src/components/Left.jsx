@@ -12,7 +12,7 @@ import menu from '../assets/menu.svg'
 import { Link,useNavigate,useLocation } from "react-router-dom";
 import { appState } from '../App'
 import Followingsm from './Followingsm'
-
+import config from '../source'
 
 const Left = () => {
   const Navigate=useNavigate();
@@ -21,7 +21,7 @@ const Left = () => {
   const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
-    let res= await fetch(`http://localhost:8000/api/user/sign-out`,{
+    let res= await fetch(`${config.baseUrl}/api/user/sign-out`,{
       method:'GET',
       // mode: 'no-cors',
       headers:{
@@ -150,13 +150,13 @@ const Left = () => {
        className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
        onClick={()=>{setToggle(!toggle);}}
         >
-          <Link to='http://localhost:8000/api/user/auth/google'>Google login</Link>
+          <Link to={`${config.baseUrl}/api/user/auth/google`}>Google login</Link>
         </li>}
        {!user && <li
         className={`text-secondary hover:text-white font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle);}}
         >
-          <Link to='http://localhost:8000/api/user/auth/facebook'>Fackbook login</Link>
+          <Link to={`${config.baseUrl}/api/user/auth/facebook`}>Fackbook login</Link>
         </li>}
         <li
         className={`${

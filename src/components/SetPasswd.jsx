@@ -2,6 +2,7 @@ import React,{useState,useContext} from 'react'
 import {appState} from '../App'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import config from '../source'
 
 const SetPasswd = () => {
     const {openLogin,setOpenLogin,dark,setOpenSignUp,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,toast}=useContext(appState);
@@ -26,7 +27,7 @@ const SetPasswd = () => {
             });
             return ;
         }
-        let res=await fetch("http://localhost:8000/api/user/verifyOtp",{
+        let res=await fetch(`${config.baseUrl}/api/user/verifyOtp`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

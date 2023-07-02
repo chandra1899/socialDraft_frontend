@@ -4,6 +4,7 @@ import { BsEmojiSmile ,BsEmojiSmileFill} from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import {appState} from '../App'
 import { useNavigate ,useParams} from 'react-router-dom'
+import config from '../source'
 
 const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
     const {id}=useParams()
@@ -13,7 +14,7 @@ const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
         setMessage(e.target.value)
     }
     const sendMsg=async ()=>{
-        let res=await fetch("http://localhost:8000/api/chat/addMessage",{
+        let res=await fetch(`${config.baseUrl}/api/chat/addMessage`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

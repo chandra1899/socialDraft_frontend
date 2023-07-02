@@ -8,6 +8,7 @@ import {PostFooter,PostProfile,Retweets} from '.'
  //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import config from '../source'
 
 const Profile = () => {
   const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
@@ -17,7 +18,7 @@ const Profile = () => {
   const [selected,setSelected]=useState('Posts')
   const getposts=async ()=>{
     setPostLoader(true)
-    let res= await fetch('http://localhost:8000/api/post/yourposts',{
+    let res= await fetch('${config.baseUrl}/api/post/yourposts',{
     method:'GET',
     // mode: 'no-cors',
     headers:{
@@ -67,7 +68,7 @@ const Profile = () => {
     {user && <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar`}>
     <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
       <div className='flex flex-row  pr-7 justify-center items-center my-3'>
-          <img src={`${user.photoLocal?`http://localhost:8000/photo/${user.photoLocal_path}?${Date.now()}`:`http://localhost:8000/api/user/userAvatar/${user._id}?${Date.now()}`}`}  alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
+          <img src={`${user.photoLocal?`${config.baseUrl}/photo/${user.photoLocal_path}?${Date.now()}`:`${config.baseUrl}/api/user/userAvatar/${user._id}?${Date.now()}`}`}  alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
           <div className='flex flex-col  min-w-[50%] items-center'>
             <div className={`flex justify-center items-center mt-[12%]  h-[40px] w-[120px] cursor-pointer ${dark?"hover:bg-slate-700":"hover:bg-slate-100"} font-bold tracking-[0.08em] transition duration-150 ease-in-out  border-slate-400 border-2 mb-3 rounded-3xl` }onClick={()=>setEditProfile(true)}>Edit Profile</div>
             <div className='flex flex-wrap justify-center items-center mx-6 '>
@@ -109,7 +110,7 @@ const Profile = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post._id}`)} />}
+      {post.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`${config.baseUrl}/api/post/postPhoto/${post._id}`)} />}
         <PostFooter post={post} />
     </div>
     ))}

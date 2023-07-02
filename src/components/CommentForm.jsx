@@ -2,6 +2,7 @@ import React,{useState,useContext} from 'react'
 import {appState} from '../App'
 import {Comment} from '../components'
 import ReactDOM from 'react-dom';
+import config from '../source'
 
 const CommentForm = () => {
     const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast,commentEvent,setCommentEvent,user,comments,setComments}=useContext(appState);
@@ -25,7 +26,7 @@ const CommentForm = () => {
           });
           return ;
       }
-        let res=await fetch("http://localhost:8000/api/comment/create",{
+        let res=await fetch(`${config.baseUrl}/api/comment/create`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

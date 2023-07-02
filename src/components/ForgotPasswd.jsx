@@ -3,7 +3,7 @@ import {appState} from '../App'
 import backArrow from '../assets/backArrow.gif'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
-
+import config from '../source'
 
 const ForgotPasswd = forwardRef((props,ref) => {
   const {forgotPasswdForm,setForgotPasswdForm,dark,setOpenLogin,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,toast}=useContext(appState);
@@ -14,7 +14,7 @@ const ForgotPasswd = forwardRef((props,ref) => {
         }
        }
       const submit=async ()=>{
-        let res=await fetch("http://localhost:8000/api/user/sendOtp",{
+        let res=await fetch(`${config.baseUrl}/api/user/sendOtp`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

@@ -4,6 +4,7 @@ import {appState} from '../App'
 import { useNavigate } from 'react-router-dom'
 import google from '../assets/google.png'
 import facebook from '../assets/facebook.png'
+import config from '../source'
 
 const ProfileBox = () => {
   const navigate=useNavigate();
@@ -15,17 +16,17 @@ const ProfileBox = () => {
      email=user.email;
   }
   const handlegoogle=async ()=>{
-    window.open('http://localhost:8000/api/user/auth/google','_self')
+    window.open(`${config.baseUrl}/api/user/auth/google`,'_self')
   }
   const handlefacebook=async ()=>{
-    window.open('http://localhost:8000/api/user/auth/facebook','_self')
+    window.open(`${config.baseUrl}/api/user/auth/facebook`,'_self')
     
   }
   return (
     <>
     {user? <div onClick={()=>navigate('/profile')} className=' cursor-pointer flex flex-col  border-b-2 border-slate-400 mt-4 pb-3 '>
         <div className={`flex flex-row  justify-center items-center h-full px-7 ${dark?"text-white":"text-black"}`}>
-      <img src={`${user.photoLocal?`http://localhost:8000/photo/${user.photoLocal_path}?${Date.now()}`:`http://localhost:8000/api/user/userAvatar/${user._id}?${Date.now()}`}`} alt="logo" className='-ml-2 h-[60px] w-[60px] m-3 rounded-full' />
+      <img src={`${user.photoLocal?`${config.baseUrl}/photo/${user.photoLocal_path}?${Date.now()}`:`${config.baseUrl}/api/user/userAvatar/${user._id}?${Date.now()}`}`} alt="logo" className='-ml-2 h-[60px] w-[60px] m-3 rounded-full' />
       <div className='flex flex-col break-all'>
         <h3 className='font-bold text-xl mt-3'>{name}</h3>
         <p className={`${dark?"text-[#dfd9ff]":"text-[#bf2bf1]"} text-[0.9rem] `}>#{email}</p>

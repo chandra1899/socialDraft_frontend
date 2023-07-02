@@ -3,7 +3,7 @@ import retweet from '../assets/retweet.png'
 import { appState } from '../App'
 import logo from '../assets/logo.png'
 import { useNavigate } from 'react-router-dom'
-
+import config from '../source'
 //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -14,7 +14,7 @@ const Following=({following})=>{
 return (
   <div key={following._id} className={`flex flex-col  transition duration-150 ease-in-out ${dark?"bg-black hover:bg-[#232334]":"bg-white hover:bg-slate-100"} rounded-2xl left-2  p-2 mb-2 min-w-[97%] cursor-pointer`} onClick={()=>navigate(`/people/${following.followable._id}`)}>
     <div className='flex flex-row justify-start items-center'>
-      <img src={`${following.followable.avatar?`http://localhost:8000/photo/${following.followable.avatar}`:logo}`}  className='h-[40px] w-[40px] mr-2 rounded-full' alt="" />
+      <img src={`${following.followable.avatar?`${config.baseUrl}/photo/${following.followable.avatar}`:logo}`}  className='h-[40px] w-[40px] mr-2 rounded-full' alt="" />
       <div className='-mt-3 break-all'>
         <h3 className='font-medium text-[0.9rem] mt-3'>{following.followable.name}</h3>
         <p className={`${dark?"text-[#42a5c6]":"text-[#414ced]"} text-[0.75rem]`}>#{following.followable.email}</p>

@@ -7,6 +7,7 @@ import {PostFooter,PostProfile} from '.'
  //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import config from '../source'
 
 const Bookmark = () => {
   const navigate=useNavigate()
@@ -15,7 +16,7 @@ const Bookmark = () => {
   const [bookmarkLoader,setBookmarkLoader]=useState(false);
   const getsavedposts=async ()=>{
     setBookmarkLoader(true);
-    let res=await fetch("http://localhost:8000/api/post/savedposts",{
+    let res=await fetch(`${config.baseUrl}/api/post/savedposts`,{
       method:"GET",
       headers:{
         "Content-Type":"application/json"
@@ -70,7 +71,7 @@ const Bookmark = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post.bookmark._id}`)}}>
         <p className='font-medium text-[16px] p-2 '>{post.bookmark.content}</p>
       </div>
-      {post.bookmark.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.bookmark._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post.bookmark._id}`)} />}
+      {post.bookmark.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post.bookmark._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`${config.baseUrl}/api/post/postPhoto/${post.bookmark._id}`)} />}
         <PostFooter post={post.bookmark} />
     </div>:
 
@@ -81,7 +82,7 @@ const Bookmark = () => {
       <div className='ml-2 break-words'>
         <p className='font-medium text-[16px] p-2 '>{post.bookmark.retweetedRef.content}</p>
       </div>
-      {post.bookmark.retweetedRef.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.bookmark.retweetedRef._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
+      {post.bookmark.retweetedRef.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post.bookmark.retweetedRef._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
     </div>
     <PostFooter post={post.bookmark} />
     </div>

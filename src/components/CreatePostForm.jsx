@@ -1,5 +1,6 @@
 import React,{useState,useContext} from 'react'
 import {appState} from '../App'
+import config from '../source'
 
 const CreatePostForm = () => {
     const {postForm,setPostForm,dark,toast,setPosts,posts,postsSocket}=useContext(appState);
@@ -32,7 +33,7 @@ const CreatePostForm = () => {
         const formData = new FormData();
         formData.append('postPhoto', photo);
         formData.append('content', post);
-        let res=await fetch("http://localhost:8000/api/post/create",{
+        let res=await fetch(`${config.baseUrl}/api/post/create`,{
             method:"POST",
             credentials:'include', 
             body:formData

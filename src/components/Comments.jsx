@@ -6,7 +6,7 @@ import Liked from '../assets/liked.png'
 import {appState} from '../App'
 import DeleteD from '../assets/delete_dark.png'
 import DeleteW from '../assets/delete_white.png'
-
+import config from '../source'
 
 
 const Comments = ({comment,key}) => {
@@ -16,7 +16,7 @@ const Comments = ({comment,key}) => {
   const [islike,setIslike]=useState(false)
   const like=async ()=>{
     if(user){
-      let res=await fetch(`http://localhost:8000/api/like?id=${comment._id}&type=Comment`,{
+      let res=await fetch(`${config.baseUrl}/api/like?id=${comment._id}&type=Comment`,{
       method:'POST',
       // mode: 'no-cors',
       headers:{
@@ -54,7 +54,7 @@ const Comments = ({comment,key}) => {
     }
   }
   const likecomment=async ()=>{
-    let res=await fetch(`http://localhost:8000/api/is/liked?id=${comment._id}&type=Comment`,{
+    let res=await fetch(`${config.baseUrl}/api/is/liked?id=${comment._id}&type=Comment`,{
       method:'get',
       // mode: 'no-cors',
       headers:{
@@ -77,7 +77,7 @@ const Comments = ({comment,key}) => {
     setLikes(data.likes)
   }
   const handleDeleteComment=async (e)=>{
-    let res= await fetch(`http://localhost:8000/api/comment/delete/${comment._id}`,{
+    let res= await fetch(`${config.baseUrl}/api/comment/delete/${comment._id}`,{
       method:'GET',
       // mode: 'no-cors',
       headers:{

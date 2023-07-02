@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import DeleteD from '../assets/delete_dark.png'
 import DeleteW from '../assets/delete_white.png'
-
+import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
@@ -25,7 +25,7 @@ const Post = () => {
     }
     const getpost=async ()=>{
       setPostLoader(true)
-        let res=await fetch(`http://localhost:8000/api/post/getpost/${id}`,{
+        let res=await fetch(`${config.baseUrl}/api/post/getpost/${id}`,{
             method:"GET",
             headers:{
               "Content-Type":"application/json"
@@ -85,7 +85,7 @@ const Post = () => {
         <div className='ml-2 '>
         <p className='font-medium text-[16px] p-2 whitespace-pre-wrap break-words'>{post.content}</p>
       </div>
-      {post.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[50vh] w-[80%] rounded-xl ml-14 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"} `} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post._id}`)} />}
+      {post.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post._id}`} alt="logo" className={`h-[50vh] w-[80%] rounded-xl ml-14 my-2 object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"} `} onClick={()=>handleimgClick(`${config.baseUrl}/api/post/postPhoto/${post._id}`)} />}
         <PostFooter post={post} />
        {(user && post.user._id===user._id) && <img 
         className={`absolute right-5 top-5 cursor-pointer h-[40px] w-[35px]`}
@@ -102,7 +102,7 @@ const Post = () => {
          <div className='ml-2 whitespace-pre-wrap break-words'>
            <p className='font-medium text-[16px] p-2 '>{post.retweetedRef.content}</p>
          </div>
-         {post.retweetedRef.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.retweetedRef._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
+         {post.retweetedRef.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post.retweetedRef._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain `} />}
        </div>
        <PostFooter post={post} />
        </div>

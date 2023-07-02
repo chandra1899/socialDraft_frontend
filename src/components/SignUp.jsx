@@ -5,6 +5,7 @@ import avatar_2 from '../assets/avatar_2.png'
 import avatar_3 from '../assets/avatar_3.png'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
+import config from '../source'
 
 const SignUp = () => {
   const {openSignUp,setOpenSignUp,dark,setOpenLogin,toast}=useContext(appState)
@@ -44,7 +45,7 @@ const SignUp = () => {
             });
             return ;
         }
-       let res= await fetch(`http://localhost:8000/api/user/create`,{
+       let res= await fetch(`${config.baseUrl}/api/user/create`,{
             method:"POST",
             body:formData
         })

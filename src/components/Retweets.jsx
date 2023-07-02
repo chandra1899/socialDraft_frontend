@@ -2,7 +2,7 @@ import React,{useEffect,useContext, useState} from 'react'
 import { appState } from '../App'
 import {PostFooter,PostProfile} from '.'
  import { useNavigate } from 'react-router-dom'
-
+ import config from '../source'
  //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -14,7 +14,7 @@ const Retweets = () => {
 
     const getretweets=async ()=>{
       setRetweetLoader(true);
-      let res= await fetch('http://localhost:8000/api/post/yourretweets',{
+      let res= await fetch(`${config.baseUrl}/api/post/yourretweets`,{
       method:'GET',
       // mode: 'no-cors',
       headers:{
@@ -69,7 +69,7 @@ const Retweets = () => {
       <div className='ml-2 cursor-pointer whitespace-pre-wrap break-words' onClick={()=>{navigate(`/post/${post.retweet._id}`)}}>
         <p className='font-medium text-[16px] p-2'>{post.retweet.content}</p>
       </div>
-      {post.retweet.photo && <img src={`http://localhost:8000/api/post/postPhoto/${post.retweet._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`http://localhost:8000/api/post/postPhoto/${post.retweet._id}`)} />}
+      {post.retweet.isPhoto && <img src={`${config.baseUrl}/api/post/postPhoto/${post.retweet._id}`} alt="logo" className={`h-[25vh] w-[40%] rounded-xl ml-[30%] my-[2%] object-contain hover:border-2  cursor-pointer ${dark?'hover:border-slate-800':"hover:border-slate-300"}`} onClick={()=>handleimgClick(`${config.baseUrl}/api/post/postPhoto/${post.retweet._id}`)} />}
         <PostFooter post={post.retweet} />
     </div>
     ))}
