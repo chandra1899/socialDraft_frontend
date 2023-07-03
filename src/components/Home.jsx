@@ -18,7 +18,7 @@ const Home = () => {
 
     const getposts=async ()=>{
       setHomeLoader(true);
-      let res=await fetch(`${config.baseUrl}/api`,{
+      let res=await fetch(`${config.baseUrl}/api/home`,{
         method:"GET",
         headers:{
           "Content-Type":"application/json"
