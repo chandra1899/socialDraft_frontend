@@ -66,7 +66,7 @@ function App() {
           method:'GET',
           // mode: 'no-cors',
           headers:{
-            'Access-Control-Allow-Origin': `${config.baseUrl}`,
+            'Access-Control-Allow-Origin': '*',
             Accept:"application/json",
             "Content-Type":"application/json"
           },
