@@ -18,7 +18,7 @@ const Profile = () => {
   const [selected,setSelected]=useState('Posts')
   const getposts=async ()=>{
     setPostLoader(true)
-    let res= await fetch('${config.baseUrl}/api/post/yourposts',{
+    let res= await fetch(`${config.baseUrl}/api/post/yourposts`,{
     method:'GET',
     // mode: 'no-cors',
     headers:{
@@ -31,7 +31,9 @@ const Profile = () => {
   setPostLoader(false)
   let data=await res.json();
   if(res.status===200){
-    setYourposts(data.yourposts)
+    if(data.yourposts!==undefined){
+      setYourposts(data.yourposts)
+    }  
   }
   else{
    
@@ -43,8 +45,8 @@ const Profile = () => {
   }
   useEffect( () => {
     if(user){
+      calluser()
       getposts();
-    calluser()
     }else{
      
         toast.warn('please log-in', {
