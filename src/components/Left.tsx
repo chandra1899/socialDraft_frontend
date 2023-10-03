@@ -1,5 +1,5 @@
 import React,{useState,useContext,useEffect } from 'react'
-import {ProfileBox} from '../components'
+import {ProfileBox} from '.'
 
 import profileimg from '../assets/profile.png'
 import homeimg from '../assets/home.png'

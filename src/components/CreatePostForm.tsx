@@ -41,7 +41,9 @@ const CreatePostForm = () => {
           let data=await res.json();
           if(res.status===200){
             setPostForm(false)
-            document.getElementById("create_post").value = "";
+            let createPost=document.getElementById("create_post") as any
+            if(createPost)
+            createPost.value = "";
             setpost("")
               let newPost=data.post;
               console.log(newPost);
@@ -78,7 +80,7 @@ const CreatePostForm = () => {
     <form action=""  className=' flex flex-col gap-6' enctype="multipart/form-data">
     <label className='flex flex-col'>
           <span className={`${dark?"text-[#42f8ec]":"text-[#0f3330]"} font-medium text-[1.125rem] mb-4`}>Create Post</span>
-          <textarea name="content" className={`p-2 ${dark?"bg-black":"bg-slate-100"} resize-none rounded-2xl`} value={post} onChange={(e)=>handleChange(e)} cols="30" rows="7"></textarea>
+          <textarea name="content" className={`p-2 ${dark?"bg-black":"bg-slate-100"} resize-none rounded-2xl`} value={post} onChange={(e)=>handleChange(e)} cols={30} rows={7}></textarea>
         </label>
         <label className='flex flex-col'>
           <span className={`${dark?"text-white":"text-black"} font-medium mb-4`}>Upload Post Photo</span>

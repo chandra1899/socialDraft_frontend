@@ -1,6 +1,6 @@
 import React,{useState,useContext} from 'react'
 import {appState} from '../App'
-import {Comment} from '../components'
+import {Comment} from '.'
 import ReactDOM from 'react-dom';
 import config from '../source'
 
@@ -71,7 +71,7 @@ const CommentForm = () => {
     <form action=""  className=' flex flex-col gap-6'>
     <label className='flex flex-col'>
           <span className={`${dark?"text-[#42f8ec]":"text-[#0f3330]"} font-medium text-[1.125rem] mb-4`}>Your Comment</span>
-          <textarea name="content" className={`p-2 ${dark?"bg-black":"bg-slate-100"} resize-none rounded-2xl`} value={comment} onChange={(e)=>handleChange(e)} cols="30" rows="7"></textarea>
+          <textarea name="content" className={`p-2 ${dark?"bg-black":"bg-slate-100"} resize-none rounded-2xl`} value={comment} onChange={(e)=>handleChange(e)} cols={30} rows={7} ></textarea>
         </label>
     </form>
     <div className='m-6 right-3 font-medium'>

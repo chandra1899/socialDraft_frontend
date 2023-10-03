@@ -1,7 +1,7 @@
 import React, { useEffect, useState,useContext } from 'react'
 import { useNavigate ,useParams} from "react-router-dom";
 import {PostFooter,PostProfile} from '.'
-import {Comment} from '../components'
+import {Comment} from '.'
 import {appState} from '../App'
 import BACK from '../assets/BACK.png'
 //loader

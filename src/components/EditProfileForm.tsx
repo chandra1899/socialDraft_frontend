@@ -23,7 +23,9 @@ const EditProfileForm = () => {
             credentials:'include', 
             body:formData
           })
-  document.getElementById("update_profile").value = "";
+          let updateProfile=document.getElementById("update_profile") as any
+          if(updateProfile)
+          updateProfile.value = "";
           const data=await res.json();
           if(res.status===200){
             setPhoto('')
@@ -118,8 +120,8 @@ const EditProfileForm = () => {
           value={formik.values.description}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-           cols="30" 
-           rows="5"
+           cols={30}
+           rows={5}
            className={`${dark?"bg-blue-900 text-white placeholder:text-secondary":"bg-white placeholder:text-black text-black"} py-4 px-3 rounded-lg outline-none border-none font-medium resize-none`}
            ></textarea>
            {formik.touched.description && formik.errors.description && <p className={`${dark?"text-white":"text-red-600"} text-[0.8rem] ml-1 tracking-widest`}>{formik.errors.description}</p>}
