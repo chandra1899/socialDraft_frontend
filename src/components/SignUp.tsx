@@ -50,7 +50,9 @@ const SignUp = () => {
             body:formData
         })
         const data=await res.json();
-        document.getElementById("update_profile").value = "";
+        let updateProfile=document.getElementById("update_profile") as any
+        if(updateProfile)
+        updateProfile.value = "";
         if(res.status===200){            
               toast.success('sucessfully registered', {
                 position: "bottom-left",
