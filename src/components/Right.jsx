@@ -4,6 +4,8 @@ import { appState } from '../App'
 import logo from '../assets/logo.png'
 import { useNavigate } from 'react-router-dom'
 import config from '../source'
+import notification_on from '../assets/notification_on.png'
+import notification_off from '../assets/notification_off.png'
 //loader
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -40,11 +42,15 @@ return (
 }
 
 const Right = () => {
-  const {following,setFollowing,followingLoader,dark,user}=useContext(appState);
+  const {notificatioOn,setNotificatioOn,following,setFollowing,followingLoader,dark,user}=useContext(appState);
 
   return (
-    <div className={`relative h-full hidden ss:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 ${dark?"border-slate-700 ":"border-slate-300"} scroll-smooth`}>
-    {!followingLoader && <h3 className='font-medium text-[23px] my-3'>Following</h3>}
+    <div className={`relative h-full hidden ss:flex flex-col min-w-[33%] ml-2 items-center right-2 rounded-3xl p-2 border-2 ${dark?"border-slate-700 ":"border-slate-300"} scroll-smooth `}>
+      <div>
+      {!notificatioOn && <img src={notification_off} alt="notification_off" className='absolute left-5 top-4 h-10 cursor-pointer' onClick={()=>{setNotificatioOn(true)}} />}
+      {notificatioOn && <img src={notification_on} alt="notification_off" className='absolute left-5 top-3 h-12 w-10 cursor-pointer' onClick={()=>{setNotificatioOn(false)}} />}
+      </div>
+      <h3 className='font-medium text-[23px] my-3'>Following</h3>
     {!followingLoader && <div className='border-t-2 border-slate-500 py-3 min-w-[95%] overflow-scroll no-scrollbar'>
    {!user && <div className={`bg-gray-900 ${dark?'bg-opacity-80':'bg-opacity-20'} rounded-xl  h-[100vh] w-[100%] z-[39]`}></div>}
 

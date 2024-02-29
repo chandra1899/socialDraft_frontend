@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { io } from "socket.io-client";
 import setBodyColor from './setBodyColor'
 import config from './source'
+import Notification from './components/Notification';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -51,6 +52,7 @@ function App() {
   const [forgotpasswdemail,setForgotpasswdemail]=useState('');
   const [imgPreview,setImgPreview]=useState(false);
   const [confirm,setConfirm]=useState(false);
+  const [notificatioOn,setNotificatioOn]=useState(false);
   const [confirmForm,setConfirmForm]=useState(false);
   const [followingDiv,setFollowingDiv]=useState(false);
   const [commentEvent,setCommentEvent]=useState(undefined);
@@ -212,7 +214,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{warnLogin,user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
+    <appState.Provider value={{warnLogin,user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,notificatioOn,setNotificatioOn,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
@@ -236,7 +238,7 @@ function App() {
         <Route exact path='/people/:id' element={<People/>} />
         <Route exact path='/chat/:id' element={<Chat msgs={msgs} setMsgs={setMsgs}/>} />
       </Routes>
-     
+      {notificatioOn && <Notification/>}
      <Right/>
      {/* <Practice/> */}
      {/* <button onClick={calluser}>button</button> */}
