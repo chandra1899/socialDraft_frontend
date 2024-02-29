@@ -61,7 +61,7 @@ function App() {
   
     const calluser=async ()=>{
       try {
-        setLoading(true)
+        // setLoading(true)
         let res= await fetch(`${config.baseUrl}/api/user/getuser`,{
           method:'GET',
           // mode: 'no-cors',
