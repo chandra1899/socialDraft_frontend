@@ -17,7 +17,7 @@ import config from '../source'
 const Left = () => {
   const Navigate=useNavigate();
   let location = useLocation();
-  const {calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
+  const {warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
   const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -92,16 +92,7 @@ const Left = () => {
               if(user){setPostForm((pre)=>!pre);Navigate('/')}
               else {
                 setOpenLogin(true)
-                toast.warn('please log-in', {
-                  position: "bottom-left",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "dark",
-                  });
+                warnLogin()
                 }}}>Post</p>
         </div>
         <div className={`${

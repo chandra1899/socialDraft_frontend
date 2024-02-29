@@ -11,7 +11,7 @@ import config from '../source'
 
 const Bookmark = () => {
   const navigate=useNavigate()
-  const {user,setOpenLogin,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+  const {warnLogin,user,setOpenLogin,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const [savedposts,setSavedposts]=useState([])
   const [bookmarkLoader,setBookmarkLoader]=useState(false);
   const getsavedposts=async ()=>{
@@ -43,16 +43,7 @@ const Bookmark = () => {
         navigate('/')
         setOpenLogin(true)
        
-          toast.warn('please log-in', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+        warnLogin()
         
       }
  }, []);

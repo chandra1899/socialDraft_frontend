@@ -10,7 +10,7 @@ import config from '../source'
 
 
 const Comments = ({comment,key}) => {
-  const {user,setOpenLogin,dark,toast}=useContext(appState)
+  const {warnLogin,user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
@@ -41,16 +41,7 @@ const Comments = ({comment,key}) => {
     }
     }else{
       setOpenLogin(true)    
-      toast.warn('please log-in', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+      warnLogin()
     }
   }
   const likecomment=async ()=>{

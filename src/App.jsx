@@ -54,11 +54,18 @@ function App() {
   const [confirmForm,setConfirmForm]=useState(false);
   const [followingDiv,setFollowingDiv]=useState(false);
   const [commentEvent,setCommentEvent]=useState(undefined);
+  const [arrivalWarn,setArrivalWarn]=useState(null);
   const [postId,setPostId]=useState('');
   const [imgsrc,setimgsrc]=useState('');
   const confirmFormchild=useRef(null);
   const forgotPasswdFormchild=useRef(null);
   
+  const warnLogin = ()=>{
+    setArrivalWarn('warn')
+    setTimeout(()=>{
+      setArrivalWarn(null)
+    },200)
+  }
     const calluser=async ()=>{
       try {
         // setLoading(true)
@@ -80,16 +87,7 @@ function App() {
       }
       else{
           setUser(undefined)
-          toast.warn('please log-in', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          warnLogin();
       }
       } catch (err) {
         toast.error('error in authentication', {
@@ -192,6 +190,20 @@ function App() {
         deletePost();
        }
     }, [confirm]);
+    useEffect(() => {
+      if(arrivalWarn){
+        toast.warn('please log-in', {
+          position: "bottom-left",
+          autoClose: 500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+    }, [arrivalWarn]);
     setBodyColor({color: `${dark?"black":"white"}`})
    
 
@@ -200,7 +212,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
+    <appState.Provider value={{warnLogin,user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>

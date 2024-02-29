@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 const Retweets = () => {
-    const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview,retweetLoader,setRetweetLoader}=useContext(appState);
+    const {warnLogin,user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview,retweetLoader,setRetweetLoader}=useContext(appState);
     const navigate=useNavigate()
     const [yourretweets,setYourretweets]=useState([])
 
@@ -43,16 +43,7 @@ const Retweets = () => {
       calluser()
       }else{
        
-          toast.warn('please log-in', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+        warnLogin()
         
         navigate('/')
         setOpenLogin(true)

@@ -13,7 +13,7 @@ import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
+    const {warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
 
     const {id}=useParams()
 
@@ -52,16 +52,7 @@ const Post = () => {
       }
       else{
         setOpenLogin(true)
-        toast.warn('please log-in', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+        warnLogin()
       }
     }
     }

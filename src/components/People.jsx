@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import config from '../source'
 
 const People = () => {
-    const {user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+    const {warnLogin,user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
     const [userdetails,setUserdetails]=useState({})
@@ -85,16 +85,7 @@ const People = () => {
       }else{
         setOpenLogin(true)
        
-          toast.warn('please log-in', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+        warnLogin()
        
         
       }
@@ -139,16 +130,7 @@ const People = () => {
        {
         setOpenLogin(true)
        
-        toast.warn('please log-in', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+        warnLogin()
        }
     }
 

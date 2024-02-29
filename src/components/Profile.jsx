@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import config from '../source'
 
 const Profile = () => {
-  const {user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+  const {warnLogin,user,editProfile,setEditProfile,openLogin,setOpenLogin,calluser,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const navigate=useNavigate()
   const [yourposts,setYourposts]=useState([])
   const [postLoader,setPostLoader]=useState(false);
@@ -49,16 +49,7 @@ const Profile = () => {
       getposts();
     }else{
      
-        toast.warn('please log-in', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+      warnLogin()
       
       navigate('/')
       setOpenLogin(true)

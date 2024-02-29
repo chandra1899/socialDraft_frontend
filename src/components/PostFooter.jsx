@@ -13,7 +13,7 @@ import config from '../source'
 const PostFooter =  ({post}) => {
   let location = useLocation();
   const navigate=useNavigate();
-  const {user,setOpenLogin,dark,toast,posts,setPosts,postsSocket}=useContext(appState)
+  const {warnLogin,user,setOpenLogin,dark,toast,posts,setPosts,postsSocket}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
   const [retweets,setRetweets]=useState(post.retweets.length)
@@ -57,16 +57,7 @@ const PostFooter =  ({post}) => {
     }
       }else{
        
-          toast.warn('please log-in', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+        warnLogin()
         
         setOpenLogin(true)
       }
@@ -178,16 +169,7 @@ const PostFooter =  ({post}) => {
     }
    }else{
    
-      toast.warn('please log-in', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+    warnLogin()
     
     setOpenLogin(true)
   }
@@ -252,16 +234,7 @@ const PostFooter =  ({post}) => {
             });
       }
     }else{
-      toast.warn('please log-in', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+      warnLogin()
     setOpenLogin(true)
     }
   }
