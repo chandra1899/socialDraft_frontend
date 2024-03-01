@@ -8,10 +8,16 @@ const SubNotification = ({notification}) => {
   return (
     <>
     
-    {notification.typeOf==='LikedPost' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
+    {notification.typeOf==='LikedPost' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{navigate(`/post/${notification.LikedPost._id}`)}}>
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-red-600'>Liked Your Post</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>No one able to ...</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.LikedPost?.content?.length>=13?`${notification?.LikedPost?.content?.substring(0, 13)} ...`:`${notification?.LikedPost?.content}`}</p>
+      </div> }
+
+    {notification.typeOf==='LikedRetweet' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{navigate(`/post/${notification.LikedRetweet._id}`)}}>
+        <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
+        <p className='text-[0.9rem] ml-2 mt-1 text-red-600'>Liked Your Retweet</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.LikedRetweet?.retweetedRef?.content?.length>=13?`${notification.LikedRetweet?.retweetedRef?.content?.substring(0, 13)} ...`:`${notification.LikedRetweet?.retweetedRef?.content}`}</p>
       </div> }
 
     {notification.typeOf==='LikedComment' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
@@ -26,16 +32,16 @@ const SubNotification = ({notification}) => {
         <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>No one able to ...</p>
       </div> }
 
-    {notification.typeOf==='Retweeted' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
+    {notification.typeOf==='Retweeted' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{navigate(`/post/${notification.Retweeted._id}`)}}  >
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-[#3a3afb]'>Retweeted</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.Retweeted.retweetedRef.content?.length>=13?`${notification.Retweeted.retweetedRef.content.substring(0, 13)} ...`:`${notification.Retweeted.retweetedRef.content}`}</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.Retweeted?.retweetedRef?.content?.length>=13?`${notification?.Retweeted?.retweetedRef?.content?.substring(0, 13)} ...`:`${notification?.Retweeted?.retweetedRef?.content}`}</p>
       </div> }
 
       {notification.typeOf==='Posted' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{navigate(`/post/${notification.Posted._id}`)}} >
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-[#3a3afb]'>Posted</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.Posted.content?.length>=13?`${notification.Posted.content.substring(0, 13)} ...`:`${notification.Posted.content}`}</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.Posted.content?.length>=13?`${notification?.Posted?.content?.substring(0, 13)} ...`:`${notification?.Posted?.content}`}</p>
       </div> }
 
     {notification.typeOf==='Messaged' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
