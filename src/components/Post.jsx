@@ -13,7 +13,7 @@ import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
+    const {commentId,setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
 
     const {id}=useParams()
     const targetDivRef = useRef(null);
@@ -64,16 +64,16 @@ const Post = () => {
         getpost();    
      }, [id]);
      useEffect(() => {
-      if (targetDivRef.current) {
+      if (targetDivRef.current && commentId !== '') {
         targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        targetDivRef.current.classList.add('bg-slate-900')
+        targetDivRef.current.classList.add('bg-slate-800')
         setTimeout(() => {
-          targetDivRef.current.classList.remove(`bg-slate-900`)
+          targetDivRef.current.classList.remove(`bg-slate-800`)
           setCommentId('')
         }, 700);
         // confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
       }
-    }, [comments]);
+    }, [comments,commentId]);
 
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>

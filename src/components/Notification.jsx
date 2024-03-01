@@ -5,7 +5,7 @@ import { appState } from '../App'
 import { useContext } from 'react'
 
 const SubNotification = ({notification}) => {
-  const {dark,setCommentId}=useContext(appState);
+  const {dark,setCommentId,setMessageId}=useContext(appState);
   const navigate=useNavigate()
   return (
     <>
@@ -22,10 +22,13 @@ const SubNotification = ({notification}) => {
         <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.LikedRetweet?.retweetedRef?.content?.length>=13?`${notification.LikedRetweet?.retweetedRef?.content?.substring(0, 13)} ...`:`${notification.LikedRetweet?.retweetedRef?.content}`}</p>
       </div> }
 
-    {notification.typeOf==='LikedComment' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
+    {notification.typeOf==='LikedComment' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{
+      navigate(`/post/${notification?.LikedComment?.postId}`);
+      setCommentId(notification?.LikedComment?.commentId?._id)
+    }}>
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-red-600'>Liked Your Comment</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.LikedPost.content?.length>=13?`${notification.LikedPost.content.substring(0, 13)} ...`:`${notification.LikedPost.content}`}</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.LikedComment?.commentId?.content?.length>=13?`${notification?.LikedComment?.commentId?.content.substring(0, 13)} ...`:`${notification?.LikedComment?.commentId?.content}`}</p>
       </div> }
 
     {notification.typeOf==='Commented' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{
@@ -49,10 +52,13 @@ const SubNotification = ({notification}) => {
         <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.Posted.content?.length>=13?`${notification?.Posted?.content?.substring(0, 13)} ...`:`${notification?.Posted?.content}`}</p>
       </div> }
 
-    {notification.typeOf==='Messaged' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
+    {notification.typeOf==='Messaged' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{
+      navigate(`/chat/${notification?.Messaged?.userId}`);
+      setMessageId(notification?.Messaged?.messageId?._id)
+    }} >
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-[#3ff339]'>Messaged</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>No one able to ...</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.Messaged?.messageId?.message?.text?.length>=13?`${notification?.Messaged?.messageId?.message?.text?.substring(0, 13)} ...`:`${notification?.Messaged?.messageId?.message?.text}`}</p>
       </div> }
     </>
   )

@@ -9,10 +9,12 @@ import config from '../source'
 const Chat = ({msgs,setMsgs}) => {
   const chatSocket= io(`${config.baseUrl}/chat`);
   const scrollRef = useRef();
-    const {dark,user,setIsEmojiOpen}=useContext(appState);
+  const targetDivRef = useRef(null);
+    const {messageId,setMessageId,dark,user,setIsEmojiOpen}=useContext(appState);
     const {id}=useParams()
   const [arrivalMessage, setArrivalMessage] = useState(null);
     const getmsgs=async ()=>{
+      if(!id || !user) return ;
         let res=await fetch(`${config.baseUrl}/api/chat/getMessages`,{
             method:"POST",
             headers:{
@@ -25,10 +27,12 @@ const Chat = ({msgs,setMsgs}) => {
             })
           })
           let data=await res.json();
-          setMsgs(data.projectedMessages)
+          if(res.status === 200){
+            setMsgs(data.projectedMessages)
+          }
     }
     useEffect( () => {
-       if(user) getmsgs();
+       if(id && user) getmsgs();
      }, [user]);
       useEffect(() => {
         if (id && user) {
@@ -47,15 +51,28 @@ const Chat = ({msgs,setMsgs}) => {
         arrivalMessage && setMsgs((prev) => [...prev, arrivalMessage]);
       }, [arrivalMessage]);
       useEffect(() => {
+        if(messageId === '')
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
      }, [msgs]);
+
+     useEffect(() => {
+      if (targetDivRef.current && messageId !== '') {
+        targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        targetDivRef.current.classList.add('bg-slate-800')
+        setTimeout(() => {
+          targetDivRef.current.classList.remove(`bg-slate-800`)
+          setMessageId('')
+        }, 700);
+        // confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
+      }
+    }, [msgs,messageId]);
       
   return (
     <div className={`relative h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>
         <Chat_top/>
         <div className='relative w-[100%] h-[100%] pt-[84px] pb-[68px] flex flex-col text-white overflow-scroll no-scrollbar' ref={scrollRef} onClick={()=>{setIsEmojiOpen(false)}}>
         {msgs.map((msg,index)=>(
-               <div className={`min-h-[42px] m-1 `} key={index}>
+               <div className={`min-h-[42px] m-1 `} ref={msg.id === messageId ? targetDivRef : null} key={index}>
                 <p className={`absolute flex justify-center items-center min-w-[60px] min-h-[30px] p-2 rounded-xl font-poppins ${msg.fromSelf?`right-3 bg-blue-700 `:`left-2 bg-violet-700`}`}>{msg.message}</p>
                </div>
         ))}

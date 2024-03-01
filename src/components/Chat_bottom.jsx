@@ -30,10 +30,16 @@ const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
           if(res.status===200){
             setMessage('');
             setMsgs([...msgs,data.msg])
+            console.log(data.toEmailUser);
+            console.log(data.msgId);
             chatSocket.emit("send-msg", {
               to: id,
               from: user._id,
               msg:message,
+              fromEmail:user?.email,
+              toEmail:data.toEmailUser?.email,
+              userId:data.toEmailUser?._id,
+              messageId:data?.msgId
             });
           }
           
