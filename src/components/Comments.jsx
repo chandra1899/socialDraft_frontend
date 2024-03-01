@@ -9,8 +9,8 @@ import DeleteW from '../assets/delete_white.png'
 import config from '../source'
 
 
-const Comments = ({comment,key}) => {
-  const {warnLogin,user,setOpenLogin,dark,toast}=useContext(appState)
+const Comments = ({comment,key,targetDivRef}) => {
+  const {commentId,warnLogin,user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
@@ -109,7 +109,7 @@ const Comments = ({comment,key}) => {
     likecomment();
  }, []);
   return (
-    <div key={key} className='flex flex-row pl-3 relative '>
+    <div key={key} ref={comment._id === commentId ? targetDivRef : null} className='flex flex-row pl-3 relative '>
       <img src={Arrow} className='h-[50px] ' alt="" />
       <div className='-ml-3 '>
       <PostProfile user={comment.user} />

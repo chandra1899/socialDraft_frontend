@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useEffect, useState,useContext, useRef } from 'react'
 import { useNavigate ,useParams} from "react-router-dom";
 import {PostFooter,PostProfile} from '.'
 import {Comment} from '../components'
@@ -13,10 +13,10 @@ import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
+    const {setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
 
     const {id}=useParams()
-
+    const targetDivRef = useRef(null);
     const [post,setPost]=useState()
     const [postLoader,setPostLoader]=useState(false)
     const handleDeletePost=async (id)=>{
@@ -61,9 +61,19 @@ const Post = () => {
       setImgPreview(true)
     }
     useEffect( () => {
-        getpost();
-        
+        getpost();    
      }, [id]);
+     useEffect(() => {
+      if (targetDivRef.current) {
+        targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        targetDivRef.current.classList.add('bg-slate-900')
+        setTimeout(() => {
+          targetDivRef.current.classList.remove(`bg-slate-900`)
+          setCommentId('')
+        }, 700);
+        // confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
+      }
+    }, [comments]);
 
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
@@ -103,7 +113,7 @@ const Post = () => {
         <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
        <div className='commentDiv'>
        {comments.map((comment,i)=>(
-        <Comment key={i} comment={comment}/>
+        <Comment targetDivRef={targetDivRef} key={i} comment={comment}/>
         ))}
        </div>
       </div>}

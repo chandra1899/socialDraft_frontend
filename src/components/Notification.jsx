@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import config from '../source'
 import { useNavigate } from 'react-router'
+import { appState } from '../App'
+import { useContext } from 'react'
 
 const SubNotification = ({notification}) => {
+  const {dark,setCommentId}=useContext(appState);
   const navigate=useNavigate()
-    let dark=true
   return (
     <>
     
@@ -26,10 +28,13 @@ const SubNotification = ({notification}) => {
         <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification.LikedPost.content?.length>=13?`${notification.LikedPost.content.substring(0, 13)} ...`:`${notification.LikedPost.content}`}</p>
       </div> }
 
-    {notification.typeOf==='Commented' && <div className='bg-slate-900 p-2 rounded-lg my-1'>
+    {notification.typeOf==='Commented' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{
+      navigate(`/post/${notification?.Commented?.postId}`);
+      setCommentId(notification?.Commented?.commentId?._id)
+    }} >
         <p className={`text-[0.95rem] ${dark?"text-[#42a5c6]":"text-[#674bf3]"}`}>#{notification.fromEmail}</p>
         <p className='text-[0.9rem] ml-2 mt-1 text-[#f4c838]'>Commented Your Post</p>
-        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>No one able to ...</p>
+        <p className='text-[0.85rem] ml-3 mt-1 border-t-2 border-l-2 border-slate-700 m-1 p-1'>{notification?.Commented?.commentId?.content?.length>=13?`${notification?.Commented?.commentId?.content.substring(0, 13)} ...`:`${notification?.Commented?.commentId?.content}`}</p>
       </div> }
 
     {notification.typeOf==='Retweeted' && <div className='bg-slate-900 p-2 rounded-lg my-1 cursor-pointer hover:bg-slate-950' onClick={()=>{navigate(`/post/${notification.Retweeted._id}`)}}  >
