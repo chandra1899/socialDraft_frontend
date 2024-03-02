@@ -72,7 +72,7 @@ function App() {
     setArrivalWarn('warn')
     setTimeout(()=>{
       setArrivalWarn(null)
-    },200)
+    },400)
   }
 
   const toastInfo=(message)=>{
