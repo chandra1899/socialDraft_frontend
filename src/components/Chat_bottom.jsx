@@ -38,7 +38,7 @@ const Chat_bottom = ({msgs,setMsgs,chatSocket}) => {
               msg:message,
               fromEmail:user?.email,
               toEmail:data.toEmailUser?.email,
-              userId:data.toEmailUser?._id,
+              userId:user._id,
               messageId:data?.msgId
             });
           }
