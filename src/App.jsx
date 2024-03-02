@@ -16,6 +16,9 @@ import { io } from "socket.io-client";
 import setBodyColor from './setBodyColor'
 import config from './source'
 import Notification from './components/Notification';
+import notification_on from './assets/notification_on.png'
+import notification_off from './assets/notification_off.png'
+import Notificationsm from './components/Notificationsm';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -55,6 +58,7 @@ function App() {
   const [notificatioOn,setNotificatioOn]=useState(false);
   const [confirmForm,setConfirmForm]=useState(false);
   const [followingDiv,setFollowingDiv]=useState(false);
+  const [notificationDiv,setNotificationDiv]=useState(false);
   const [commentEvent,setCommentEvent]=useState(undefined);
   const [arrivalWarn,setArrivalWarn]=useState(null);
   const [postId,setPostId]=useState('');
@@ -216,7 +220,7 @@ function App() {
     {loading && <Backdrop className={classes.backdrop} open>
         <CircularProgress color="inherit" />
       </Backdrop>}
-    <appState.Provider value={{messageId,setMessageId,commentId,setCommentId,warnLogin,user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,notificatioOn,setNotificatioOn,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
+    <appState.Provider value={{setNotificationDiv,messageId,setMessageId,commentId,setCommentId,warnLogin,user,setUser,openSignUp,setOpenSignUp,openLogin,setOpenLogin,posts,setPosts,openComment,setOpenComment,commentpostId,setCommentpostId,editProfile,setEditProfile,calluser,postForm,setPostForm,following,setFollowing,callfollowing,followingLoader,dark,setDark,toast,forgotPasswdForm,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,imgsrc,setimgsrc,imgPreview,setImgPreview,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,followingDiv,setFollowingDiv,commentEvent,setCommentEvent,comments,setComments,notificatioOn,setNotificatioOn,isEmojiOpen,setIsEmojiOpen,retweetLoader,setRetweetLoader,postsSocket}}>
     <div className={`${dark?"bg-primary text-white":"bg-white text-black"} h-full w-full flex flex-row `}>
       
      <Left/>
@@ -241,6 +245,15 @@ function App() {
         <Route exact path='/chat/:id' element={<Chat msgs={msgs} setMsgs={setMsgs}/>} />
       </Routes>
       {notificatioOn && <Notification/>}
+
+      <div className='absolute h-10 w-10 right-1 -top-5 ss:hidden z-[12]' >
+      {!notificationDiv && <img src={notification_off} alt="notification_off" className='absolute left-2 sw:left-7 sm:left-5 top-4 h-10 cursor-pointer' onClick={()=>{setNotificationDiv(true)}} />}
+      {notificationDiv && <img src={notification_on} alt="notification_off" className='absolute left-2 sw:left-7 sm:left-5 top-3 h-12 w-10 cursor-pointer' onClick={()=>{setNotificationDiv(false)}} />}
+      </div>
+      {notificationDiv && <div className={`absolute flex ss:hidden z-[11] rounded-xl left-0 top-1  ${dark?"bg-primary text-white":"bg-white text-black"} h-full w-[90vw]  `}>
+      <Notificationsm/>
+    </div>}
+
      <Right/>
      {/* <Practice/> */}
      {/* <button onClick={calluser}>button</button> */}

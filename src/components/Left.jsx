@@ -17,7 +17,7 @@ import config from '../source'
 const Left = () => {
   const Navigate=useNavigate();
   let location = useLocation();
-  const {setNotificatioOn,warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
+  const {setNotificatioOn,warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv,setNotificationDiv}=useContext(appState);
   const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -183,7 +183,7 @@ const Left = () => {
         className={`hover:text-white ss:hidden text-secondary font-poppins font-medium cursor-pointer text-[16px]`}
         onClick={()=>{setToggle(!toggle)}}
         >
-          <p onClick={()=>{setFollowingDiv(true)}}>Following</p>
+          <p onClick={()=>{setFollowingDiv(true);setNotificationDiv(false)}}>Following</p>
         </li>
        {user && <li
         className={`${

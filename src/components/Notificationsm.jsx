@@ -67,7 +67,7 @@ const SubNotification = ({notification}) => {
   )
 }
 
-const Notification = () => {
+const Notificationsm = () => {
   const {dark,user}=useContext(appState);
   const [notificationLoader, setNotificationLoader] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -94,7 +94,7 @@ const Notification = () => {
   },[user])
 
   return (
-    <div className={`absolute right-[15rem] sm:right-[18rem] top-16 rounded-xl min-w-[300px] w-[23vw] h-[100vh] ${dark?`bg-slate-800 border-slate-700`:`bg-slate-100 border-slate-300`} z-[11] p-2 hidden ss:flex flex-col overflow-scroll no-scrollbar border-2 `}>
+    <div className={`absolute mx-auto top-0 rounded-xl min-w-[300px] w-[23vw] h-[100vh] ${dark?`bg-slate-800 border-slate-700`:`bg-slate-100 border-slate-300`} z-[11] p-2 flex ss:hidden flex-col overflow-scroll no-scrollbar border-2 `}>
       {!user && <div className={`bg-gray-900 ${dark?'bg-opacity-80':'bg-opacity-20'} rounded-xl  h-[100vh] w-[100%] z-[39]`}></div>}
       {!user && !notificationLoader && notifications?.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Please login .........</p></>}
       {user && !notificationLoader && notifications?.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[10%] text-red-600 mt-10'>..... No Notifications Found .....</p></>}
@@ -108,4 +108,4 @@ const Notification = () => {
   )
 }
 
-export default Notification
+export default Notificationsm
