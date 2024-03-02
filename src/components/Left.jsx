@@ -17,7 +17,7 @@ import config from '../source'
 const Left = () => {
   const Navigate=useNavigate();
   let location = useLocation();
-  const {warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
+  const {setNotificatioOn,warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv}=useContext(appState);
   const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -71,7 +71,7 @@ const Left = () => {
 
   return (
    <div >
-    <div className={`bg-gradient-to-b hidden sm:flex rounded-3xl fixed overflow-y-scroll top-6 left-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[25%] p-3 overflow-hidden flex-col no-scrollbar border-2 `}>
+    <div className={`bg-gradient-to-b hidden sm:flex rounded-3xl fixed overflow-y-scroll top-6 left-4 bottom-4 z-0 ${dark?"from-black to-blue-950 border-slate-700":"bg-gray-200 border-slate-300"} h-full max-w-[25%] p-3 overflow-hidden flex-col no-scrollbar border-2 `} onClick={()=>{setNotificatioOn(false)}} >
       <ProfileBox/>
       <div className=' flex flex-col mt-4 py-5 '>
         <div className={`${

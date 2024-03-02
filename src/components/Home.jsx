@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 
 const Home = () => {
   const navigate=useNavigate()
-  const {posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview,postsSocket}=useContext(appState);
+  const {setNotificatioOn,posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview,postsSocket}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
   const [arrivalPost, setArrivalPost] = useState(null);
   const [latestPosts, setLatestPosts] = useState([]);
@@ -56,7 +56,7 @@ const Home = () => {
 
   return (
     
-   <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2  ${homeLoader?`${dark?"bg-black":"bg-slate-200"}`:""} overflow-scroll no-scrollbar`}>
+   <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2  ${homeLoader?`${dark?"bg-black":"bg-slate-200"}`:""} overflow-scroll no-scrollbar`} onClick={()=>{setNotificatioOn(false)}} >
 
     {latestPosts.length!==0 && <div onClick={updateLatestPosts} className='absolute flex justify-center items-center top-0 left-[43%] ss:left-[28%] rounded-b-full bg-blue-600 hover:bg-blue-700 h-[38px] w-[43px]'>
     <img src={dropDown} alt="dropDown" className='mt-1 cursor-pointer h-[40px] w-[40px]'  />

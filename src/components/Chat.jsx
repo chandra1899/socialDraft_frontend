@@ -10,7 +10,7 @@ const Chat = ({msgs,setMsgs}) => {
   const chatSocket= io(`${config.baseUrl}/chat`);
   const scrollRef = useRef();
   const targetDivRef = useRef(null);
-    const {messageId,setMessageId,dark,user,setIsEmojiOpen}=useContext(appState);
+    const {setNotificatioOn,messageId,setMessageId,dark,user,setIsEmojiOpen}=useContext(appState);
     const {id}=useParams()
   const [arrivalMessage, setArrivalMessage] = useState(null);
     const getmsgs=async ()=>{
@@ -58,9 +58,9 @@ const Chat = ({msgs,setMsgs}) => {
      useEffect(() => {
       if (targetDivRef.current && messageId !== '') {
         targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        targetDivRef.current.classList.add('bg-slate-800')
+        targetDivRef.current.classList.add(`${dark?`bg-slate-800`:`bg-slate-100`}`)
         setTimeout(() => {
-          targetDivRef.current.classList.remove(`bg-slate-800`)
+          targetDivRef.current.classList.remove(`${dark?`bg-slate-800`:`bg-slate-100`}`)
           setMessageId('')
         }, 700);
         // confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
@@ -68,7 +68,7 @@ const Chat = ({msgs,setMsgs}) => {
     }, [msgs,messageId]);
       
   return (
-    <div className={`relative h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `}>
+    <div className={`relative h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar `} onClick={()=>{setNotificatioOn(false)}} >
         <Chat_top/>
         <div className='relative w-[100%] h-[100%] pt-[84px] pb-[68px] flex flex-col text-white overflow-scroll no-scrollbar' ref={scrollRef} onClick={()=>{setIsEmojiOpen(false)}}>
         {msgs.map((msg,index)=>(

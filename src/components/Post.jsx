@@ -13,7 +13,7 @@ import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {commentId,setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
+    const {setNotificatioOn,commentId,setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
 
     const {id}=useParams()
     const targetDivRef = useRef(null);
@@ -66,9 +66,9 @@ const Post = () => {
      useEffect(() => {
       if (targetDivRef.current && commentId !== '') {
         targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        targetDivRef.current.classList.add('bg-slate-800')
+        targetDivRef.current.classList.add(`${dark?`bg-slate-800`:`bg-slate-100`}`)
         setTimeout(() => {
-          targetDivRef.current.classList.remove(`bg-slate-800`)
+          targetDivRef.current.classList.remove(`${dark?`bg-slate-800`:`bg-slate-100`}`)
           setCommentId('')
         }, 700);
         // confirmFormchild.current.classList.add(`${dark?'bg-slate-600':'bg-red-400'}`)
@@ -77,7 +77,7 @@ const Post = () => {
 
   return (
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
-       <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1)}} />
+       <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
        {post===undefined && !postLoader && <p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-[33%]'>....... No such Post found .........</p>}
       {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
        <>

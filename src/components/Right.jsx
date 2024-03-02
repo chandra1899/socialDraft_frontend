@@ -11,10 +11,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 const Following=({following})=>{
-  const {dark}=useContext(appState);
+  const {dark,setNotificatioOn}=useContext(appState);
   const navigate=useNavigate()
 return (
-  <div key={following._id} className={`flex flex-col  transition duration-150 ease-in-out ${dark?"bg-black hover:bg-[#232334]":"bg-white hover:bg-slate-100"} rounded-2xl left-2  p-2 mb-2 min-w-[97%] cursor-pointer`} onClick={()=>navigate(`/people/${following.followable._id}`)}>
+  <div key={following._id} className={`flex flex-col  transition duration-150 ease-in-out ${dark?"bg-black hover:bg-[#232334]":"bg-white hover:bg-slate-100"} rounded-2xl left-2  p-2 mb-2 min-w-[97%] cursor-pointer`} onClick={()=>{navigate(`/people/${following.followable._id}`);setNotificatioOn(false)}}>
     <div className='flex flex-row justify-start items-center'>
       <img src={`${following.followable.photoLocal?`${config.baseUrl}/photo/${following.followable.photoLocal_path}?${Date.now()}`:`${config.baseUrl}/api/user/userAvatar/${following.followable._id}?${Date.now()}`}`}  className='h-[40px] w-[40px] mr-2 rounded-full' alt="" />
       <div className='-mt-3 break-all'>
