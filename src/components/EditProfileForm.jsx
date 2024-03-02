@@ -7,7 +7,7 @@ import config from '../source'
 
 const EditProfileForm = () => {
   const Navigate=useNavigate()
-    const {editProfile,setEditProfile,user,setUser,dark,toast}=useContext(appState);
+    const {toastInfo,toastSuccess,toastError,editProfile,setEditProfile,user,setUser,dark,toast}=useContext(appState);
     const [photo,setPhoto]=useState('')
 
       const handlePhotoUpload=(e)=>{
@@ -27,32 +27,12 @@ const EditProfileForm = () => {
           const data=await res.json();
           if(res.status===200){
             setPhoto('')
-              toast.success('sucessfully Updated your profile', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-           
+            toastSuccess('sucessfully Updated your profile');
             setUser(data.user)
             setEditProfile(false)
           }
           else{         
-              toast.error('error in updating profile', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-            
+            toastError('error in updating profile');
           }
     }
     const formik = useFormik({

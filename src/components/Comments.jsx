@@ -10,7 +10,7 @@ import config from '../source'
 
 
 const Comments = ({comment,key,targetDivRef}) => {
-  const {commentId,warnLogin,user,setOpenLogin,dark,toast}=useContext(appState)
+  const {toastInfo,toastSuccess,toastError,commentId,warnLogin,user,setOpenLogin,dark,toast}=useContext(appState)
 
   const [likes,setLikes]=useState(comment.likes.length)
   const [islike,setIslike]=useState(false)
@@ -80,29 +80,10 @@ const Comments = ({comment,key,targetDivRef}) => {
     });
     if(res.status===200){
     e.target.parentElement.classList.add('hidden');
-      toast.success('Comment removed', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
+      toastSuccess('Comment removed');
     }
     else{
-      toast.error('Comment removed', {
-        position: "bottom-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-
+      toastError('Comment removed');
     }
   }
   useEffect( () => {

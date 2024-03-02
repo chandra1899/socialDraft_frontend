@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import config from '../source'
 
 const CommentForm = () => {
-    const {openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast,commentEvent,setCommentEvent,user,comments,setComments}=useContext(appState);
+    const {toastError,toastSuccess,toastInfo,openComment,setOpenComment,commentpostId,setCommentpostId,dark,toast,commentEvent,setCommentEvent,user,comments,setComments}=useContext(appState);
 
 
     const [comment,setComment]=useState("")
@@ -14,16 +14,7 @@ const CommentForm = () => {
       }
      const submit=async ()=>{
       if(comment===''){
-        toast.info('Comment cannot be empty', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+        toastInfo('Comment cannot be empty');
           return ;
       }
         let res=await fetch(`${config.baseUrl}/api/comment/create`,{
@@ -42,28 +33,10 @@ const CommentForm = () => {
             setComments([...comments,data.comment]);
             setOpenComment(false)
             setComment('')
-            toast.success('Comment created', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });              
+            toastSuccess('Comment created');              
           }
           else{
-              toast.error('error in creating a Comment', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+              toastError('error in creating a Comment');
           }
      }
   return (

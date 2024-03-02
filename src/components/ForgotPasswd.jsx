@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import config from '../source'
 
 const ForgotPasswd = forwardRef((props,ref) => {
-  const {forgotPasswdForm,setForgotPasswdForm,dark,setOpenLogin,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,toast}=useContext(appState);
+  const {toastInfo,toastSuccess,toastError,forgotPasswdForm,setForgotPasswdForm,dark,setOpenLogin,setpasswd,setSetpasswd,forgotpasswdemail,setForgotpasswdemail,toast}=useContext(appState);
 
       const handleKeyEnter=(e)=>{
         if(e.key=='Enter'){
@@ -29,27 +29,9 @@ const ForgotPasswd = forwardRef((props,ref) => {
             setForgotPasswdForm(false)
             setSetpasswd(true)
             setForgotpasswdemail(data.email);
-            toast.info('OTP sent to email', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastInfo('OTP sent to email');
           }else{
-            toast.error('error in sending OTP to email', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastError('error in sending OTP to email');
           }
         formik.values.email="";
       }

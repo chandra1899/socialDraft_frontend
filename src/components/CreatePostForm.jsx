@@ -3,7 +3,7 @@ import {appState} from '../App'
 import config from '../source'
 
 const CreatePostForm = () => {
-    const {postForm,setPostForm,dark,toast,setPosts,posts,postsSocket}=useContext(appState);
+    const {toastInfo,toastSuccess,toastError,postForm,setPostForm,dark,toast,setPosts,posts,postsSocket}=useContext(appState);
 
 
     const [post,setpost]=useState("")
@@ -18,16 +18,7 @@ const CreatePostForm = () => {
       
      const submit=async ()=>{
       if(post==='' && photo===''){
-        toast.info('Comment cannot be empty', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+        toastInfo('Comment cannot be empty');
           return ;
       }
         const formData = new FormData();
@@ -46,31 +37,10 @@ const CreatePostForm = () => {
               let newPost=data.post;
               console.log(newPost);
               postsSocket.emit("uploadedPost",{newPost});
-              toast.success('sucessfully created post', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-             
-              
+              toastSuccess('sucessfully created post');  
           }
           else{             
-                toast.error('error in creating a post', {
-                  position: "bottom-left",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "dark",
-                  });
-              
+              toastError('error in creating a post');
           }
      }
   return (

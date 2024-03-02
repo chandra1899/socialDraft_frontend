@@ -13,7 +13,7 @@ import config from '../source'
 const PostFooter =  ({post}) => {
   let location = useLocation();
   const navigate=useNavigate();
-  const {warnLogin,user,setOpenLogin,dark,toast,posts,setPosts,postsSocket}=useContext(appState)
+  const {toastWarn,toastInfo,toastSuccess,toastError,warnLogin,user,setOpenLogin,dark,toast,posts,setPosts,postsSocket}=useContext(appState)
 
   const [likes,setLikes]=useState(post.likes.length)
   const [retweets,setRetweets]=useState(post.retweets.length)
@@ -43,22 +43,10 @@ const PostFooter =  ({post}) => {
 
       }
     }else{     
-        toast.error('unable to make like', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
-      
+      toastError('unable to make like');
     }
       }else{
-       
         warnLogin()
-        
         setOpenLogin(true)
       }
   }
@@ -126,51 +114,18 @@ const PostFooter =  ({post}) => {
         if(location.pathname==='/bookmark'){
           e.target.parentElement.parentElement.classList.add('hidden');
         }
-          toast.info('Bookmark removed', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
-        
+        toastInfo('Bookmark removed');
       }
       else{
-       
-          toast.info('Bookmark added', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
-        
+        toastInfo('Bookmark added');
         setIssaved("Saved")
       }
     }
     else{
-   
-        toast.error('error in bookmark', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
+      toastError('error in bookmark');
     }
    }else{
-   
     warnLogin()
-    
     setOpenLogin(true)
   }
   }
@@ -191,47 +146,18 @@ const PostFooter =  ({post}) => {
         if(data.deleted){
             setRetweets(retweets-1);
             setIsretweet("Retweet")   
-            toast.info('Retweet removed', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
-          
+            toastInfo('Retweet removed');
         }
         else{
           let newPost=data.post;
           postsSocket.emit("uploadedPost",{newPost});
           setRetweets(retweets+1);
           setIsretweet("Retweeted")
-            toast.info('Retweet added', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
+            toastInfo('Retweet added');
         }
       }
       else{
-     
-          toast.error('error in Retweet', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          toastError('error in Retweet');
       }
     }else{
       warnLogin()

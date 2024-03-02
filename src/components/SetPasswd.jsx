@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import config from '../source'
 
 const SetPasswd = () => {
-    const {openLogin,setOpenLogin,dark,setOpenSignUp,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,toast}=useContext(appState);
+    const {toastWarn,toastInfo,toastSuccess,toastError,openLogin,setOpenLogin,dark,setOpenSignUp,setForgotPasswdForm,setpasswd,setSetpasswd,forgotpasswdemail,toast}=useContext(appState);
 
       const handleKeyEnter=(e)=>{
         if(e.key=='Enter'){
@@ -15,16 +15,7 @@ const SetPasswd = () => {
       const submit=async ()=>{
         const {password,confirm_password,otp}=formik.values
         if(password!==confirm_password) {
-          toast.warn('Password does not match', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          toastWarn('Password does not match');
             return ;
         }
         let res=await fetch(`${config.baseUrl}/api/user/verifyOtp`,{
@@ -41,50 +32,14 @@ const SetPasswd = () => {
           if(res.status===200){
             setSetpasswd(false)
             setOpenLogin(true)
-            toast.success('sucessfully changed password', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastSuccess('sucessfully changed password');
           }else if(res.status===400){
-            toast.warn('Password does not match', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastWarn('Password does not match');
           }else if(res.status===401){
-            toast.warn('Invalid OTP', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastWarn('Invalid OTP');
           }
           else{
-            toast.error('error in changing password', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastError('error in changing password');
           }
           formik.values.password='';
            formik.values.confirm_password='';

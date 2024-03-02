@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import config from '../source'
 
 const People = () => {
-    const {setNotificatioOn,warnLogin,user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+    const {toastWarn,toastInfo,toastSuccess,toastError,setNotificatioOn,warnLogin,user,setOpenLogin,callfollowing,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
     const navigate=useNavigate()
     const {id}=useParams()
     const [userdetails,setUserdetails]=useState({})
@@ -70,24 +70,11 @@ const People = () => {
         callfollowing()
       }
       else{       
-          toast.error('error in follow/unfollow', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
-        
+        toastError('error in follow/unfollow');
       }
       }else{
         setOpenLogin(true)
-       
-        warnLogin()
-       
-        
+        warnLogin() 
       }
     }
     const isfollow=async ()=>{
@@ -129,7 +116,6 @@ const People = () => {
       else
        {
         setOpenLogin(true)
-       
         warnLogin()
        }
     }

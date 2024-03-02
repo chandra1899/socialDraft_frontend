@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import config from '../source'
 
 const SignUp = () => {
-  const {openSignUp,setOpenSignUp,dark,setOpenLogin,toast}=useContext(appState)
+  const {toastWarn,toastInfo,toastSuccess,toastError,openSignUp,setOpenSignUp,dark,setOpenLogin,toast}=useContext(appState)
   const [latest,setlatest]=useState('');
   const [photo,setPhoto]=useState('');
       const submit=async ()=>{
@@ -20,29 +20,11 @@ const SignUp = () => {
         formData.append('name', formik.values.name);
         formData.append('latest', latest);
         if(formik.values.password!==formik.values.confirm_password) {
-          toast.warn('Password does not match', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          toastWarn('Password does not match');
             return ;
         }
         if(latest==='' || (photo==='' && latest!=='avatar_1' && latest!=='avatar_2' && latest!=='avatar_3')) {
-          toast.warn('Photo is compulsary', {
-            position: "bottom-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
+          toastWarn('Photo is compulsary');
             return ;
         }
        let res= await fetch(`${config.baseUrl}/api/user/create`,{
@@ -52,59 +34,21 @@ const SignUp = () => {
         const data=await res.json();
         document.getElementById("update_profile").value = "";
         if(res.status===200){            
-              toast.success('sucessfully registered', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+              toastSuccess('sucessfully registered');
             
             setOpenSignUp(false)
             setOpenLogin(true)
         }
         else if(res.status===401){
-        
-            toast.warn('password does not match', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
+          toastWarn('password does not match');
         }
         else if(res.status===400){
-          
-            toast.warn('user already exists .. please log-in', {
-              position: "bottom-left",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-              });
+          toastWarn('user already exists .. please log-in');
           setOpenSignUp(false)
           setOpenLogin(true)
         }
         else{           
-              toast.error('unable to register', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
+            toastError('unable to register');
         }
         formik.values.name='';
         formik.values.email='';

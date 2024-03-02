@@ -42,9 +42,7 @@ const Retweets = () => {
         getretweets();
       calluser()
       }else{
-       
         warnLogin()
-        
         navigate('/')
         setOpenLogin(true)
       }

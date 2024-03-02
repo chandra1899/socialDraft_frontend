@@ -17,7 +17,7 @@ import config from '../source'
 const Left = () => {
   const Navigate=useNavigate();
   let location = useLocation();
-  const {setNotificatioOn,warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv,setNotificationDiv}=useContext(appState);
+  const {toastInfo,toastSuccess,toastError,setNotificatioOn,warnLogin,calluser,postForm,setPostForm,dark,setDark,user,setOpenSignUp,setOpenLogin,callfollowing,toast,followingDiv,setFollowingDiv,setNotificationDiv}=useContext(appState);
   const [active,setActive]=useState('/');
   const [toggle,setToggle]=useState(false);
   const logout=async ()=>{
@@ -33,33 +33,12 @@ const Left = () => {
     });
     let data=await res.json();
     if(res.status===200){
-      
-        toast.success('sucessfully Logged Out', {
-          position: "bottom-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
-      
+      toastSuccess('sucessfully Logged Out');
       Navigate('/');
       calluser();
       callfollowing()
     }else{      
-              toast.error('error in logging out', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-           
+      toastError('error in logging out');    
     }
   }
   useEffect( () => {

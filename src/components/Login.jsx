@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import config from '../source'
 
 const Login = () => {
-  const {openLogin,setOpenLogin,dark,calluser,setOpenSignUp,toast,setForgotPasswdForm}=useContext(appState);
+  const {toastWarn,toastInfo,toastSuccess,toastError,openLogin,setOpenLogin,dark,calluser,setOpenSignUp,toast,setForgotPasswdForm}=useContext(appState);
   const navigate=useNavigate();
      const submit=async ()=>{
         const {email,password}=formik.values
@@ -23,60 +23,17 @@ const Login = () => {
           const data=await res.json();
           if(res.status===200){
               calluser();
-              
-                toast.success('sucessfully Logged In', {
-                  position: "bottom-left",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "dark",
-                  });
-              
+              toastSuccess('sucessfully Logged In');
               navigate('/')
               setOpenLogin(false)
           }
           else if(res.status===401){              
-                toast.warn('Invalid email/password', {
-                  position: "bottom-left",
-                  autoClose: 2000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "dark",
-                  });
-              
-    
+                toastWarn('Invalid email/password');
           }
           else if(res.status===404){            
-              toast.warn('Please Sign-up', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-            
+            toastWarn('Please Sign-up');
           }else{
-          
-              toast.error('error in log-in', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                });
-            
+            toastError('error in log-in');
           }
        formik.values.email='';
        formik.values.password='';
