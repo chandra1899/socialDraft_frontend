@@ -5,7 +5,6 @@ import config from '../source'
 const CreatePostForm = () => {
     const {toastInfo,toastSuccess,toastError,postForm,setPostForm,dark,toast,setPosts,posts,postsSocket}=useContext(appState);
 
-
     const [post,setpost]=useState("")
     const [photo,setPhoto]=useState("")
 
@@ -34,6 +33,7 @@ const CreatePostForm = () => {
             setPostForm(false)
             document.getElementById("create_post").value = "";
             setpost("")
+            setPhoto("")
               let newPost=data.post;
               console.log(newPost);
               postsSocket.emit("uploadedPost",{newPost});

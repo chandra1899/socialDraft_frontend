@@ -79,7 +79,7 @@ const Post = () => {
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
        <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
        {post===undefined && !postLoader && <p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-[33%]'>....... No such Post found .........</p>}
-      {post && !postLoader &&<div className=' h-full flex flex-col overflow-scroll no-scrollbar'>
+      {post && !postLoader &&<div className=' h-full flex flex-col overflow-y-scroll '>
        <>
        {post.type!=='Retweet'? <div className='relative' >
         <PostProfile user={post.user}/>
