@@ -13,12 +13,15 @@ import config from '../source'
 
 const Post = () => {
   const navigate=useNavigate()
-    const {setNotificatioOn,commentId,setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
+    const {toastError,setNotificatioOn,commentId,setCommentId,warnLogin,openComment,setOpenComment,commentpostId,setCommentpostId,user,setOpenLogin,dark,toast,confirmForm,setConfirmForm,confirm,setConfirm,postId,setPostId,imgsrc,setimgsrc,imgPreview,setImgPreview,commentEvent,setCommentEvent,comments,setComments}=useContext(appState);
 
     const {id}=useParams()
     const targetDivRef = useRef(null);
     const [post,setPost]=useState()
     const [postLoader,setPostLoader]=useState(false)
+    const [pageNo, setPageNo] = useState(1);
+    const containerRef = useRef(null);
+
     const handleDeletePost=async (id)=>{
       setConfirmForm(true);
       setPostId(id)
@@ -37,13 +40,44 @@ const Post = () => {
           setPostLoader(false)
           if(res.status===200 && data.post!==null){
             setPost(data.post)
-            setComments(data.post.comments)
-          }else if(data.post===null){
-          }
-          else{
-           
           }
     }
+    const getcomments=async ()=>{
+        let res=await fetch(`${config.baseUrl}/api/comment/getcomments/${id}?page=${pageNo}`,{
+            method:"GET",
+            headers:{
+              "Content-Type":"application/json"
+            },
+          credentials:'include', 
+
+          })
+          let data=await res.json();
+          if(res.status===200 && data.comments!==null){
+            if(pageNo == 1){
+              setComments(data.comments)
+              setPageNo(2)
+            }
+            else if(data.comments?.length !== 0){
+              setComments((prev)=>[...prev, ...data.comments])
+              setPageNo((prev)=>prev+1)
+          }
+          // setComments((prev)=>{
+          //     console.log(prev);
+          //     return prev
+          //   })
+    
+          }else{
+            toastError('error in getting posts')
+          }
+    }
+
+    const handleInfiniteScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
+        getcomments();
+      }
+    };
+
     const AddComment=(e)=>{
       setCommentEvent(e.target)
       {if(user){
@@ -61,8 +95,14 @@ const Post = () => {
       setImgPreview(true)
     }
     useEffect( () => {
-        getpost();    
+        getpost();  
+        if(pageNo === 1){
+          getcomments()
+        }
      }, [id]);
+     useEffect(()=>{
+      if(pageNo > 1) handleInfiniteScroll()
+    },[pageNo])
      useEffect(() => {
       if (targetDivRef.current && commentId !== '') {
         targetDivRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -79,7 +119,7 @@ const Post = () => {
     <div className={`h-full flex flex-col min-w-[97%] ss:min-w-[65%] ${dark?"bg-black":"bg-slate-200"} p-2  rounded-xl overflow-scroll no-scrollbar`}>
        <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
        {post===undefined && !postLoader && <p className='flex justify-center items-center text-[1.125rem] font-medium text-red-600 mt-[33%]'>....... No such Post found .........</p>}
-      {post && !postLoader &&<div className=' h-full flex flex-col overflow-y-scroll '>
+      {post && !postLoader &&<div className=' h-full flex flex-col overflow-y-scroll '  ref={containerRef} onScroll={handleInfiniteScroll} >
        <>
        {post.type!=='Retweet'? <div className='relative' >
         <PostProfile user={post.user}/>
@@ -111,7 +151,7 @@ const Post = () => {
       }
        </>
         <button onClick={AddComment} className={`min-h-[40px]  ${dark?"bg-green-600 hover:bg-green-700":"text-white bg-blue-600 hover:bg-blue-700"} m-2 font-medium rounded-xl mb-5`}>Add Comment</button>
-       <div className='commentDiv'>
+       <div className='commentDiv' >
        {comments.map((comment,i)=>(
         <Comment targetDivRef={targetDivRef} key={i} comment={comment}/>
         ))}
