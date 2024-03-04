@@ -1,4 +1,4 @@
-import React,{useEffect,useContext, useState} from 'react'
+import React,{useEffect,useContext, useState, useRef} from 'react'
 import { appState } from '../App'
 import logo from '../assets/logo.png'
 import BACK from '../assets/BACK.png'
@@ -11,12 +11,14 @@ import config from '../source'
 
 const Bookmark = () => {
   const navigate=useNavigate()
-  const {setNotificatioOn,warnLogin,user,setOpenLogin,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
+  const {toastError,setNotificatioOn,warnLogin,user,setOpenLogin,dark,toast,imgsrc,setimgsrc,imgPreview,setImgPreview}=useContext(appState);
   const [savedposts,setSavedposts]=useState([])
   const [bookmarkLoader,setBookmarkLoader]=useState(false);
+  const [pageNo, setPageNo] = useState(1);
+  const containerRef = useRef(null);
   const getsavedposts=async ()=>{
     setBookmarkLoader(true);
-    let res=await fetch(`${config.baseUrl}/api/post/savedposts`,{
+    let res=await fetch(`${config.baseUrl}/api/post/savedposts?page=${pageNo}`,{
       method:"GET",
       headers:{
         "Content-Type":"application/json"
@@ -26,12 +28,30 @@ const Bookmark = () => {
     let data=await res.json();
     setBookmarkLoader(false);
     if(res.status===200){
-      setSavedposts(data.savedposts)
+      if(pageNo == 1){
+        setSavedposts(data.savedposts)
+        setPageNo(2)
+      }
+      else if(data.savedposts?.length !== 0){
+        setSavedposts((prev)=>[...prev, ...data.savedposts])
+        setPageNo((prev)=>prev+1)
     }
-    else{
-     
+    // setSavedposts((prev)=>{
+    //     console.log(prev);
+    //     return prev
+    //   })
+
+    }else{
+      toastError('error in getting posts')
     }
   }
+  const handleInfiniteScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    if (scrollTop + clientHeight >= scrollHeight - 5) {
+      getsavedposts();
+    }
+  };
+
   const handleimgClick=(src)=>{
     setimgsrc(src)
     setImgPreview(true)
@@ -39,21 +59,26 @@ const Bookmark = () => {
   useEffect( () => {
     if(user){
       getsavedposts();
+      if(pageNo === 1){
+        getsavedposts()
+      }
       }else{
         navigate('/')
         setOpenLogin(true)
-       
-        warnLogin()
-        
+        warnLogin() 
       }
- }, []);
+    }, []);
+    useEffect(()=>{
+      if(pageNo > 1) handleInfiniteScroll()
+    },[pageNo])
+
 
   return (
    <>
-   {user &&  <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-gray-200"} flex flex-col overflow-scroll `}>
+   {user &&  <div ref={containerRef} onScroll={handleInfiniteScroll} className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-gray-200"} flex flex-col overflow-y-scroll `}>
    <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
       <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
-    {!bookmarkLoader &&  <div className='flex flex-col overflow-scroll no-scrollbar '>
+    <div className='flex flex-col overflow-scroll no-scrollbar '>
       {savedposts.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium mt-[33%] text-red-600'>.......No Saved Posts........</p></>}
     {savedposts.map((post,i)=>(
       <div key={i} onClick={()=>{setNotificatioOn(false)}} >
@@ -80,7 +105,7 @@ const Bookmark = () => {
     }
      </div>
     ))}
-    </div>}
+    </div>
     {bookmarkLoader && <div className='m-auto ml-[40%] mt-[40%]'> <Box sx={{ display: 'flex' }}>
       <CircularProgress />
     </Box></div>}
