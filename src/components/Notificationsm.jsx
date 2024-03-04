@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import config from '../source'
 import { useNavigate } from 'react-router'
 import { appState } from '../App'
@@ -146,9 +146,12 @@ const Notificationsm = () => {
   const {dark,user}=useContext(appState);
   const [notificationLoader, setNotificationLoader] = useState(false);
     const [notifications, setNotifications] = useState([]);
+    const [pageNo, setPageNo] = useState(1);
+    const containerRef = useRef(null);
+
   const getNotifications = async ()=>{
     setNotificationLoader(true)
-    let res=await fetch(`${config.baseUrl}/api/notification/getnotifications`,{
+    let res=await fetch(`${config.baseUrl}/api/notification/getnotifications?page=${pageNo}`,{
       method:"GET",
       headers:{
         "Content-Type":"application/json"
@@ -157,19 +160,41 @@ const Notificationsm = () => {
 
     })
     let data=await res.json();
-    setNotificationLoader(false)
     if(res.status===200){
-      // console.log(data.notifications);
-      setNotifications(data.notifications)
+      if(pageNo == 1){
+        setNotifications(data.notifications)
+        setPageNo(2)
+      }
+      else if(data.notifications?.length !== 0){
+      setNotifications((prev)=>[...prev, ...data.notifications])
+      setPageNo((prev)=>prev+1)
     }
+      
+      // setNotifications((prev)=>{
+      //   console.log(prev);
+      //   return prev
+      // })
+    }
+    setNotificationLoader(false)
   }
 
+  const handleInfiniteScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      getNotifications();
+    }
+  };
+
   useEffect(()=>{
-    getNotifications()
-  },[user])
+    if(pageNo === 1)
+    handleInfiniteScroll()
+  },[])
+  useEffect(()=>{
+    if(pageNo > 1) handleInfiniteScroll()
+  },[pageNo])
 
   return (
-    <div className={`absolute mx-auto top-0 rounded-xl min-w-[300px] w-[23vw] h-[100vh] ${dark?`bg-slate-800 border-slate-700`:`bg-slate-100 border-slate-300`} z-[11] p-2 flex ss:hidden flex-col overflow-scroll no-scrollbar border-2 `}>
+    <div ref={containerRef} onScroll={handleInfiniteScroll} className={`absolute mx-auto top-0 rounded-xl min-w-[300px] w-[23vw] h-[100vh] ${dark?`bg-slate-800 border-slate-700`:`bg-slate-100 border-slate-300`} z-[11] p-2 flex ss:hidden flex-col overflow-scroll  border-2 pb-16`}>
       {!user && <div className={`bg-gray-900 ${dark?'bg-opacity-80':'bg-opacity-20'} rounded-xl  h-[100vh] w-[100%] z-[39]`}></div>}
       {!user && !notificationLoader && notifications?.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[20%] text-red-600 mt-10'>....... Please login .........</p></>}
       {user && !notificationLoader && notifications?.length===0 && <><p className='flex justify-center items-center text-[1.125rem] font-medium absolute top-[35%] left-[10%] text-red-600 mt-10'>..... No Notifications Found .....</p></>}
