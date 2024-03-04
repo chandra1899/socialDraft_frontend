@@ -50,7 +50,7 @@ const Bookmark = () => {
 
   return (
    <>
-   {user &&  <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-gray-200"} flex flex-col overflow-scroll no-scrollbar `}>
+   {user &&  <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-gray-200"} flex flex-col overflow-scroll `}>
    <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
       <div className='h-full min-w-[65%] mr-2 rounded-3xl p-2  '>
     {!bookmarkLoader &&  <div className='flex flex-col overflow-scroll no-scrollbar '>

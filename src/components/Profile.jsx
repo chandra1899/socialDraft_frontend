@@ -57,7 +57,7 @@ const Profile = () => {
 
   return (
     <>
-    {user && <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll no-scrollbar`} onClick={()=>{setNotificatioOn(false)}} >
+    {user && <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2 ${dark?"bg-black":"bg-slate-200"} flex flex-col overflow-scroll `} onClick={()=>{setNotificatioOn(false)}} >
     <img src={BACK} alt="back" className={`h-[30px] w-[30px] absolute top-5 sm:-left-9 left-1 cursor-pointer`} onClick={()=>{navigate(-1);setNotificatioOn(false)}} />
       <div className='flex flex-row  pr-7 justify-center items-center my-3'>
           <img src={`${user.photoLocal?`${config.baseUrl}/photo/${user.photoLocal_path}?${Date.now()}`:`${config.baseUrl}/api/user/userAvatar/${user._id}?${Date.now()}`}`}  alt={user.name} className='ml-[5%] sm:h-[140px] sm:w-[140px] h-[100px] w-[100px] rounded-full' />
