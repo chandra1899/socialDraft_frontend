@@ -1,4 +1,4 @@
-import React,{useEffect,useContext, useState} from 'react'
+import React,{useEffect,useContext, useState, useRef} from 'react'
 import {PostFooter,PostProfile} from '.'
 import { appState } from '../App'
 import { useNavigate ,useParams} from "react-router-dom";
@@ -11,23 +11,49 @@ import Box from '@mui/material/Box';
 
 const Home = () => {
   const navigate=useNavigate()
-  const {setNotificatioOn,posts,setPosts,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview,postsSocket}=useContext(appState);
+  const {setNotificatioOn,posts,setPosts,toastError,user,dark,calluser,imgsrc,setimgsrc,imgPreview,setImgPreview,postsSocket}=useContext(appState);
   const [homeLoader,setHomeLoader]=useState(false);
   const [arrivalPost, setArrivalPost] = useState(null);
   const [latestPosts, setLatestPosts] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
+  const containerRef = useRef(null);
 
     const getposts=async ()=>{
       setHomeLoader(true);
-      let res=await fetch(`${config.baseUrl}/api/home`,{
+      let res=await fetch(`${config.baseUrl}/api/home?page=${pageNo}`,{
         method:"GET",
         headers:{
           "Content-Type":"application/json"
         }
       })
       let data=await res.json();
-      setPosts(data.posts)
+      if(res.status===200){
+        if(pageNo == 1){
+          setPosts(data.posts)
+          setPageNo(2)
+        }
+        else if(data.posts?.length !== 0){
+          setPosts((prev)=>[...prev, ...data.posts])
+          setPageNo((prev)=>prev+1)
+      }
+        // setPosts((prev)=>{
+        //   console.log(prev);
+        //   return prev
+        // })
+
+      }else{
+        toastError('error in getting posts')
+      }
       setHomeLoader(false);
     }
+
+    const handleInfiniteScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
+        getposts();
+      }
+    };
+
     const handleimgClick=(src)=>{
       setimgsrc(src)
       setImgPreview(true)
@@ -48,22 +74,28 @@ const Home = () => {
     useEffect(() => {
       arrivalPost && setLatestPosts((prev) => [arrivalPost,...prev]);
     }, [arrivalPost]);
-  useEffect( () => {
-    calluser()
-    getposts();
- }, []);
+    useEffect( () => {
+      calluser()
+    }, []);
+    useEffect(()=>{
+      if(pageNo === 1)
+      handleInfiniteScroll()
+    },[])
+    useEffect(()=>{
+      if(pageNo > 1) handleInfiniteScroll()
+    },[pageNo])
  
 
   return (
     
-   <div className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2  ${homeLoader?`${dark?"bg-black":"bg-slate-200"}`:""} overflow-y-scroll `} onClick={()=>{setNotificatioOn(false)}} >
+   <div ref={containerRef} className={`h-full min-w-[97%] ss:min-w-[65%] mr-2 rounded-3xl p-2  ${homeLoader?`${dark?"bg-black":"bg-slate-200"}`:""} overflow-y-scroll ` } onScroll={handleInfiniteScroll} onClick={()=>{setNotificatioOn(false)}} >
 
     {latestPosts.length!==0 && <div onClick={updateLatestPosts} className='absolute flex justify-center items-center top-0 left-[43%] ss:left-[28%] rounded-b-full bg-blue-600 hover:bg-blue-700 h-[38px] w-[43px]'>
     <img src={dropDown} alt="dropDown" className='mt-1 cursor-pointer h-[40px] w-[40px]'  />
     </div>}
     
     <div className='flex flex-col overflow-scroll no-scrollbar '>
-    {!homeLoader && posts.map((post,i)=>(
+    {posts.map((post,i)=>(
      <div key={i}>
       {post.type!=='Retweet'?<div key={i}  className={`flex flex-col rounded-2xl mb-2 p-1 ${dark?"bg-black hover:bg-[#112]":"bg-white hover:bg-slate-100"} min-h-[50%]   hover:border-3 hover:border-slate-600  transition duration-150 ease-in-out `}>
       <PostProfile user={post.user}/>
