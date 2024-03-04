@@ -76,11 +76,10 @@ const Home = () => {
     }, [arrivalPost]);
     useEffect( () => {
       calluser()
+      if(pageNo === 1){
+        getposts()
+      }
     }, []);
-    useEffect(()=>{
-      if(pageNo === 1)
-      handleInfiniteScroll()
-    },[])
     useEffect(()=>{
       if(pageNo > 1) handleInfiniteScroll()
     },[pageNo])
